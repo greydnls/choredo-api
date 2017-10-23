@@ -16,7 +16,7 @@ services:
   db:
     image: postgres:10.0
     ports:
-      - "3306:3306"
+      - "5432:5432"
     environment:
       - POSTGRES_DB=choredo
       - POSTGRES_USER=choredo
