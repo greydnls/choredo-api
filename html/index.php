@@ -26,6 +26,7 @@ $app->routeMiddleware([
 $app->register(Choredo\Providers\AppServiceProvider::class);
 $app->register(Choredo\Providers\AuthServiceProvider::class);
 $app->register(LaravelDoctrine\ORM\DoctrineServiceProvider::class);
+$app->register(Choredo\Providers\EntityManagerProvider::class);
 
 
 $app->router->group([
