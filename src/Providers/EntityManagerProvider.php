@@ -31,7 +31,7 @@ class EntityManagerProvider extends ServiceProvider
         $config->setQueryCacheImpl($cache);
         $config->setMetadataCacheImpl($cache);
         $config->setProxyDir($proxyDirectory);
-        $config->setProxyNamespace('HelpMeAbstract\Proxies');
+        $config->setProxyNamespace('Choredo\Proxies');
 
         if ($isProduction) {
             $config->setAutoGenerateProxyClasses(Common\Proxy\AbstractProxyFactory::AUTOGENERATE_NEVER);
@@ -47,7 +47,6 @@ class EntityManagerProvider extends ServiceProvider
             'dbname'   => getenv('DB_DATABASE') ?? 'choredo',
         ];
 
-        $config = ORM\Tools\Setup::createAnnotationMetadataConfiguration([__DIR__ . "../Entities"], !$isProduction);
         $this->app['entity_manager'] = ORM\EntityManager::create($dbParams, $config);
     }
 }

@@ -1,0 +1,130 @@
+<?php
+
+namespace Choredo\Entities;
+
+use Assert\Assertion;
+use Choredo\Entities\Behaviors;
+
+/**
+ * Class Family
+ * @package Choredo\Entities
+ *
+ * @ORM\Entity
+ * @ORM\Table(name="families")
+ * @ORM\HasLifeCycleCallbacks
+ */
+class Family
+{
+    use Behaviors\HasUuid;
+    use Behaviors\HasCreatedDate;
+    use Behaviors\HasUpdatedDate;
+
+    const PAYMENT_STRATEGY_PER_CHORE = 'per_chore';
+    const PAYMENT_STRATEGY_PER_CHILD = 'per_child';
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", name="payment_strategy")
+     */
+    private $paymentStrategy;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer", nullable=true, name="completion_threshold")
+     */
+    private $completionThreshold;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="smallint", name="week_start_day")
+     */
+    private $weekStartDay;
+
+    /**
+     * Family constructor.
+     * @param string $name
+     * @param string $paymentStrategy
+     * @param int $completionThreshold
+     * @param int $weekStartDay
+     */
+    public function __construct(
+        string $name,
+        string $paymentStrategy,
+        int $weekStartDay,
+        int $completionThreshold = null
+    ) {
+        $this->name = $name;
+        $this->weekStartDay = $weekStartDay;
+        $this->setPaymentStrategy($paymentStrategy, $completionThreshold);
+    }
+
+    /**
+     * Set paymentStrategy with validation rules
+     *
+     * @param string $paymentStrategy
+     * @param int|null $completionThreshold
+     */
+    private function setPaymentStrategy(string $paymentStrategy, int $completionThreshold = null)
+    {
+        Assertion::choice(
+            $paymentStrategy,
+            [static::PAYMENT_STRATEGY_PER_CHILD, static::PAYMENT_STRATEGY_PER_CHORE],
+            "Invalid payment strategy '$paymentStrategy' specified."
+        );
+
+        if ($paymentStrategy === static::PAYMENT_STRATEGY_PER_CHILD) {
+            Assertion::between(
+                $completionThreshold,
+                0,
+                100,
+                "When per-child payment strategy is specified, "
+                . " a completion threshold value between 0 and 100 must also be set"
+            );
+        }
+
+        $this->paymentStrategy = $paymentStrategy;
+        $this->completionThreshold = $completionThreshold;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaymentStrategy(): string
+    {
+        return $this->paymentStrategy;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCompletionThreshold(): int
+    {
+        return $this->completionThreshold;
+    }
+
+    /**
+     * @return int
+     */
+    public function getWeekStartDay(): int
+    {
+        return $this->weekStartDay;
+    }
+}
