@@ -10,6 +10,7 @@
         "doctrine/orm": "^2.5",
         "league/container": "^2.4",
         "league/route": "^3.0",
+        "monolog/monolog": "^1.23",
         "ramsey/uuid": "^3.7",
         "ramsey/uuid-doctrine": "^1.4",
         "vlucas/phpdotenv": "~2.2"
