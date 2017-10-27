@@ -1,15 +1,15 @@
 {
-    "name": "laravel/lumen",
-    "description": "The Laravel Lumen Framework.",
-    "keywords": ["framework", "laravel", "lumen"],
+    "name": "greybee/choredo",
+    "description": "API For ChoreDo",
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": ">=7.0",
+        "php": ">=7.1",
         "beberlei/assert": "^2.7",
         "doctrine/migrations": "^1.5",
         "doctrine/orm": "^2.5",
-        "laravel/lumen-framework": "5.5.*",
+        "league/container": "^2.4",
+        "league/route": "^3.0",
         "ramsey/uuid": "^3.7",
         "ramsey/uuid-doctrine": "^1.4",
         "vlucas/phpdotenv": "~2.2"
@@ -26,10 +26,9 @@
         }
     },
     "autoload-dev": {
-        "classmap": [
-            "tests/",
-            "database/"
-        ]
+        "psr-4": {
+            "Choredo\\Test\\": "test/"
+        }
     },
     "scripts": {
         "post-root-package-install": [

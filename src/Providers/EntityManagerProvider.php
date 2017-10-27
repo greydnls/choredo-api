@@ -5,15 +5,17 @@ namespace Choredo\Providers;
 use Doctrine\Common;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM;
-use Illuminate\Support\ServiceProvider;
+use League\Container\ServiceProvider\AbstractServiceProvider;
 use Ramsey\Uuid\Doctrine\UuidType;
 
 /**
  * Class EntityManagerProvider
  * @package Choredo\Providers
  */
-class EntityManagerProvider extends ServiceProvider
+class EntityManagerProvider extends AbstractServiceProvider
 {
+    protected $provides = [ORM\EntityManager::class];
+
     public function register()
     {
         $environment = getenv('ENV') ?? 'production';
@@ -47,6 +49,6 @@ class EntityManagerProvider extends ServiceProvider
             'dbname'   => getenv('DB_DATABASE') ?? 'choredo',
         ];
 
-        $this->app['entity_manager'] = ORM\EntityManager::create($dbParams, $config);
+        return ORM\EntityManager::create($dbParams, $config);
     }
 }
