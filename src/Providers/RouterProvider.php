@@ -3,9 +3,10 @@
 
 namespace Choredo\Providers;
 
+use Choredo\Actions;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Route\RouteCollection;
-use Zend\Diactoros\Response\TextResponse;
+use League\Route\RouteGroup;
 
 class RouterProvider extends AbstractServiceProvider
 {
@@ -20,14 +21,16 @@ class RouterProvider extends AbstractServiceProvider
      */
     public function register()
     {
-        $this->container->share(
+        $this->getContainer()->share(
             RouteCollection::class,
-            function () : RouteCollection {
-                $router = new RouteCollection($this->container);
+            function (): RouteCollection {
+                $router = new RouteCollection($this->getContainer());
 
-                $router->get('/', function(){
-                    return new TextResponse("It's Working");
-                });
+//                $router->get('/', function () {
+//                    return new TextResponse("It's Working");
+//                });
+
+                $router->get('/families/{id:uuid}', [Actions\Family\GetFamily::class, '__invoke']);
 
                 return $router;
             }

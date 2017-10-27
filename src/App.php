@@ -27,13 +27,14 @@ class App
     public function run()
     {
         try {
-            $response = $this->container->get(RouteCollection::class)->dispatch(
-                $this->container->get(ServerRequestInterface::class),
-                new Response()
-            );
+            $response = $this->container->get(RouteCollection::class)
+                ->dispatch(
+                    $this->container->get(ServerRequestInterface::class),
+                    new Response()
+                );
         } catch (AssertionFailedException $e) {
             $response = new BadRequestResponse([$e->getMessage()]);
-        } catch (\Throwable $e){
+        } catch (\Throwable $e) {
             $response = new ServerErrorResponse([$e->getMessage()]);
         }
 

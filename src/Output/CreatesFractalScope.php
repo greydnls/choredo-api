@@ -34,7 +34,7 @@ trait CreatesFractalScope
         $data,
         TransformerAbstract $transformer,
         string $type
-    ) : Scope {
+    ): Scope {
         return $this->manager->createData(new Item($data, $transformer, $type));
     }
 
@@ -48,7 +48,7 @@ trait CreatesFractalScope
         array $data,
         TransformerAbstract $transformer,
         string $type
-    )  : Scope {
+    ): Scope {
         return $this->manager->createData(
             new Collection($data, $transformer, $type)
         );
