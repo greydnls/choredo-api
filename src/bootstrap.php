@@ -1,5 +1,12 @@
 <?php
 
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Zend\Diactoros\Response;
+use Zend\Diactoros\Response\SapiEmitter;
+use Zend\Diactoros\ServerRequestFactory;
+use Choredo\Providers;
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 try {
@@ -8,6 +15,20 @@ try {
     //
 }
 
-$app = new \Choredo\App();
+$container = new \League\Container\Container();
+$container->share(ResponseInterface::class, new Response());
+$container->share(SapiEmitter::class, SapiEmitter::class);
+$container->share(
+    ServerRequestInterface::class,
+    function () {
+        return ServerRequestFactory::fromGlobals();
+    }
+);
+
+$container->addServiceProvider(new Providers\EntityManagerProvider());
+$container->addServiceProvider(new Providers\RouterProvider());
+$container->addServiceProvider(new Providers\LoggerProvider());
+
+$app = new \Choredo\App($container);
 
 return $app;

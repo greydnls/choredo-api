@@ -4,6 +4,7 @@ namespace Choredo\Entities;
 
 use Assert\Assertion;
 use Choredo\Entities\Behaviors;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Family

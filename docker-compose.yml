@@ -6,12 +6,15 @@ services:
       - DB_USER=choredo
       - DB_PASSWORD=securelol
       - DB_DATABASE=choredo
+      - DB_HOST=db
       - ENV=development
     volumes:
       - .:/var/www
     ports:
       - "8080:80"
     depends_on:
+      - db
+    links:
       - db
   db:
     image: postgres:10.0
