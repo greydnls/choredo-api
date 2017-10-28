@@ -27,14 +27,6 @@ class RouterProvider extends AbstractServiceProvider
             function (): RouteCollection {
                 $router = new RouteCollection($this->container);
 
-                $router->get(
-                    '/',
-                    function () {
-                        return new TextResponse("It's Working");
-                    }
-                );
-                });
-
                 $router->group('families/{familyId:uuid}', function (RouteGroup $routeGroup) {
                     $routeGroup->get('/', [Actions\Family\GetFamily::class, '__invoke']);
                     $routeGroup->get('chores',  [Actions\Chore\ListChores::class, '__invoke']);
