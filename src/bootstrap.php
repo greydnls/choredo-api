@@ -1,5 +1,7 @@
 <?php
 
+use Choredo\Output\FractalAwareInterface;
+use League\Fractal\Manager;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response;
@@ -28,6 +30,8 @@ $container->share(
 $container->addServiceProvider(new Providers\EntityManagerProvider());
 $container->addServiceProvider(new Providers\RouterProvider());
 $container->addServiceProvider(new Providers\LoggerProvider());
+
+$this->inflector(FractalAwareInterface::class)->invokeMethod('setManager', [Manager::class]);
 
 $app = new \Choredo\App($container);
 
