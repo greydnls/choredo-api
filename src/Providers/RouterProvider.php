@@ -7,6 +7,7 @@ use Choredo\Actions;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Route\RouteCollection;
 use League\Route\RouteGroup;
+use Zend\Diactoros\Response\TextResponse;
 
 class RouterProvider extends AbstractServiceProvider
 {
@@ -26,11 +27,13 @@ class RouterProvider extends AbstractServiceProvider
             function (): RouteCollection {
                 $router = new RouteCollection($this->getContainer());
 
-//                $router->get('/', function () {
-//                    return new TextResponse("It's Working");
-//                });
+                $router->get('/', function () {
+                    return new TextResponse("It's Working");
+                });
 
-                $router->get('/families/{id:uuid}', [Actions\Family\GetFamily::class, '__invoke']);
+                $router->group('families/{familyId:uuid}', function (RouteGroup $routeGroup) {
+                    $routeGroup->get('/', [Actions\Family\GetFamily::class, '__invoke']);
+                });
 
                 return $router;
             }
