@@ -22,10 +22,10 @@ class RouterProvider extends AbstractServiceProvider
      */
     public function register()
     {
-        $this->getContainer()->share(
+        $this->container->share(
             RouteCollection::class,
             function (): RouteCollection {
-                $router = new RouteCollection($this->getContainer());
+                $router = new RouteCollection($this->container);
 
                 $router->get('/', function () {
                     return new TextResponse("It's Working");

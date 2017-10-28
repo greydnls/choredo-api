@@ -19,6 +19,6 @@ class FractalProvider extends AbstractServiceProvider
     {
         $manager = new Manager();
         $manager->setSerializer(new JsonApiSerializer("https://" . $_SERVER['SERVER_NAME']));
-        $this->getContainer()->share(Manager::class, $manager);
+        $this->container->share(Manager::class, $manager);
     }
 }

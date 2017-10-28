@@ -20,6 +20,6 @@ class ActionProvider extends AbstractServiceProvider
      */
     public function register()
     {
-        $this->getContainer()->share(Actions\Family\GetFamily::class);
+        $this->container->share(Actions\Family\GetFamily::class);
     }
 }
