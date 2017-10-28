@@ -119,7 +119,7 @@ class Family
     /**
      * @return int|null
      */
-    public function getCompletionThreshold()
+    public function getCompletionThreshold(): ?int
     {
         return $this->completionThreshold;
     }
