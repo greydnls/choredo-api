@@ -16,46 +16,42 @@ use Ramsey\Uuid\Doctrine\UuidType;
 class EntityManagerProvider extends AbstractServiceProvider
 {
     protected $provides = [
-        ORM\EntityManager::class
+        ORM\EntityManagerInterface::class
     ];
 
     public function register()
     {
-        $this->container->share(
-            ORM\EntityManager::class,
-            function () {
-                $environment = getenv('ENV') ?? 'production';
-                $isProduction = $environment === 'production';
+        $environment = getenv('ENV') ?? 'production';
+        $isProduction = $environment === 'production';
 
-            $entityDirectory = realpath(__DIR__ . '/../Entities');
-            $proxyDirectory = realpath(__DIR__ . '/../proxies/');
+        $entityDirectory = realpath(__DIR__ . '/../Entities');
+        $proxyDirectory = realpath(__DIR__ . '/../proxies/');
 
-            Type::addType('uuid', UuidType::class);
-            $cache = new Common\Cache\ArrayCache();
+        Type::addType('uuid', UuidType::class);
+        $cache = new Common\Cache\ArrayCache();
 
-            $config = new ORM\Configuration();
-            $annotationDriver = $config->newDefaultAnnotationDriver($entityDirectory, false);
-            $config->setMetadataDriverImpl($annotationDriver);
-            $config->setQueryCacheImpl($cache);
-            $config->setMetadataCacheImpl($cache);
-            $config->setProxyDir($proxyDirectory);
-            $config->setProxyNamespace('Choredo\Proxies');
+        $config = new ORM\Configuration();
+        $annotationDriver = $config->newDefaultAnnotationDriver($entityDirectory, false);
+        $config->setMetadataDriverImpl($annotationDriver);
+        $config->setQueryCacheImpl($cache);
+        $config->setMetadataCacheImpl($cache);
+        $config->setProxyDir($proxyDirectory);
+        $config->setProxyNamespace('Choredo\Proxies');
 
-            if ($isProduction) {
-                $config->setAutoGenerateProxyClasses(Common\Proxy\AbstractProxyFactory::AUTOGENERATE_NEVER);
-            } else {
-                $config->setAutoGenerateProxyClasses(Common\Proxy\AbstractProxyFactory::AUTOGENERATE_ALWAYS);
-            }
+        if ($isProduction) {
+            $config->setAutoGenerateProxyClasses(Common\Proxy\AbstractProxyFactory::AUTOGENERATE_NEVER);
+        } else {
+            $config->setAutoGenerateProxyClasses(Common\Proxy\AbstractProxyFactory::AUTOGENERATE_ALWAYS);
+        }
 
-            $dbParams = [
-                'driver'   => 'pdo_pgsql',
-                'user'     => getenv('DB_USER'),
-                'password' => getenv('DB_PASSWORD'),
-                'host'     => getenv('DB_HOST'),
-                'dbname'   => getenv('DB_DATABASE'),
-            ];
+        $dbParams = [
+            'driver'   => 'pdo_pgsql',
+            'user'     => getenv('DB_USER'),
+            'password' => getenv('DB_PASSWORD'),
+            'host'     => getenv('DB_HOST') ?? 'db',
+            'dbname'   => getenv('DB_DATABASE') ?? 'choredo',
+        ];
 
-            return ORM\EntityManager::create($dbParams, $config);
-        });
+        $this->container->share(ORM\EntityManagerInterface::class, ORM\EntityManager::create($dbParams, $config));
     }
 }

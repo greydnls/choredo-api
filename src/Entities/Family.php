@@ -23,6 +23,8 @@ class Family
 
     const PAYMENT_STRATEGY_PER_CHORE = 'per_chore';
     const PAYMENT_STRATEGY_PER_CHILD = 'per_child';
+    const MIN_COMPLETION_THRESHOLD = 0;
+    const MAX_COMPLETION_THRESHOLD = 100;
 
     /**
      * @var string
