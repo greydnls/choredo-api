@@ -26,10 +26,12 @@ final class Container extends \League\Container\Container
             }
         );
 
+        $this->addServiceProvider(new Providers\FractalProvider());
         $this->addServiceProvider(new Providers\RouterProvider());
         $this->addServiceProvider(new Providers\EntityManagerProvider());
         $this->addServiceProvider(new Providers\LoggerProvider());
 
-        $this->inflector(FractalAwareInterface::class)->invokeMethod('setManager', [Manager::class]);
+        $this->inflector(FractalAwareInterface::class)
+            ->invokeMethod('setManager', [$this->get(Manager::class)]);
     }
 }
