@@ -1,7 +1,9 @@
 <?php
 
+namespace Choredo\Test\Transformers;
+
 use Choredo\Entities;
-use Choredo\Entities\Transformers;
+use Choredo\Transformers;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 
@@ -23,7 +25,7 @@ class FamilyTest extends TestCase
         $transformer = new Transformers\Family();
         $resource = $transformer->transform($family);
 
-        $this->assertSame($weekStartDayText, $resource['weekStartDay']);
+        $this->assertSame($weekStartDayText, $resource['attributes']['weekStartDay']);
     }
 
     public function weekStartDayProvider(): array
