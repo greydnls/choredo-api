@@ -14,7 +14,8 @@
         "monolog/monolog": "^1.23",
         "ramsey/uuid": "^3.7",
         "ramsey/uuid-doctrine": "^1.4",
-        "vlucas/phpdotenv": "~2.2"
+        "vlucas/phpdotenv": "~2.2",
+        "league/fractal": "^0.17.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
