@@ -3,6 +3,8 @@
 
 namespace Choredo;
 
+use Choredo\Output\FractalAwareInterface;
+use League\Fractal\Manager;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response;
@@ -27,5 +29,7 @@ final class Container extends \League\Container\Container
         $this->addServiceProvider(new Providers\RouterProvider());
         $this->addServiceProvider(new Providers\EntityManagerProvider());
         $this->addServiceProvider(new Providers\LoggerProvider());
+
+        $this->inflector(FractalAwareInterface::class)->invokeMethod('setManager', [Manager::class]);
     }
 }

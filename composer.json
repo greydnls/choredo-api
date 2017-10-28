@@ -9,6 +9,7 @@
         "doctrine/migrations": "^1.5",
         "doctrine/orm": "^2.5",
         "league/container": "^2.4",
+        "league/fractal": "^0.17.0",
         "league/route": "^3.0",
         "monolog/monolog": "^1.23",
         "ramsey/uuid": "^3.7",
