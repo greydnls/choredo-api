@@ -39,10 +39,21 @@ class Family
                 ->choice(DAYS_OF_WEEK)
             ->that($data['completionThreshold'], 'Family::completionThreshold')
                 ->nullOr()
-                ->tryAll()
-                    ->integer()
-                    ->min(Entities\Family::MIN_COMPLETION_THRESHOLD)
-                    ->max(Entities\Family::MAX_COMPLETION_THRESHOLD)
+                ->between(
+                    Entities\Family::MIN_COMPLETION_THRESHOLD,
+                    Entities\Family::MAX_COMPLETION_THRESHOLD
+                )
             ->verifyNow();
+
+        if ($data['paymentStrategy'] === Entities\Family::PAYMENT_STRATEGY_PER_CHORE) {
+            Assert::lazy()
+                ->that($data['completionThreshold'], 'Family::completionThreshold')
+                ->notEmpty()
+                ->between(
+                    Entities\Family::MIN_COMPLETION_THRESHOLD,
+                    Entities\Family::MAX_COMPLETION_THRESHOLD
+                )
+                ->verifyNow();
+        }
     }
 }
