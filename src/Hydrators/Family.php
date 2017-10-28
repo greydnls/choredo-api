@@ -45,5 +45,4 @@ class Family
                     ->max(Entities\Family::MAX_COMPLETION_THRESHOLD)
             ->verifyNow();
     }
-
 }

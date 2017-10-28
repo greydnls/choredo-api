@@ -4,9 +4,9 @@ namespace Choredo\Actions\Chore;
 
 use Choredo\Output\CreatesFractalScope;
 use Choredo\Output\FractalAwareInterface;
+use Choredo\Transformer\ChoreTransformer;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Choredo\Transformer\ChoreTransformer;
 use Zend\Diactoros\Response\JsonResponse;
 
 class ListChores implements FractalAwareInterface
