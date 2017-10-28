@@ -10,7 +10,7 @@ class ActionProvider extends AbstractServiceProvider
 
     protected $provides = [
         Actions\Family\GetFamily::class, 
-        Actions\Chore\ListChores
+        Actions\Chore\ListChores::class
     ];
 
     /**
