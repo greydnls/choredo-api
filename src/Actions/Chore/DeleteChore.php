@@ -1,13 +1,13 @@
 <?php
 
 
-namespace Choredo\Http\Chores;
+namespace Choredo\Actions\Chore;
 
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class FindChore
+class DeleteChore
 {
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $vars) : ResponseInterface
     {

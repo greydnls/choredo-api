@@ -10,6 +10,7 @@ use Ramsey\Uuid\Doctrine\UuidType;
 
 /**
  * Class EntityManagerProvider
+ *
  * @package Choredo\Providers
  */
 class EntityManagerProvider extends AbstractServiceProvider
@@ -20,9 +21,11 @@ class EntityManagerProvider extends AbstractServiceProvider
 
     public function register()
     {
-        $this->container->share(ORM\EntityManager::class, function () {
-            $environment = getenv('ENV') ?? 'production';
-            $isProduction = $environment === 'production';
+        $this->container->share(
+            ORM\EntityManager::class,
+            function () {
+                $environment = getenv('ENV') ?? 'production';
+                $isProduction = $environment === 'production';
 
             $entityDirectory = realpath(__DIR__ . '/../Entities');
             $proxyDirectory = realpath(__DIR__ . '/../proxies/');

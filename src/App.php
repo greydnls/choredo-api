@@ -5,7 +5,6 @@ namespace Choredo;
 use Assert\AssertionFailedException;
 use Choredo\Response\BadRequestResponse;
 use Choredo\Response\ServerErrorResponse;
-use League\Container\Container;
 use League\Container\ContainerAwareTrait;
 use League\Container\ContainerAwareInterface;
 use League\Route\RouteCollection;
