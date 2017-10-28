@@ -19,6 +19,7 @@ class Chore
     use Behaviors\HasUuid;
     use Behaviors\HasCreatedDate;
     use Behaviors\HasUpdatedDate;
+    use Behaviors\BelongsToFamily;
 
     /**
      * @var string
@@ -46,16 +47,6 @@ class Chore
      * )
      */
     private $value = null;
-
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Choredo\Entities\Family")
-     * @ORM\JoinColumn(name="family_id", referencedColumnName="id", nullable=false)
-     *
-     * @var Family
-     */
-    private $family;
-
 
     public function __construct(
         Family $family,
@@ -92,13 +83,5 @@ class Chore
     public function getValue()
     {
         return $this->value;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getFamily()
-    {
-        return $this->family;
     }
 }
