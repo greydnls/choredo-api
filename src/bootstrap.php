@@ -1,5 +1,8 @@
 <?php
 
+use Zend\Diactoros\Response;
+use Choredo\Providers;
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 try {

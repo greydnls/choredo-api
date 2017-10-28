@@ -5,19 +5,17 @@ namespace Choredo;
 use Assert\AssertionFailedException;
 use Choredo\Response\BadRequestResponse;
 use Choredo\Response\ServerErrorResponse;
-use League\Container\ContainerInterface;
-use League\Container\ServiceProvider\ServiceProviderInterface;
+use League\Container\ContainerAwareTrait;
+use League\Container\ContainerAwareInterface;
 use League\Route\RouteCollection;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Response\SapiEmitter;
 
-class App
+class App implements ContainerAwareInterface
 {
-    /**
-     * @var Container
-     */
-    private $container;
+    use ContainerAwareTrait;
 
     public function __construct(ContainerInterface $container = null)
     {
@@ -39,10 +37,5 @@ class App
         }
 
         $this->container->get(SapiEmitter::class)->emit($response);
-    }
-
-    public function register(ServiceProviderInterface $serviceProvider)
-    {
-        $this->container->addServiceProvider($serviceProvider);
     }
 }
