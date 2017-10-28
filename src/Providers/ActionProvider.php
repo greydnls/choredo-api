@@ -2,8 +2,6 @@
 
 namespace Choredo\Providers;
 
-
-use Choredo\Actions;
 use Choredo\Actions;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
