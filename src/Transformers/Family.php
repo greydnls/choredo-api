@@ -5,11 +5,10 @@ namespace Choredo\Transformers;
 use Assert\Assertion;
 use Choredo\Entities;
 use League\Fractal\TransformerAbstract;
+use const Choredo\DAYS_OF_WEEK;
 
 class Family extends TransformerAbstract
 {
-    const DAYS_OF_WEEK = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-
     public function transform(Entities\Family $family)
     {
         return [
@@ -29,8 +28,8 @@ class Family extends TransformerAbstract
 
     private function transformWeekStartDay(int $weekStartDay): string
     {
-        Assertion::between($weekStartDay, 0, count(static::DAYS_OF_WEEK) - 1);
+        Assertion::between($weekStartDay, 0, count(DAYS_OF_WEEK) - 1);
 
-        return static::DAYS_OF_WEEK[$weekStartDay];
+        return DAYS_OF_WEEK[$weekStartDay];
     }
 }
