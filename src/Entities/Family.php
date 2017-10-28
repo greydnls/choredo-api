@@ -5,6 +5,7 @@ namespace Choredo\Entities;
 use Assert\Assertion;
 use Choredo\Entities\Behaviors;
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\UuidInterface;
 
 /**
  * Class Family
@@ -53,17 +54,20 @@ class Family
 
     /**
      * Family constructor.
+     * @param UuidInterface $id
      * @param string $name
      * @param string $paymentStrategy
-     * @param int $completionThreshold
      * @param int $weekStartDay
+     * @param int $completionThreshold
      */
     public function __construct(
+        UuidInterface $id,
         string $name,
         string $paymentStrategy,
         int $weekStartDay,
         int $completionThreshold = null
     ) {
+        $this->id = $id;
         $this->name = $name;
         $this->weekStartDay = $weekStartDay;
         $this->setPaymentStrategy($paymentStrategy, $completionThreshold);
@@ -114,9 +118,9 @@ class Family
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getCompletionThreshold(): int
+    public function getCompletionThreshold(): ?int
     {
         return $this->completionThreshold;
     }

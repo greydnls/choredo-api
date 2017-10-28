@@ -1,18 +1,19 @@
 <?php
 
-
 namespace Choredo\Providers;
 
 
-use Choredo\Actions\Chore\ListChores;
+use Choredo\Actions;
+use Choredo\Actions;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
 class ActionProvider extends AbstractServiceProvider
 {
-    protected $provides =
-        [
-          ListChores::class
-        ];
+
+    protected $provides = [
+        Actions\Family\GetFamily::class, 
+        Actions\Chore\ListChores
+    ];
 
     /**
      * Use the register method to register items with the container via the
@@ -24,5 +25,6 @@ class ActionProvider extends AbstractServiceProvider
     public function register()
     {
         $this->getContainer()->share(ListChores::class);
+        $this->container->share(Actions\Family\GetFamily::class);
     }
 }

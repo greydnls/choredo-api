@@ -12,5 +12,4 @@ try {
 }
 
 $app = new \Choredo\App();
-
 return $app;

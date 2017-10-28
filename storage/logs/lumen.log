@@ -1,0 +1,158 @@
+[2017-10-23 03:51:58] lumen.ERROR: Doctrine\Common\Proxy\Exception\InvalidArgumentException: You must configure a proxy directory. See docs for details in /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/common/lib/Doctrine/Common/Proxy/Exception/InvalidArgumentException.php:39
+Stack trace:
+#0 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/common/lib/Doctrine/Common/Proxy/ProxyGenerator.php(215): Doctrine\Common\Proxy\Exception\InvalidArgumentException::proxyDirectoryRequired()
+#1 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/lib/Doctrine/ORM/Proxy/ProxyFactory.php(77): Doctrine\Common\Proxy\ProxyGenerator->__construct(false, 'HelpMeAbstract\\...')
+#2 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/lib/Doctrine/ORM/EntityManager.php(165): Doctrine\ORM\Proxy\ProxyFactory->__construct(Object(Doctrine\ORM\EntityManager), false, 'HelpMeAbstract\\...', 1)
+#3 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/lib/Doctrine/ORM/EntityManager.php(850): Doctrine\ORM\EntityManager->__construct(Object(Doctrine\DBAL\Connection), Object(Doctrine\ORM\Configuration), Object(Doctrine\Common\EventManager))
+#4 /Users/squinones/Workspace/ChoreDo/choredo-api/src/Providers/EntityManagerProvider.php(50): Doctrine\ORM\EntityManager::create(Object(Doctrine\DBAL\Connection), Object(Doctrine\ORM\Configuration))
+#5 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/laravel/lumen-framework/src/Application.php(193): Choredo\Providers\EntityManagerProvider->register()
+#6 /Users/squinones/Workspace/ChoreDo/choredo-api/src/bootstrap.php(28): Laravel\Lumen\Application->register(Object(Choredo\Providers\EntityManagerProvider))
+#7 /Users/squinones/Workspace/ChoreDo/choredo-api/config/cli-config.php(7): require_once('/Users/squinone...')
+#8 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/bin/doctrine.php(55): require('/Users/squinone...')
+#9 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/bin/doctrine(4): include('/Users/squinone...')
+#10 {main}  
+[2017-10-23 03:52:07] lumen.ERROR: Doctrine\Common\Proxy\Exception\InvalidArgumentException: You must configure a proxy directory. See docs for details in /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/common/lib/Doctrine/Common/Proxy/Exception/InvalidArgumentException.php:39
+Stack trace:
+#0 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/common/lib/Doctrine/Common/Proxy/ProxyGenerator.php(215): Doctrine\Common\Proxy\Exception\InvalidArgumentException::proxyDirectoryRequired()
+#1 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/lib/Doctrine/ORM/Proxy/ProxyFactory.php(77): Doctrine\Common\Proxy\ProxyGenerator->__construct(false, 'HelpMeAbstract\\...')
+#2 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/lib/Doctrine/ORM/EntityManager.php(165): Doctrine\ORM\Proxy\ProxyFactory->__construct(Object(Doctrine\ORM\EntityManager), false, 'HelpMeAbstract\\...', 1)
+#3 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/lib/Doctrine/ORM/EntityManager.php(850): Doctrine\ORM\EntityManager->__construct(Object(Doctrine\DBAL\Connection), Object(Doctrine\ORM\Configuration), Object(Doctrine\Common\EventManager))
+#4 /Users/squinones/Workspace/ChoreDo/choredo-api/src/Providers/EntityManagerProvider.php(50): Doctrine\ORM\EntityManager::create(Object(Doctrine\DBAL\Connection), Object(Doctrine\ORM\Configuration))
+#5 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/laravel/lumen-framework/src/Application.php(193): Choredo\Providers\EntityManagerProvider->register()
+#6 /Users/squinones/Workspace/ChoreDo/choredo-api/src/bootstrap.php(28): Laravel\Lumen\Application->register(Object(Choredo\Providers\EntityManagerProvider))
+#7 /Users/squinones/Workspace/ChoreDo/choredo-api/config/cli-config.php(7): require_once('/Users/squinone...')
+#8 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/bin/doctrine.php(55): require('/Users/squinone...')
+#9 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/bin/doctrine(4): include('/Users/squinone...')
+#10 {main}  
+[2017-10-23 03:52:14] lumen.ERROR: Doctrine\Common\Proxy\Exception\InvalidArgumentException: You must configure a proxy directory. See docs for details in /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/common/lib/Doctrine/Common/Proxy/Exception/InvalidArgumentException.php:39
+Stack trace:
+#0 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/common/lib/Doctrine/Common/Proxy/ProxyGenerator.php(215): Doctrine\Common\Proxy\Exception\InvalidArgumentException::proxyDirectoryRequired()
+#1 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/lib/Doctrine/ORM/Proxy/ProxyFactory.php(77): Doctrine\Common\Proxy\ProxyGenerator->__construct(false, 'HelpMeAbstract\\...')
+#2 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/lib/Doctrine/ORM/EntityManager.php(165): Doctrine\ORM\Proxy\ProxyFactory->__construct(Object(Doctrine\ORM\EntityManager), false, 'HelpMeAbstract\\...', 1)
+#3 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/lib/Doctrine/ORM/EntityManager.php(850): Doctrine\ORM\EntityManager->__construct(Object(Doctrine\DBAL\Connection), Object(Doctrine\ORM\Configuration), Object(Doctrine\Common\EventManager))
+#4 /Users/squinones/Workspace/ChoreDo/choredo-api/src/Providers/EntityManagerProvider.php(50): Doctrine\ORM\EntityManager::create(Object(Doctrine\DBAL\Connection), Object(Doctrine\ORM\Configuration))
+#5 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/laravel/lumen-framework/src/Application.php(193): Choredo\Providers\EntityManagerProvider->register()
+#6 /Users/squinones/Workspace/ChoreDo/choredo-api/src/bootstrap.php(28): Laravel\Lumen\Application->register(Object(Choredo\Providers\EntityManagerProvider))
+#7 /Users/squinones/Workspace/ChoreDo/choredo-api/config/cli-config.php(7): require_once('/Users/squinone...')
+#8 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/bin/doctrine.php(55): require('/Users/squinone...')
+#9 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/bin/doctrine(4): include('/Users/squinone...')
+#10 {main}  
+[2017-10-23 03:55:39] lumen.ERROR: Doctrine\Common\Proxy\Exception\InvalidArgumentException: You must configure a proxy directory. See docs for details in /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/common/lib/Doctrine/Common/Proxy/Exception/InvalidArgumentException.php:39
+Stack trace:
+#0 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/common/lib/Doctrine/Common/Proxy/ProxyGenerator.php(215): Doctrine\Common\Proxy\Exception\InvalidArgumentException::proxyDirectoryRequired()
+#1 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/lib/Doctrine/ORM/Proxy/ProxyFactory.php(77): Doctrine\Common\Proxy\ProxyGenerator->__construct(false, 'HelpMeAbstract\\...')
+#2 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/lib/Doctrine/ORM/EntityManager.php(165): Doctrine\ORM\Proxy\ProxyFactory->__construct(Object(Doctrine\ORM\EntityManager), false, 'HelpMeAbstract\\...', 1)
+#3 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/lib/Doctrine/ORM/EntityManager.php(850): Doctrine\ORM\EntityManager->__construct(Object(Doctrine\DBAL\Connection), Object(Doctrine\ORM\Configuration), Object(Doctrine\Common\EventManager))
+#4 /Users/squinones/Workspace/ChoreDo/choredo-api/src/Providers/EntityManagerProvider.php(50): Doctrine\ORM\EntityManager::create(Object(Doctrine\DBAL\Connection), Object(Doctrine\ORM\Configuration))
+#5 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/laravel/lumen-framework/src/Application.php(193): Choredo\Providers\EntityManagerProvider->register()
+#6 /Users/squinones/Workspace/ChoreDo/choredo-api/src/bootstrap.php(28): Laravel\Lumen\Application->register(Object(Choredo\Providers\EntityManagerProvider))
+#7 /Users/squinones/Workspace/ChoreDo/choredo-api/config/cli-config.php(7): require_once('/Users/squinone...')
+#8 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/bin/doctrine.php(55): require('/Users/squinone...')
+#9 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/bin/doctrine(4): include('/Users/squinone...')
+#10 {main}  
+[2017-10-23 03:56:12] lumen.ERROR: Doctrine\Common\Proxy\Exception\InvalidArgumentException: You must configure a proxy directory. See docs for details in /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/common/lib/Doctrine/Common/Proxy/Exception/InvalidArgumentException.php:39
+Stack trace:
+#0 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/common/lib/Doctrine/Common/Proxy/ProxyGenerator.php(215): Doctrine\Common\Proxy\Exception\InvalidArgumentException::proxyDirectoryRequired()
+#1 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/lib/Doctrine/ORM/Proxy/ProxyFactory.php(77): Doctrine\Common\Proxy\ProxyGenerator->__construct(NULL, 'HelpMeAbstract\\...')
+#2 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/lib/Doctrine/ORM/EntityManager.php(165): Doctrine\ORM\Proxy\ProxyFactory->__construct(Object(Doctrine\ORM\EntityManager), NULL, 'HelpMeAbstract\\...', 1)
+#3 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/lib/Doctrine/ORM/EntityManager.php(850): Doctrine\ORM\EntityManager->__construct(Object(Doctrine\DBAL\Connection), Object(Doctrine\ORM\Configuration), Object(Doctrine\Common\EventManager))
+#4 /Users/squinones/Workspace/ChoreDo/choredo-api/src/Providers/EntityManagerProvider.php(50): Doctrine\ORM\EntityManager::create(Object(Doctrine\DBAL\Connection), Object(Doctrine\ORM\Configuration))
+#5 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/laravel/lumen-framework/src/Application.php(193): Choredo\Providers\EntityManagerProvider->register()
+#6 /Users/squinones/Workspace/ChoreDo/choredo-api/src/bootstrap.php(28): Laravel\Lumen\Application->register(Object(Choredo\Providers\EntityManagerProvider))
+#7 /Users/squinones/Workspace/ChoreDo/choredo-api/config/cli-config.php(7): require_once('/Users/squinone...')
+#8 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/bin/doctrine.php(55): require('/Users/squinone...')
+#9 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/bin/doctrine(4): include('/Users/squinone...')
+#10 {main}  
+[2017-10-23 04:04:54] lumen.ERROR: Symfony\Component\Debug\Exception\FatalThrowableError: Class 'LaravelDoctrine\ORM\DoctrineServiceProvider' not found in /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/laravel/lumen-framework/src/Application.php:183
+Stack trace:
+#0 /Users/squinones/Workspace/ChoreDo/choredo-api/src/bootstrap.php(27): Laravel\Lumen\Application->register('LaravelDoctrine...')
+#1 /Users/squinones/Workspace/ChoreDo/choredo-api/config/cli-config.php(7): require_once('/Users/squinone...')
+#2 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/bin/doctrine.php(55): require('/Users/squinone...')
+#3 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/bin/doctrine(4): include('/Users/squinone...')
+#4 {main}  
+[2017-10-23 04:05:34] lumen.ERROR: Doctrine\Common\Proxy\Exception\InvalidArgumentException: You must configure a proxy directory. See docs for details in /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/common/lib/Doctrine/Common/Proxy/Exception/InvalidArgumentException.php:39
+Stack trace:
+#0 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/common/lib/Doctrine/Common/Proxy/ProxyGenerator.php(215): Doctrine\Common\Proxy\Exception\InvalidArgumentException::proxyDirectoryRequired()
+#1 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/lib/Doctrine/ORM/Proxy/ProxyFactory.php(77): Doctrine\Common\Proxy\ProxyGenerator->__construct(false, 'HelpMeAbstract\\...')
+#2 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/lib/Doctrine/ORM/EntityManager.php(165): Doctrine\ORM\Proxy\ProxyFactory->__construct(Object(Doctrine\ORM\EntityManager), false, 'HelpMeAbstract\\...', 1)
+#3 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/lib/Doctrine/ORM/EntityManager.php(850): Doctrine\ORM\EntityManager->__construct(Object(Doctrine\DBAL\Connection), Object(Doctrine\ORM\Configuration), Object(Doctrine\Common\EventManager))
+#4 /Users/squinones/Workspace/ChoreDo/choredo-api/src/Providers/EntityManagerProvider.php(50): Doctrine\ORM\EntityManager::create(Object(Doctrine\DBAL\Connection), Object(Doctrine\ORM\Configuration))
+#5 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/laravel/lumen-framework/src/Application.php(193): Choredo\Providers\EntityManagerProvider->register()
+#6 /Users/squinones/Workspace/ChoreDo/choredo-api/src/bootstrap.php(27): Laravel\Lumen\Application->register(Object(Choredo\Providers\EntityManagerProvider))
+#7 /Users/squinones/Workspace/ChoreDo/choredo-api/config/cli-config.php(7): require_once('/Users/squinone...')
+#8 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/bin/doctrine.php(55): require('/Users/squinone...')
+#9 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/bin/doctrine(4): include('/Users/squinone...')
+#10 {main}  
+[2017-10-23 04:05:42] lumen.ERROR: Doctrine\Common\Proxy\Exception\InvalidArgumentException: You must configure a proxy directory. See docs for details in /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/common/lib/Doctrine/Common/Proxy/Exception/InvalidArgumentException.php:39
+Stack trace:
+#0 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/common/lib/Doctrine/Common/Proxy/ProxyGenerator.php(215): Doctrine\Common\Proxy\Exception\InvalidArgumentException::proxyDirectoryRequired()
+#1 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/lib/Doctrine/ORM/Proxy/ProxyFactory.php(77): Doctrine\Common\Proxy\ProxyGenerator->__construct(false, 'HelpMeAbstract\\...')
+#2 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/lib/Doctrine/ORM/EntityManager.php(165): Doctrine\ORM\Proxy\ProxyFactory->__construct(Object(Doctrine\ORM\EntityManager), false, 'HelpMeAbstract\\...', 1)
+#3 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/lib/Doctrine/ORM/EntityManager.php(850): Doctrine\ORM\EntityManager->__construct(Object(Doctrine\DBAL\Connection), Object(Doctrine\ORM\Configuration), Object(Doctrine\Common\EventManager))
+#4 /Users/squinones/Workspace/ChoreDo/choredo-api/src/Providers/EntityManagerProvider.php(50): Doctrine\ORM\EntityManager::create(Object(Doctrine\DBAL\Connection), Object(Doctrine\ORM\Configuration))
+#5 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/laravel/lumen-framework/src/Application.php(193): Choredo\Providers\EntityManagerProvider->register()
+#6 /Users/squinones/Workspace/ChoreDo/choredo-api/src/bootstrap.php(27): Laravel\Lumen\Application->register(Object(Choredo\Providers\EntityManagerProvider))
+#7 /Users/squinones/Workspace/ChoreDo/choredo-api/config/cli-config.php(7): require_once('/Users/squinone...')
+#8 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/bin/doctrine.php(55): require('/Users/squinone...')
+#9 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/bin/doctrine(4): include('/Users/squinone...')
+#10 {main}  
+[2017-10-23 04:10:20] lumen.ERROR: Doctrine\Common\Proxy\Exception\InvalidArgumentException: You must configure a proxy directory. See docs for details in /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/common/lib/Doctrine/Common/Proxy/Exception/InvalidArgumentException.php:39
+Stack trace:
+#0 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/common/lib/Doctrine/Common/Proxy/ProxyGenerator.php(215): Doctrine\Common\Proxy\Exception\InvalidArgumentException::proxyDirectoryRequired()
+#1 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/lib/Doctrine/ORM/Proxy/ProxyFactory.php(77): Doctrine\Common\Proxy\ProxyGenerator->__construct(false, 'HelpMeAbstract\\...')
+#2 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/lib/Doctrine/ORM/EntityManager.php(165): Doctrine\ORM\Proxy\ProxyFactory->__construct(Object(Doctrine\ORM\EntityManager), false, 'HelpMeAbstract\\...', 1)
+#3 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/lib/Doctrine/ORM/EntityManager.php(850): Doctrine\ORM\EntityManager->__construct(Object(Doctrine\DBAL\Connection), Object(Doctrine\ORM\Configuration), Object(Doctrine\Common\EventManager))
+#4 /Users/squinones/Workspace/ChoreDo/choredo-api/src/Providers/EntityManagerProvider.php(50): Doctrine\ORM\EntityManager::create(Object(Doctrine\DBAL\Connection), Object(Doctrine\ORM\Configuration))
+#5 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/laravel/lumen-framework/src/Application.php(193): Choredo\Providers\EntityManagerProvider->register()
+#6 /Users/squinones/Workspace/ChoreDo/choredo-api/src/bootstrap.php(27): Laravel\Lumen\Application->register(Object(Choredo\Providers\EntityManagerProvider))
+#7 /Users/squinones/Workspace/ChoreDo/choredo-api/cli-config.php(9): require_once('/Users/squinone...')
+#8 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/bin/doctrine.php(55): require('/Users/squinone...')
+#9 /Users/squinones/Workspace/ChoreDo/choredo-api/vendor/doctrine/orm/bin/doctrine(4): include('/Users/squinone...')
+#10 {main}  
+[2017-10-23 04:33:32] lumen.ERROR: Symfony\Component\Debug\Exception\FatalThrowableError: Type error: Argument 1 passed to Doctrine\ORM\Tools\Console\ConsoleRunner::run() must be an instance of Symfony\Component\Console\Helper\HelperSet, integer given, called in /var/www/vendor/doctrine/orm/bin/doctrine.php on line 66 in /var/www/vendor/doctrine/orm/lib/Doctrine/ORM/Tools/Console/ConsoleRunner.php:57
+Stack trace:
+#0 /var/www/vendor/doctrine/orm/bin/doctrine.php(66): Doctrine\ORM\Tools\Console\ConsoleRunner::run(1, Array)
+#1 /var/www/vendor/doctrine/orm/bin/doctrine(4): include('/var/www/vendor...')
+#2 {main}  
+[2017-10-23 18:37:11] lumen.ERROR: Symfony\Component\Debug\Exception\FatalThrowableError: Type error: Argument 1 passed to Choredo\Http\Controllers\Family::show() must be an instance of Ramsey\Uuid\UuidInterface, string given in /var/www/src/Http/Controllers/Family.php:26
+Stack trace:
+#0 [internal function]: Choredo\Http\Controllers\Family->show('foo')
+#1 /var/www/vendor/illuminate/container/BoundMethod.php(29): call_user_func_array(Array, Array)
+#2 /var/www/vendor/illuminate/container/BoundMethod.php(87): Illuminate\Container\BoundMethod::Illuminate\Container\{closure}()
+#3 /var/www/vendor/illuminate/container/BoundMethod.php(31): Illuminate\Container\BoundMethod::callBoundMethod(Object(Laravel\Lumen\Application), Array, Object(Closure))
+#4 /var/www/vendor/illuminate/container/Container.php(549): Illuminate\Container\BoundMethod::call(Object(Laravel\Lumen\Application), Array, Array, NULL)
+#5 /var/www/vendor/laravel/lumen-framework/src/Concerns/RoutesRequests.php(373): Illuminate\Container\Container->call(Array, Array)
+#6 /var/www/vendor/laravel/lumen-framework/src/Concerns/RoutesRequests.php(339): Laravel\Lumen\Application->callControllerCallable(Array, Array)
+#7 /var/www/vendor/laravel/lumen-framework/src/Concerns/RoutesRequests.php(313): Laravel\Lumen\Application->callLumenController(Object(Choredo\Http\Controllers\Family), 'show', Array)
+#8 /var/www/vendor/laravel/lumen-framework/src/Concerns/RoutesRequests.php(275): Laravel\Lumen\Application->callControllerAction(Array)
+#9 /var/www/vendor/laravel/lumen-framework/src/Concerns/RoutesRequests.php(260): Laravel\Lumen\Application->callActionOnArrayBasedRoute(Array)
+#10 /var/www/vendor/laravel/lumen-framework/src/Concerns/RoutesRequests.php(230): Laravel\Lumen\Application->handleFoundRoute(Array)
+#11 /var/www/vendor/laravel/lumen-framework/src/Concerns/RoutesRequests.php(164): Laravel\Lumen\Application->handleDispatcherResponse(Array)
+#12 /var/www/vendor/laravel/lumen-framework/src/Concerns/RoutesRequests.php(413): Laravel\Lumen\Application->Laravel\Lumen\Concerns\{closure}()
+#13 /var/www/vendor/laravel/lumen-framework/src/Concerns/RoutesRequests.php(166): Laravel\Lumen\Application->sendThroughPipeline(Array, Object(Closure))
+#14 /var/www/vendor/laravel/lumen-framework/src/Concerns/RoutesRequests.php(107): Laravel\Lumen\Application->dispatch(NULL)
+#15 /var/www/html/index.php(5): Laravel\Lumen\Application->run()
+#16 {main}  
+[2017-10-23 18:37:58] lumen.ERROR: Ramsey\Uuid\Exception\InvalidUuidStringException: Invalid UUID string: foo in /var/www/vendor/ramsey/uuid/src/Codec/StringCodec.php:143
+Stack trace:
+#0 /var/www/vendor/ramsey/uuid/src/Codec/StringCodec.php(80): Ramsey\Uuid\Codec\StringCodec->extractComponents('foo')
+#1 /var/www/vendor/ramsey/uuid/src/UuidFactory.php(191): Ramsey\Uuid\Codec\StringCodec->decode('foo')
+#2 /var/www/vendor/ramsey/uuid/src/Uuid.php(629): Ramsey\Uuid\UuidFactory->fromString('foo')
+#3 /var/www/src/Http/Controllers/Family.php(29): Ramsey\Uuid\Uuid::fromString('foo')
+#4 [internal function]: Choredo\Http\Controllers\Family->show('foo')
+#5 /var/www/vendor/illuminate/container/BoundMethod.php(29): call_user_func_array(Array, Array)
+#6 /var/www/vendor/illuminate/container/BoundMethod.php(87): Illuminate\Container\BoundMethod::Illuminate\Container\{closure}()
+#7 /var/www/vendor/illuminate/container/BoundMethod.php(31): Illuminate\Container\BoundMethod::callBoundMethod(Object(Laravel\Lumen\Application), Array, Object(Closure))
+#8 /var/www/vendor/illuminate/container/Container.php(549): Illuminate\Container\BoundMethod::call(Object(Laravel\Lumen\Application), Array, Array, NULL)
+#9 /var/www/vendor/laravel/lumen-framework/src/Concerns/RoutesRequests.php(373): Illuminate\Container\Container->call(Array, Array)
+#10 /var/www/vendor/laravel/lumen-framework/src/Concerns/RoutesRequests.php(339): Laravel\Lumen\Application->callControllerCallable(Array, Array)
+#11 /var/www/vendor/laravel/lumen-framework/src/Concerns/RoutesRequests.php(313): Laravel\Lumen\Application->callLumenController(Object(Choredo\Http\Controllers\Family), 'show', Array)
+#12 /var/www/vendor/laravel/lumen-framework/src/Concerns/RoutesRequests.php(275): Laravel\Lumen\Application->callControllerAction(Array)
+#13 /var/www/vendor/laravel/lumen-framework/src/Concerns/RoutesRequests.php(260): Laravel\Lumen\Application->callActionOnArrayBasedRoute(Array)
+#14 /var/www/vendor/laravel/lumen-framework/src/Concerns/RoutesRequests.php(230): Laravel\Lumen\Application->handleFoundRoute(Array)
+#15 /var/www/vendor/laravel/lumen-framework/src/Concerns/RoutesRequests.php(164): Laravel\Lumen\Application->handleDispatcherResponse(Array)
+#16 /var/www/vendor/laravel/lumen-framework/src/Concerns/RoutesRequests.php(413): Laravel\Lumen\Application->Laravel\Lumen\Concerns\{closure}()
+#17 /var/www/vendor/laravel/lumen-framework/src/Concerns/RoutesRequests.php(166): Laravel\Lumen\Application->sendThroughPipeline(Array, Object(Closure))
+#18 /var/www/vendor/laravel/lumen-framework/src/Concerns/RoutesRequests.php(107): Laravel\Lumen\Application->dispatch(NULL)
+#19 /var/www/html/index.php(5): Laravel\Lumen\Application->run()
+#20 {main}  

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: squinones
- * Date: 10/23/2017
- * Time: 2:08 PM
- */
 
 namespace Choredo\Providers;
 
@@ -15,11 +9,16 @@ use League\Fractal\Serializer\JsonApiSerializer;
 class FractalProvider extends AbstractServiceProvider
 {
     protected $provides = [ Manager::class ];
+
+    /**
+     * Use the register method to register items with the container via the
+     * protected $this->container property or the `getContainer` method
+     * from the ContainerAwareTrait.
+     */
     public function register()
     {
         $manager = new Manager();
         $manager->setSerializer(new JsonApiSerializer("https://" . $_SERVER['SERVER_NAME']));
-
-        $this->getContainer()->share(Manager::class, $manager);
+        $this->container->share(Manager::class, $manager);
     }
 }
