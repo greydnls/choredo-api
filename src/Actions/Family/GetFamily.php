@@ -23,6 +23,6 @@ class GetFamily implements FractalAwareInterface
         $id = Uuid::fromString($params['familyId']);
         $family = new Entities\Family($id, 'test family', Entities\Family::PAYMENT_STRATEGY_PER_CHILD, 0);
 
-        return new JsonResponse($this->outputItem($family, new Transformers\Family(), 'family')->toArray());
+        return new JsonResponse($this->outputItem($family, new Transformers\FamilyTransformer(), 'family')->toArray());
     }
 }

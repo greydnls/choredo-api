@@ -20,7 +20,7 @@ class FamilyTransformer extends TransformerAbstract
                 'weekStartDay'        => $this->transformWeekStartDay($family->getWeekStartDay()),
             ],
             'links'      => [
-                'self' => '/family/' . $family->getId()->toString(),
+                'self' => '/families/' . $family->getId()->toString(),
             ],
         ];
     }

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Choredo\Middleware;
-
 
 use Assert\Assert;
 use Assert\Assertion;
@@ -60,7 +58,7 @@ class JsonApiResourceParser
             ->eq($this->expectedType)
             ->verifyNow();
 
-        if ($this->idType === self::TYPE_UUID){
+        if ($this->idType === self::TYPE_UUID) {
             Assert::lazy()
                 ->that($parsedBody['id'], 'request::body::id')
                 ->uuid()
