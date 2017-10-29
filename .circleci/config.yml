@@ -39,4 +39,11 @@ jobs:
 #          command: vendor/bin/phpcs --standard=PSR2 src/
       - run:
           name: Run Unit tests
-          command: vendor/bin/phpunit
+          command: |
+            mkdir -p ~/phpunit
+            vendor/bin/phpunit --log-junit ~/phpunit/junit.xml tests
+          when: always
+      - store_test_results:
+          path: ~/phpunit
+      - store_artifacts:
+          path: ~/phpunit
