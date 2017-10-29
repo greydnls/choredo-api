@@ -11,7 +11,7 @@ use Doctrine\ORM\EntityRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class MultiTenantFamilyMiddleware
+class MultiTenantFamilyHydrator
 {
     public function __construct(EntityRepository $repository)
     {

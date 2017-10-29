@@ -5,13 +5,13 @@ namespace Choredo\Providers;
 
 
 use Choredo\Entities\Family;
-use Choredo\Middleware\MultiTenantFamilyMiddleware;
+use Choredo\Middleware\MultiTenantFamilyHydrator;
 use Doctrine\ORM\EntityManager;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
 class MiddlewareProvider extends AbstractServiceProvider
 {
-    protected $provides = [ MultiTenantFamilyMiddleware::class ];
+    protected $provides = [ MultiTenantFamilyHydrator::class ];
 
     /**
      * Use the register method to register items with the container via the
@@ -22,9 +22,9 @@ class MiddlewareProvider extends AbstractServiceProvider
      */
     public function register()
     {
-        $this->container->share(MultiTenantFamilyMiddleware::class, function(){
+        $this->container->share(MultiTenantFamilyHydrator::class, function(){
             $entityManager = $this->container->get(EntityManager::class);
-            return new MultiTenantFamilyMiddleware($entityManager->getRepository(Family::class));
+            return new MultiTenantFamilyHydrator($entityManager->getRepository(Family::class));
         });
     }
 }
