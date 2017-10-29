@@ -2,14 +2,14 @@
 
 namespace Choredo\Providers;
 
-use Choredo\Hydrators\Family;
+use Choredo\Hydrators\FamilyHydrator;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
 class HydratorProvider extends AbstractServiceProvider
 {
 
     protected $provides = [
-        Family::class
+        FamilyHydrator::class
     ];
 
     /**
@@ -21,6 +21,6 @@ class HydratorProvider extends AbstractServiceProvider
      */
     public function register()
     {
-        $this->container->share(Family::class);
+        $this->container->share(FamilyHydrator::class);
     }
 }

@@ -7,12 +7,11 @@ use Choredo\Entities;
 use League\Fractal\TransformerAbstract;
 use const Choredo\DAYS_OF_WEEK;
 
-class Family extends TransformerAbstract
+class FamilyTransformer extends TransformerAbstract
 {
     public function transform(Entities\Family $family)
     {
         return [
-            'type'       => 'family',
             'id'         => $family->getId()->toString(),
             'attributes' => [
                 'name'                => $family->getName(),

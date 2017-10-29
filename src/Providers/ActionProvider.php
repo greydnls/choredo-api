@@ -28,7 +28,7 @@ class ActionProvider extends AbstractServiceProvider
         $this->container->share(Actions\Family\GetFamily::class);
         $this->container->share(Actions\Family\CreateFamily::class, function () {
             return new Actions\Family\CreateFamily(
-                $this->container->get(Hydrators\Family::class),
+                $this->container->get(Hydrators\FamilyHydrator::class),
                 $this->container->get(EntityManagerInterface::class)
             );
         });

@@ -6,9 +6,10 @@ use Assert\LazyAssertionException;
 use Choredo\Entities;
 use Choredo\Hydrators;
 use PHPUnit\Framework\TestCase;
+use Ramsey\Uuid\UuidInterface;
 use const Choredo\SHORT_DATA_FIELD_MAX_SIZE;
 
-class FamilyTest extends TestCase
+class FamilyHydratorTest extends TestCase
 {
     protected $dataStub = [
         'name'            => 'test family',
@@ -20,11 +21,11 @@ class FamilyTest extends TestCase
     {
         $data = $this->dataStub;
 
-        $hydrator = new Hydrators\Family();
+        $hydrator = new Hydrators\FamilyHydrator();
         $family = $hydrator->hydrate($data);
 
         $this->assertInstanceOf(Entities\Family::class, $family);
-        $this->assertNotEmpty($family->getId());
+        $this->assertInstanceOf(UuidInterface::class, $family->getId());
     }
 
     /**
@@ -34,7 +35,7 @@ class FamilyTest extends TestCase
     public function testHydratorThrowsExceptionOnInvalidId()
     {
         $data = array_merge($this->dataStub, ['id' => 'this_is_not_a_uuid']);
-        $hydrator = new Hydrators\Family();
+        $hydrator = new Hydrators\FamilyHydrator();
         $hydrator->hydrate($data);
     }
 
@@ -56,14 +57,13 @@ class FamilyTest extends TestCase
 
         $this->expectException(LazyAssertionException::class);
         $this->expectExceptionMessage($exceptionMessage);
-        (new Hydrators\Family())->hydrate($data);
+        (new Hydrators\FamilyHydrator())->hydrate($data);
     }
 
     public function invalidPaymentStrategyCompletionThresholdCombinationsProvider(): array
     {
         return [
-            [null, "Family::completionThreshold: Value \"<NULL>\" is empty, but non empty value was expected."],
-            [0, "Family::completionThreshold: Value \"0\" is empty, but non empty value was expected."],
+            [null, "Family::completionThreshold: Value \"<NULL>\" is null, but non null value was expected."],
             [
                 Entities\Family::MIN_COMPLETION_THRESHOLD - 1,
                 "Family::completionThreshold: Provided \"-1\" is neither greater than or equal to \"0\" " .
@@ -88,7 +88,7 @@ class FamilyTest extends TestCase
         $data = array_merge($this->dataStub, ['name' => $name]);
         $this->expectException(LazyAssertionException::class);
         $this->expectExceptionMessage($exceptionMessage);
-        (new Hydrators\Family())->hydrate($data);
+        (new Hydrators\FamilyHydrator())->hydrate($data);
     }
 
     public function invalidNameProvider(): array
@@ -111,7 +111,7 @@ class FamilyTest extends TestCase
     public function testHydratorValidatesPaymentStrategy()
     {
         $data = array_merge($this->dataStub, ['paymentStrategy' => Entities\Family::PAYMENT_STRATEGY_PER_CHILD]);
-        $family = (new Hydrators\Family())->hydrate($data);
+        $family = (new Hydrators\FamilyHydrator())->hydrate($data);
         $this->assertEquals(Entities\Family::PAYMENT_STRATEGY_PER_CHILD, $family->getPaymentStrategy());
         $this->assertNull($family->getCompletionThreshold());
 
@@ -122,7 +122,7 @@ class FamilyTest extends TestCase
                 'completionThreshold' => 100,
             ]
         );
-        $family = (new Hydrators\Family())->hydrate($data);
+        $family = (new Hydrators\FamilyHydrator())->hydrate($data);
         $this->assertEquals(Entities\Family::PAYMENT_STRATEGY_PER_CHORE, $family->getPaymentStrategy());
         $this->assertEquals(100, $family->getCompletionThreshold());
 
@@ -132,7 +132,7 @@ class FamilyTest extends TestCase
             "Family::paymentStrategy: Value \"this is not a real strategy\" is not an element of" .
             " the valid values: per_child, per_chore"
         );
-        (new Hydrators\Family())->hydrate($data);
+        (new Hydrators\FamilyHydrator())->hydrate($data);
     }
 
     public function testHydratorThrowsExceptionOnInvalidWeekStartDay()
@@ -143,6 +143,6 @@ class FamilyTest extends TestCase
             "Family::weekStartDay: Value \"this is not a real day\" is not an element of the valid values: sunday," .
             " monday, tuesday, wednesday, thursday, friday, saturday"
         );
-        (new Hydrators\Family())->hydrate($data);
+        (new Hydrators\FamilyHydrator())->hydrate($data);
     }
 }
