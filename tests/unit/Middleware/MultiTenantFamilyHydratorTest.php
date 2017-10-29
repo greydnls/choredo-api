@@ -37,7 +37,7 @@ class MultiTenantFamilyHydratorTest extends TestCase
 
         $response = new Response();
 
-        $this->constructSubjuect()($request, $response, function(){});
+        $this->constructSubject()($request, $response, function(){});
 
     }
 
@@ -58,10 +58,10 @@ class MultiTenantFamilyHydratorTest extends TestCase
         $this->expectException(InvalidRequestException::class);
         $this->expectExceptionMessage('Invalid or non-existent family requested');
 
-        $this->constructSubjuect()($request, $response, function(){});
+        $this->constructSubject()($request, $response, function(){});
     }
 
-    public function constructSubjuect()
+    public function constructSubject()
     {
         return new MultiTenantFamilyHydrator($this->repository);
     }
