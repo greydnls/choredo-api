@@ -13,15 +13,10 @@ class FamilyTransformer extends TransformerAbstract
     {
         return [
             'id'         => $family->getId()->toString(),
-            'attributes' => [
-                'name'                => $family->getName(),
-                'paymentStrategy'     => $family->getPaymentStrategy(),
-                'completionThreshold' => $family->getCompletionThreshold(),
-                'weekStartDay'        => $this->transformWeekStartDay($family->getWeekStartDay()),
-            ],
-            'links'      => [
-                'self' => '/families/' . $family->getId()->toString(),
-            ],
+            'name'                => $family->getName(),
+            'paymentStrategy'     => $family->getPaymentStrategy(),
+            'completionThreshold' => $family->getCompletionThreshold(),
+            'weekStartDay'        => $this->transformWeekStartDay($family->getWeekStartDay()),
         ];
     }
 

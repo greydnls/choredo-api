@@ -5,6 +5,7 @@ namespace Choredo\Test\Hydrators;
 use Assert\LazyAssertionException;
 use Choredo\Entities;
 use Choredo\Hydrators;
+use Choredo\Hydrators\FamilyHydrator;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\UuidInterface;
 use const Choredo\SHORT_DATA_FIELD_MAX_SIZE;
@@ -21,7 +22,7 @@ class FamilyHydratorTest extends TestCase
     {
         $data = $this->dataStub;
 
-        $hydrator = new Hydrators\FamilyHydrator();
+        $hydrator = new FamilyHydrator();
         $family = $hydrator->hydrate($data);
 
         $this->assertInstanceOf(Entities\Family::class, $family);
@@ -35,7 +36,7 @@ class FamilyHydratorTest extends TestCase
     public function testHydratorThrowsExceptionOnInvalidId()
     {
         $data = array_merge($this->dataStub, ['id' => 'this_is_not_a_uuid']);
-        $hydrator = new Hydrators\FamilyHydrator();
+        $hydrator = new FamilyHydrator();
         $hydrator->hydrate($data);
     }
 
@@ -57,7 +58,7 @@ class FamilyHydratorTest extends TestCase
 
         $this->expectException(LazyAssertionException::class);
         $this->expectExceptionMessage($exceptionMessage);
-        (new Hydrators\FamilyHydrator())->hydrate($data);
+        (new FamilyHydrator())->hydrate($data);
     }
 
     public function invalidPaymentStrategyCompletionThresholdCombinationsProvider(): array
@@ -88,7 +89,7 @@ class FamilyHydratorTest extends TestCase
         $data = array_merge($this->dataStub, ['name' => $name]);
         $this->expectException(LazyAssertionException::class);
         $this->expectExceptionMessage($exceptionMessage);
-        (new Hydrators\FamilyHydrator())->hydrate($data);
+        (new FamilyHydrator())->hydrate($data);
     }
 
     public function invalidNameProvider(): array
@@ -111,7 +112,7 @@ class FamilyHydratorTest extends TestCase
     public function testHydratorValidatesPaymentStrategy()
     {
         $data = array_merge($this->dataStub, ['paymentStrategy' => Entities\Family::PAYMENT_STRATEGY_PER_CHILD]);
-        $family = (new Hydrators\FamilyHydrator())->hydrate($data);
+        $family = (new FamilyHydrator())->hydrate($data);
         $this->assertEquals(Entities\Family::PAYMENT_STRATEGY_PER_CHILD, $family->getPaymentStrategy());
         $this->assertNull($family->getCompletionThreshold());
 
@@ -122,7 +123,7 @@ class FamilyHydratorTest extends TestCase
                 'completionThreshold' => 100,
             ]
         );
-        $family = (new Hydrators\FamilyHydrator())->hydrate($data);
+        $family = (new FamilyHydrator())->hydrate($data);
         $this->assertEquals(Entities\Family::PAYMENT_STRATEGY_PER_CHORE, $family->getPaymentStrategy());
         $this->assertEquals(100, $family->getCompletionThreshold());
 
@@ -132,7 +133,7 @@ class FamilyHydratorTest extends TestCase
             "Family::paymentStrategy: Value \"this is not a real strategy\" is not an element of" .
             " the valid values: per_child, per_chore"
         );
-        (new Hydrators\FamilyHydrator())->hydrate($data);
+        (new FamilyHydrator())->hydrate($data);
     }
 
     public function testHydratorThrowsExceptionOnInvalidWeekStartDay()
@@ -143,6 +144,6 @@ class FamilyHydratorTest extends TestCase
             "Family::weekStartDay: Value \"this is not a real day\" is not an element of the valid values: sunday," .
             " monday, tuesday, wednesday, thursday, friday, saturday"
         );
-        (new Hydrators\FamilyHydrator())->hydrate($data);
+        (new FamilyHydrator())->hydrate($data);
     }
 }

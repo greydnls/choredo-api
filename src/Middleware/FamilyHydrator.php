@@ -40,8 +40,8 @@ class FamilyHydrator
 
     private function validateResource(JsonApiResource $resource): void
     {
-        if ($resource->getId() !g== "new") {
-            Assert::lazy()->that($resource->getId(), 'Family::id')->uuid()->verifyNow();
+        if ($resource->getId() !== "new") {
+            Assertion::uuid($resource->getId());
         }
 
         Assert::lazy()
