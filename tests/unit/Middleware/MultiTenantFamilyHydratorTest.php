@@ -3,7 +3,7 @@
 namespace Choredo\Test;
 
 use Choredo\Exception\InvalidRequestException;
-use Choredo\Middleware\MultiTenantFamilyMiddleware;
+use Choredo\Middleware\MultiTenantFamilyHydrator;
 use Doctrine\ORM\EntityRepository;
 use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
@@ -11,7 +11,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Uri;
 
-class MultiTenantFamilyMiddlewareTest extends TestCase
+class MultiTenantFamilyHydratorTest extends TestCase
 {
     /**
      * @var PHPUnit_Framework_MockObject_MockObject|EntityRepository
@@ -63,6 +63,6 @@ class MultiTenantFamilyMiddlewareTest extends TestCase
 
     public function constructSubjuect()
     {
-        return new MultiTenantFamilyMiddleware($this->repository);
+        return new MultiTenantFamilyHydrator($this->repository);
     }
 }

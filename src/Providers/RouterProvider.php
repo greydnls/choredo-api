@@ -4,7 +4,7 @@
 namespace Choredo\Providers;
 
 use Choredo\Actions;
-use Choredo\Middleware\MultiTenantFamilyMiddleware;
+use Choredo\Middleware\MultiTenantFamilyHydrator;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Route\RouteCollection;
 use League\Route\RouteGroup;
@@ -34,7 +34,7 @@ class RouterProvider extends AbstractServiceProvider
                     $routeGroup->post('/chores/',  [Actions\Chore\CreateChore::class, '__invoke']);
                     $routeGroup->put('/chores/{choreId}',  [Actions\Chore\UpdateChore::class, '__invoke']);
                     $routeGroup->delete('/chores/{choreId}',  [Actions\Chore\DeleteChore::class, '__invoke']);
-                })->middleware($this->container->get(MultiTenantFamilyMiddleware::class));
+                })->middleware($this->container->get(MultiTenantFamilyHydrator::class));
 
                 return $router;
             }
