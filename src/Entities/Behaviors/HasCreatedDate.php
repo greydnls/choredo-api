@@ -7,8 +7,7 @@ trait HasCreatedDate
     /**
      * @ORM\Column(
      *     type="datetime",
-     *     name="created",
-     *     nullable=false
+     *     name="created"
      * )
      *
      * @var \DateTime

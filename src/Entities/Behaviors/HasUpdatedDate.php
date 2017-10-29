@@ -7,8 +7,7 @@ trait HasUpdatedDate
     /**
      * @ORM\Column(
      *     type="datetime",
-     *     name="updated",
-     *     nullable=false
+     *     name="updated"
      * )
      *
      * @var \DateTime

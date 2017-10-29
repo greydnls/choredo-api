@@ -1,15 +1,16 @@
 #!/usr/bin/env php
 <?php
 
+use Choredo\App;
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
 use Symfony\Component\Console;
 
 // replace with file to your own project bootstrap
-/** @var \Laravel\Lumen\Application $app */
+/** @var App $app */
 $app = require_once __DIR__ . '/src/bootstrap.php';
 
 /** @var \Doctrine\ORM\EntityManagerInterface $entityManager */
-$entityManager = $app['entity_manager'];
+$entityManager = $app->getContainer()->get(\Doctrine\ORM\EntityManager::class);
 
 $helperSet = ConsoleRunner::createHelperSet($entityManager);
 
