@@ -46,4 +46,16 @@ class JsonApiResource
     {
         return $this->attributes;
     }
+
+    public function getAttribute($key, $default = null)
+    {
+        return $this->hasAttribute($key)
+            ? $this->attributes[$key]
+            : $default;
+    }
+
+    public function hasAttribute($key)
+    {
+        return array_key_exists($key, $this->attributes);
+    }
 }
