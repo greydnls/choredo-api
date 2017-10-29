@@ -4,10 +4,10 @@
 namespace Choredo\Providers;
 
 use Choredo\Actions;
+use Choredo\Middleware\MultiTenantFamilyMiddleware;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Route\RouteCollection;
 use League\Route\RouteGroup;
-use Zend\Diactoros\Response\TextResponse;
 
 class RouterProvider extends AbstractServiceProvider
 {
@@ -26,7 +26,7 @@ class RouterProvider extends AbstractServiceProvider
             RouteCollection::class,
             function (): RouteCollection {
                 $router = new RouteCollection($this->container);
-
+              
                 $router->group('families/{familyId:uuid}', function (RouteGroup $routeGroup) {
                     $routeGroup->get('/', [Actions\Family\GetFamily::class, '__invoke']);
                     $routeGroup->get('chores',  [Actions\Chore\ListChores::class, '__invoke']);
@@ -34,7 +34,7 @@ class RouterProvider extends AbstractServiceProvider
                     $routeGroup->post('/chores/',  [Actions\Chore\CreateChore::class, '__invoke']);
                     $routeGroup->put('/chores/{choreId}',  [Actions\Chore\UpdateChore::class, '__invoke']);
                     $routeGroup->delete('/chores/{choreId}',  [Actions\Chore\DeleteChore::class, '__invoke']);
-                });
+                })->middleware($this->container->get(MultiTenantFamilyMiddleware::class));
 
                 return $router;
             }

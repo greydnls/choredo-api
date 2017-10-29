@@ -3,6 +3,7 @@
 namespace Choredo;
 
 use Assert\AssertionFailedException;
+use Choredo\Exception\InvalidRequestException;
 use Choredo\Response\BadRequestResponse;
 use Choredo\Response\ServerErrorResponse;
 use League\Container\ContainerAwareTrait;
@@ -29,8 +30,8 @@ class App implements ContainerAwareInterface
                 ->dispatch(
                     $this->container->get(ServerRequestInterface::class),
                     new Response()
-                );
-        } catch (AssertionFailedException $e) {
+            );
+        } catch (AssertionFailedException | InvalidRequestException $e) {
             $response = new BadRequestResponse([$e->getMessage()]);
         } catch (\Throwable $e) {
             $response = new ServerErrorResponse([$e->getMessage()]);
