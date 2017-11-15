@@ -3,7 +3,6 @@
 
 namespace Choredo\Providers;
 
-
 use Choredo\Entities\Family;
 use Choredo\Middleware\MultiTenantFamilyHydrator;
 use Doctrine\ORM\EntityManagerInterface;

@@ -3,7 +3,6 @@
 
 namespace Choredo;
 
-
 class JsonApiResource
 {
     private $id;
