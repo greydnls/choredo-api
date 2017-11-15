@@ -8,6 +8,7 @@ use Choredo\Transformers\FamilyTransformer;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Teapot\StatusCode as Http;
 use Zend\Diactoros\Response\JsonResponse;
 
 class CreateFamily implements FractalAwareInterface
@@ -36,6 +37,7 @@ class CreateFamily implements FractalAwareInterface
         $this->entityManager->flush();
 
         $item = $this->outputItem($family, new FamilyTransformer(), 'families')->toArray();
-        return (new JsonResponse($item))->withHeader("location", "/families/" . $family->getId());
+
+        return (new JsonResponse($item, Http::CREATED))->withHeader("location", "/families/" . $family->getId());
     }
 }
