@@ -2,13 +2,18 @@
 
 namespace Choredo\Actions\Family;
 
+use Choredo\Output\CreatesFractalScope;
+use Choredo\Output\FractalAwareInterface;
+use Choredo\Transformers\FamilyTransformer;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Zend\Diactoros\Response\EmptyResponse;
+use Zend\Diactoros\Response\JsonResponse;
 
-class CreateFamily
+class CreateFamily implements FractalAwareInterface
 {
+    use CreatesFractalScope;
+
     /**
      * @var EntityManagerInterface
      */
@@ -30,8 +35,7 @@ class CreateFamily
         $this->entityManager->persist($family);
         $this->entityManager->flush();
 
-        return EmptyResponse::withHeaders([
-            "location" => "/families/" . $family->getId()
-        ]);
+        $item = $this->outputItem($family, new FamilyTransformer(), 'families')->toArray();
+        return (new JsonResponse($item))->withHeader("location", "/families/" . $family->getId());
     }
 }
