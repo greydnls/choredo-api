@@ -25,19 +25,19 @@ class FamilyTransformerTest extends TestCase
         $transformer = new Transformers\FamilyTransformer();
         $resource = $transformer->transform($family);
 
-        $this->assertSame($weekStartDayText, $resource['attributes']['weekStartDay']);
+        $this->assertSame($weekStartDayText, $resource['weekStartDay']);
     }
 
     public function weekStartDayProvider(): array
     {
         return [
-            [Uuid::uuid4(), 'test family', Entities\Family::PAYMENT_STRATEGY_PER_CHILD, 0, 'sunday'],
-            [Uuid::uuid4(), 'test family', Entities\Family::PAYMENT_STRATEGY_PER_CHILD, 1, 'monday'],
-            [Uuid::uuid4(), 'test family', Entities\Family::PAYMENT_STRATEGY_PER_CHILD, 2, 'tuesday'],
-            [Uuid::uuid4(), 'test family', Entities\Family::PAYMENT_STRATEGY_PER_CHILD, 3, 'wednesday'],
-            [Uuid::uuid4(), 'test family', Entities\Family::PAYMENT_STRATEGY_PER_CHILD, 4, 'thursday'],
-            [Uuid::uuid4(), 'test family', Entities\Family::PAYMENT_STRATEGY_PER_CHILD, 5, 'friday'],
-            [Uuid::uuid4(), 'test family', Entities\Family::PAYMENT_STRATEGY_PER_CHILD, 6, 'saturday'],
+            [Uuid::uuid4(), 'test family', Entities\Family::PAYMENT_STRATEGY_PER_CHORE, 0, 'sunday'],
+            [Uuid::uuid4(), 'test family', Entities\Family::PAYMENT_STRATEGY_PER_CHORE, 1, 'monday'],
+            [Uuid::uuid4(), 'test family', Entities\Family::PAYMENT_STRATEGY_PER_CHORE, 2, 'tuesday'],
+            [Uuid::uuid4(), 'test family', Entities\Family::PAYMENT_STRATEGY_PER_CHORE, 3, 'wednesday'],
+            [Uuid::uuid4(), 'test family', Entities\Family::PAYMENT_STRATEGY_PER_CHORE, 4, 'thursday'],
+            [Uuid::uuid4(), 'test family', Entities\Family::PAYMENT_STRATEGY_PER_CHORE, 5, 'friday'],
+            [Uuid::uuid4(), 'test family', Entities\Family::PAYMENT_STRATEGY_PER_CHORE, 6, 'saturday'],
         ];
     }
 }
