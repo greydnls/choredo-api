@@ -3,6 +3,7 @@
 
 namespace Choredo\Entities;
 
+use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
 
 /**

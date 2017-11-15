@@ -1,7 +1,8 @@
 <?php
 
-
 namespace Choredo\Entities;
+
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @package Choredo\Entities
