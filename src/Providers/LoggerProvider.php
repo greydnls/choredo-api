@@ -3,7 +3,6 @@
 
 namespace Choredo\Providers;
 
-
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use Monolog\Formatter\JsonFormatter;
 use Monolog\Handler\StreamHandler;

@@ -14,7 +14,9 @@
         "monolog/monolog": "^1.23",
         "ramsey/uuid": "^3.7",
         "ramsey/uuid-doctrine": "^1.4",
-        "vlucas/phpdotenv": "~2.2"
+        "shrikeh/teapot": "^2.3",
+        "vlucas/phpdotenv": "~2.2",
+        "zendframework/zend-diactoros": "^1.6"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

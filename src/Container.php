@@ -29,6 +29,7 @@ final class Container extends \League\Container\Container
         $this->addServiceProvider(new Providers\EntityManagerProvider());
         $this->addServiceProvider(new Providers\MiddlewareProvider());
         $this->addServiceProvider(new Providers\FractalProvider());
+        $this->addServiceProvider(new Providers\EntityManagerProvider());
         $this->addServiceProvider(new Providers\ActionProvider());
         $this->addServiceProvider(new Providers\RouterProvider());
         $this->addServiceProvider(new Providers\LoggerProvider());

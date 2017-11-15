@@ -16,16 +16,14 @@ use Ramsey\Uuid\Doctrine\UuidType;
 class EntityManagerProvider extends AbstractServiceProvider
 {
     protected $provides = [
-        ORM\EntityManager::class
+        ORM\EntityManagerInterface::class
     ];
 
     public function register()
     {
-        $this->container->share(
-            ORM\EntityManager::class,
-            function () {
-                $environment = getenv('ENV') ?? 'production';
-                $isProduction = $environment === 'production';
+        $this->container->share(ORM\EntityManagerInterface::class, function () {
+            $environment = getenv('ENV') ?? 'production';
+            $isProduction = $environment === 'production';
 
             $entityDirectory = realpath(__DIR__ . '/../Entities');
             $proxyDirectory = realpath(__DIR__ . '/../proxies/');
@@ -51,8 +49,8 @@ class EntityManagerProvider extends AbstractServiceProvider
                 'driver'   => 'pdo_pgsql',
                 'user'     => getenv('DB_USER'),
                 'password' => getenv('DB_PASSWORD'),
-                'host'     => getenv('DB_HOST'),
-                'dbname'   => getenv('DB_DATABASE'),
+                'host'     => getenv('DB_HOST') ?? 'db',
+                'dbname'   => getenv('DB_DATABASE') ?? 'choredo',
             ];
 
             return ORM\EntityManager::create($dbParams, $config);

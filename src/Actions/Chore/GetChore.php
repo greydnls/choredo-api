@@ -3,7 +3,6 @@
 
 namespace Choredo\Actions\Chore;
 
-
 use Choredo\Output\CreatesFractalScope;
 use Choredo\Output\FractalAwareInterface;
 use Psr\Http\Message\ResponseInterface;

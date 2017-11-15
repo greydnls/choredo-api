@@ -1,4 +1,4 @@
 name: ChoreDo Migrations
 migrations_namespace: Choredo\Migrations
 table_name: doctrine_migration_versions
-migrations_directory: migrations
+migrations_directory: database/migrations

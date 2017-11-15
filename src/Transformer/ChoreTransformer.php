@@ -3,7 +3,6 @@
 
 namespace Choredo\Transformer;
 
-
 use Choredo\Entities\Chore;
 use League\Fractal\TransformerAbstract;
 

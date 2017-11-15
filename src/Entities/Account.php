@@ -1,9 +1,7 @@
 <?php
 
-
 namespace Choredo\Entities;
 
-use Ramsey\Uuid\UuidInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

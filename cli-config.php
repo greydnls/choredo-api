@@ -10,7 +10,7 @@ use Symfony\Component\Console;
 $app = require_once __DIR__ . '/src/bootstrap.php';
 
 /** @var \Doctrine\ORM\EntityManagerInterface $entityManager */
-$entityManager = $app->getContainer()->get(\Doctrine\ORM\EntityManager::class);
+$entityManager = $app->getContainer()->get(\Doctrine\ORM\EntityManagerInterface::class);
 
 $helperSet = ConsoleRunner::createHelperSet($entityManager);
 

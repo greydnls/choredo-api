@@ -11,7 +11,6 @@ trait HasUuid
      *
      * @ORM\Id
      * @ORM\Column(type="uuid")
-     * @ORM\GeneratedValue(strategy="UUID")
      */
     private $id;
 

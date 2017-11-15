@@ -23,6 +23,8 @@ class Family
 
     const PAYMENT_STRATEGY_PER_CHORE = 'per_chore';
     const PAYMENT_STRATEGY_PER_CHILD = 'per_child';
+    const MIN_COMPLETION_THRESHOLD = 0;
+    const MAX_COMPLETION_THRESHOLD = 100;
 
     /**
      * @var string
@@ -90,8 +92,8 @@ class Family
         if ($paymentStrategy === static::PAYMENT_STRATEGY_PER_CHILD) {
             Assertion::between(
                 $completionThreshold,
-                0,
-                100,
+                static::MIN_COMPLETION_THRESHOLD,
+                static::MAX_COMPLETION_THRESHOLD,
                 "When per-child payment strategy is specified, "
                 . " a completion threshold value between 0 and 100 must also be set"
             );
