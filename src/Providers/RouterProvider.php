@@ -10,6 +10,8 @@ use Choredo\Middleware\MultiTenantFamilyHydrator;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Route\RouteCollection;
 use League\Route\RouteGroup;
+use Zend\Diactoros\Response;
+use Zend\Diactoros\Response\TextResponse;
 
 class RouterProvider extends AbstractServiceProvider
 {
@@ -28,6 +30,8 @@ class RouterProvider extends AbstractServiceProvider
             RouteCollection::class,
             function (): RouteCollection {
                 $router = new RouteCollection($this->container);
+
+                $router->post('/auth', [Actions\Auth::class, '__invoke']);
 
                 $router->post('/families', [Actions\Family\CreateFamily::class, '__invoke'])
                     ->middlewares(

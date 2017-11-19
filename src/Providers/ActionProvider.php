@@ -5,6 +5,7 @@ namespace Choredo\Providers;
 use Choredo\Actions;
 use Choredo\Hydrators;
 use Doctrine\ORM\EntityManagerInterface;
+use Choredo\Entities\Account;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
 class ActionProvider extends AbstractServiceProvider
@@ -12,7 +13,8 @@ class ActionProvider extends AbstractServiceProvider
     protected $provides = [
         Actions\Family\GetFamily::class,
         Actions\Family\CreateFamily::class,
-        Actions\Chore\ListChores::class
+        Actions\Chore\ListChores::class,
+        Actions\Auth::class
     ];
 
     /**
@@ -33,5 +35,10 @@ class ActionProvider extends AbstractServiceProvider
         });
 
         $this->getContainer()->share(Actions\Chore\ListChores::class);
+
+        $this->container->share(Actions\Auth::class, function(){
+            $entityManager = $this->container->get(EntityManager::class);
+            return new Actions\Auth($entityManager->getRepository(Account::class));
+        });
     }
 }
