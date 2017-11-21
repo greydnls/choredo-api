@@ -34,10 +34,10 @@ class ActionProvider extends AbstractServiceProvider
             );
         });
 
-        $this->getContainer()->share(Actions\Chore\ListChores::class);
+        $this->container->share(Actions\Chore\ListChores::class);
 
         $this->container->share(Actions\Auth::class, function(){
-            $entityManager = $this->container->get(EntityManager::class);
+            $entityManager = $this->container->get(EntityManagerInterface::class);
             return new Actions\Auth($entityManager->getRepository(Account::class));
         });
     }

@@ -5,6 +5,7 @@ namespace Choredo;
 use Assert\AssertionFailedException;
 use Choredo\Exception\InvalidRequestException;
 use Choredo\Response\BadRequestResponse;
+use Choredo\Response\MethodNotAllowedResponse;
 use Choredo\Response\NotFoundResponse;
 use Choredo\Response\ServerErrorResponse;
 use League\Container\ContainerAwareInterface;
@@ -37,16 +38,14 @@ class App implements ContainerAwareInterface
             $response = new BadRequestResponse([$e->getMessage()]);
         } catch (NotFoundException $e) {
             $response = new NotFoundResponse();
-        }  catch (MethodNotAllowedException $e){
-            if ($request->getMethod() !== 'OPTIONS'){
-                throw $e;
-
-            }
-            $response = new Response\JsonResponse([], 200, [
-                'Access-Control-Allow-Origin' => '*',
-                'Access-Control-Allow-Methods' => 'GET,PUT,POST,DELETE,OPTIONS',
-                'Access-Control-Allow-Headers' => 'Content-Type, Authorization, Content-Length, X-Requested-With',
-            ]);
+        } catch (MethodNotAllowedException $e) {
+            $response = ($request->getMethod() === 'OPTIONS')
+                ? new Response\JsonResponse([], 200, [
+                    'Access-Control-Allow-Origin' => '*',
+                    'Access-Control-Allow-Methods' => 'GET,PUT,POST,DELETE,OPTIONS',
+                    'Access-Control-Allow-Headers' => 'Content-Type, Authorization, Content-Length, X-Requested-With',
+                ])
+                : new MethodNotAllowedResponse();
         } catch (\Throwable $e) {
             $response = new ServerErrorResponse([$e->getMessage()]);
         }
