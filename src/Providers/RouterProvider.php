@@ -7,14 +7,14 @@ use Choredo\Actions;
 use Choredo\Middleware\FamilyHydrator;
 use Choredo\Middleware\JsonApiResourceParser;
 use Choredo\Middleware\MultiTenantFamilyHydrator;
+use Choredo\Route\RouteCollection;
 use League\Container\ServiceProvider\AbstractServiceProvider;
-use League\Route\RouteCollection;
 use League\Route\RouteGroup;
 
 class RouterProvider extends AbstractServiceProvider
 {
     protected $provides = [
-        RouteCollection::class,
+        \League\Route\RouteCollection::class,
     ];
 
     /**
@@ -25,7 +25,7 @@ class RouterProvider extends AbstractServiceProvider
     public function register()
     {
         $this->container->share(
-            RouteCollection::class,
+            \League\Route\RouteCollection::class,
             function (): RouteCollection {
                 $router = new RouteCollection($this->container);
 
