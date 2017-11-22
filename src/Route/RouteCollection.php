@@ -10,11 +10,10 @@ class RouteCollection extends \League\Route\RouteCollection
 
     public function getDispatcher(ServerRequestInterface $request)
     {
-        if (!$this->dispatcher){
+        if (!$this->dispatcher) {
             $this->dispatcher = parent::getDispatcher($request);
         }
 
         return $this->dispatcher;
-
     }
 }
