@@ -31,10 +31,7 @@ class RouterProvider extends AbstractServiceProvider
                 $router = new RouteCollection($this->container);
 
                 $router->post('/families', [Actions\Family\CreateFamily::class, '__invoke'])
-                    ->middlewares(
-                        new ResourceHydrator(new FamilyHydrator()),
-                        JsonApiResourceParser::newType('families')
-                    );
+                    ->middlewares(ResourceHydrator::newType('families', new FamilyHydrator()));
 
                 $router->group('families/{familyId:uuid}', function (RouteGroup $routeGroup) {
                     $routeGroup->get('/', [Actions\Family\GetFamily::class, '__invoke']);

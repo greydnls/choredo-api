@@ -27,11 +27,6 @@ class FamilyHydrator implements Hydrator
         );
     }
 
-    public function getAttributeName(): string
-    {
-        return 'familyEntity';
-    }
-
     private function validateResource(JsonApiResource $resource): void
     {
         if ($resource->getId() !== "new") {
