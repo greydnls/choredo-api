@@ -5,13 +5,11 @@ namespace Choredo\Test\Hydrators;
 use Assert\InvalidArgumentException;
 use Assert\LazyAssertionException;
 use Choredo\Entities;
+use Choredo\JsonApi\JsonApiResource;
 use Choredo\JsonApi\Resource;
 use Choredo\Hydrators\FamilyHydrator;
-use Choredo\Middleware\JsonApiResourceParser;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\UuidInterface;
-use Zend\Diactoros\Response;
-use Zend\Diactoros\ServerRequest;
 use const Choredo\SHORT_DATA_FIELD_MAX_SIZE;
 
 class FamilyHydratorTest extends TestCase
@@ -31,7 +29,7 @@ class FamilyHydratorTest extends TestCase
 
     }
 
-    private function getResource($id = JsonApiResourceParser::TYPE_NEW, $data = [])
+    private function getResource($id = JsonApiResource::TYPE_NEW, $data = [])
     {
         $data = array_merge($this->dataStub, $data);
 
