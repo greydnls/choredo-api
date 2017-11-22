@@ -24,7 +24,7 @@ class FamilyTransformer extends TransformerAbstract
         }
 
         if ($family->getUpdateDate()) {
-            $entity['updatedDate'] = $family->getUpdatedDate()->format(\DateTime::ATOM);
+            $entity['updatedDate'] = $family->getUpdateDate()->format(\DateTime::ATOM);
         }
 
         return $entity;
