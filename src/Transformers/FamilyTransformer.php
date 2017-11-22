@@ -12,11 +12,13 @@ class FamilyTransformer extends TransformerAbstract
     public function transform(Entities\Family $family)
     {
         return [
-            'id'         => $family->getId()->toString(),
+            'id'                  => $family->getId()->toString(),
             'name'                => $family->getName(),
             'paymentStrategy'     => $family->getPaymentStrategy(),
             'completionThreshold' => $family->getCompletionThreshold(),
             'weekStartDay'        => $this->transformWeekStartDay($family->getWeekStartDay()),
+            'createdDate'         => $family->getCreatedDate()->format(\DateTime::ATOM),
+            'updatedDate'         => $family->getUpdateDate()->format(\DateTime::ATOM),
         ];
     }
 
