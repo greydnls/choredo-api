@@ -12,62 +12,57 @@ class CompoundDocument implements JsonApiResource
     /**
      * @var array
      */
-    private $relationships;
-    /**
-     * @var array
-     */
     private $included;
 
     /**
      * CompoundDocument constructor.
      * @param JsonApiResource $resource
-     * @param array $relationships
+     * @param array $includedData
      */
-    public function __construct(JsonApiResource $resource, array $relationships)
+    public function __construct(JsonApiResource $resource, array $includedData)
     {
         $this->resource = $resource;
-        $this->relationships = $relationships;
+        $this->included = $includedData;
     }
 
-    public function hasRelationship($name): boolean
+    public function getRelationshipResource(Relation $relation): ?JsonApiResource
     {
-        return array_key_exists($name, $this->relationships);
-    }
-
-    public function getRelationship($name): array
-    {
-        return array_filter($this->relationships, function($relationship) use ($name) {
-           return $relationship->name === $name;
+        $relationship = array_filter($this->included, function(JsonApiResource $included) use ($relation){
+            return $included->getId() === $relation->getId() && $included->getType() == $relation->getType();
         });
-    }
 
-    public function getRelatedResource($name, $id): ?JsonApiResource
-    {
-        $relationship = $this->getRelationship($name);
-
-        if (is_array($relationship)) {
-            $relationship = array_filter($relationship, function(JsonApiResource $relationship) use ($id){
-                return $relationship->getId() === $id;
-            });
-        }
-
-        if ($relationship instanceof JsonApiResource && $relationship->getId() === $id){
+        if ($relationship instanceof JsonApiResource){
             return $relationship;
         }
 
         throw new \InvalidArgumentException('Invalid Related Resource Requested');
     }
 
+    public function hasRelatedResource(Relation $relation) : bool
+    {
+        return array_filter($this->included, function(JsonApiResource $included) use ($relation){
+            return $included->getId() === $relation->getId() && $included->getType() == $relation->getType();
+        }) instanceof JsonApiResource;
+    }
+
     public function getRelatedResources(): array
     {
-        array_reduce($this->relationships, function($included, Relationship $relationship){
-            return array_merge($included, (array)$relationship->getData());
-        }, []);
+        return $this->included;
+    }
+
+    public function hasRelationship($name): boolean
+    {
+        return $this->resource->hasRelationship($name);
+    }
+
+    public function getRelationship($name): array
+    {
+        return $this->resource->getRelationship($name);
     }
 
     public function getRelationships(): array
     {
-       return $this->relationships;
+       return $this->resource->getRelationships();
     }
 
     public function getId()

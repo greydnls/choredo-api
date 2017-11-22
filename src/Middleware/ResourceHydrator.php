@@ -5,8 +5,8 @@ namespace Choredo\Middleware;
 use Assert\Assert;
 use Assert\Assertion;
 use Choredo\Hydrators\Hydrator;
-use Choredo\JsonApi\JsonApiResource;
 use Choredo\JsonApi\Resource;
+use const Choredo\REQUEST_RESOURCE;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Ramsey\Uuid\Uuid;
@@ -97,7 +97,7 @@ class ResourceHydrator
             $resource = $this->hydrator->hydrate($resource);
         }
 
-        $request = $request->withAttribute('resource', $resource);
+        $request = $request->withAttribute(REQUEST_RESOURCE, $resource);
 
         return $next($request, $response);
     }

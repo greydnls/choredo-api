@@ -18,7 +18,9 @@ interface JsonApiResource
 
     public function hasRelationship($name): boolean;
 
-    public function getRelatedResource($name, $id): ?JsonApiResource;
+    public function getRelatedResource(Relation $relation): ?JsonApiResource;
+
+    public function hasRelatedResource(Relation $relation): bool;
 
     public function getRelationship($name);
 

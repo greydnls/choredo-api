@@ -13,15 +13,21 @@ class Resource implements JsonApiResource
      * @var array
      */
     private $attributes;
+    /**
+     * @var array
+     */
+    private $relationships;
 
     public function __construct(
         string $id,
         string $type,
-        array $attributes
+        array $attributes,
+        array $relationships
     ) {
         $this->id = $id;
         $this->type = $type;
         $this->attributes = $attributes;
+        $this->setRelationships($relationships);
     }
 
     /**
@@ -62,26 +68,49 @@ class Resource implements JsonApiResource
 
     public function hasRelationship($name): boolean
     {
-        return false;
+        return array_key_exists($name, $this->relationships);
     }
 
-    public function getRelatedResource($name, $id): JsonApiResource
+    public function getRelationship($name, $default = [])
+    {
+        return $this->hasRelationship($name)
+            ? $this->relationships[$name]
+            : $default;
+    }
+
+    public function getRelationships(): array
+    {
+        return $this->relationships;
+    }
+
+    public function getRelatedResource(Relation $relation): ?JsonApiResource
     {
         return null;
     }
 
-    public function getRelationship($name)
+    public function hasRelatedResource(Relation $relation): bool
     {
         return false;
     }
 
-    public function getRelatedResources() : array
+    public function getRelatedResources(): array
     {
         return [];
     }
 
-    public function getRelationships() : array
+    /**
+     * @param array $relationships
+     */
+    private function setRelationships(array $relationships): void
     {
-        return [];
+        foreach ($relationships as $relationship) {
+            foreach ((array)$relationship as $relation) {
+                if (!$relation instanceof Relation) {
+                    throw new \InvalidArgumentException('Invalid Relationship provided');
+                }
+            }
+        }
+
+        $this->relationships = $relationships;
     }
 }
