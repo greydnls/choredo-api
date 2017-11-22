@@ -7,6 +7,7 @@ use Choredo\Pageable;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use const Choredo\REQUEST_HANDLER_CLASS;
+use const Choredo\REQUEST_PAGINATION;
 
 class PaginationParser
 {
@@ -28,7 +29,7 @@ class PaginationParser
             ->that($page['offset'], 'page[offset]')->numeric()->greaterOrEqualThan(0)
             ->verifyNow();
 
-        $request = $request->withAttribute('page', $page);
+        $request = $request->withAttribute(REQUEST_PAGINATION, $page);
 
         return $next($request, $response);
     }
