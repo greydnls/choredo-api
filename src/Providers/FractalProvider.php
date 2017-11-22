@@ -8,7 +8,9 @@ use League\Fractal\Serializer\JsonApiSerializer;
 
 class FractalProvider extends AbstractServiceProvider
 {
-    protected $provides = [ Manager::class ];
+    protected $provides = [
+        Manager::class
+    ];
 
     /**
      * Use the register method to register items with the container via the
@@ -18,7 +20,7 @@ class FractalProvider extends AbstractServiceProvider
     public function register()
     {
         $manager = new Manager();
-        $manager->setSerializer(new JsonApiSerializer("https://" . $_SERVER['SERVER_NAME']));
+        $manager->setSerializer(new JsonApiSerializer(\Choredo\getBaseUrl()));
         $this->container->share(Manager::class, $manager);
     }
 }
