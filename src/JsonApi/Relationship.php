@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Choredo;
+namespace Choredo\JsonApi;
 
 
 class Relationship

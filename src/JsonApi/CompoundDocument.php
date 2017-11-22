@@ -1,6 +1,6 @@
 <?php
 
-namespace Choredo;
+namespace Choredo\JsonApi;
 
 class CompoundDocument implements JsonApiResource
 {

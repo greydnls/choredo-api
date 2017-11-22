@@ -1,7 +1,6 @@
 <?php
 
-
-namespace Choredo;
+namespace Choredo\JsonApi;
 
 class Resource implements JsonApiResource
 {
