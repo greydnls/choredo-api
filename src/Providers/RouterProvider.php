@@ -4,9 +4,10 @@
 namespace Choredo\Providers;
 
 use Choredo\Actions;
-use Choredo\Middleware\FamilyHydrator;
+use Choredo\Hydrators\FamilyHydrator;
 use Choredo\Middleware\JsonApiResourceParser;
 use Choredo\Middleware\MultiTenantFamilyHydrator;
+use Choredo\Middleware\ResourceHydrator;
 use Choredo\Route\RouteCollection;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Route\RouteGroup;
@@ -31,7 +32,7 @@ class RouterProvider extends AbstractServiceProvider
 
                 $router->post('/families', [Actions\Family\CreateFamily::class, '__invoke'])
                     ->middlewares(
-                        new FamilyHydrator(),
+                        new ResourceHydrator(new FamilyHydrator()),
                         JsonApiResourceParser::newType('families')
                     );
 
