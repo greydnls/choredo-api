@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Choredo\Transformer;
+namespace Choredo\Transformers;
 
 use Choredo\Entities\Chore;
 use League\Fractal\TransformerAbstract;

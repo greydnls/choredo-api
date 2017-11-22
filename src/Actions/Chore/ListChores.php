@@ -4,7 +4,7 @@ namespace Choredo\Actions\Chore;
 
 use Choredo\Output\CreatesFractalScope;
 use Choredo\Output\FractalAwareInterface;
-use Choredo\Transformer\ChoreTransformer;
+use Choredo\Transformers\ChoreTransformer;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\JsonResponse;
