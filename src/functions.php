@@ -9,6 +9,7 @@ namespace Choredo {
     const REQUEST_HANDLER_CLASS = 'request-handler-class';
     const REQUEST_VARIABLES = 'request-url-vars';
     const REQUEST_PAGINATION = 'page';
+    const REQUEST_SORT = 'sort';
 
     function getBaseUrl(): string
     {
