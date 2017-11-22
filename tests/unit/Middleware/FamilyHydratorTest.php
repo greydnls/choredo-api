@@ -5,7 +5,7 @@ namespace Choredo\Test\Hydrators;
 use Assert\InvalidArgumentException;
 use Assert\LazyAssertionException;
 use Choredo\Entities;
-use Choredo\JsonApiResource;
+use Choredo\Resource;
 use Choredo\Middleware\FamilyHydrator;
 use Choredo\Middleware\JsonApiResourceParser;
 use PHPUnit\Framework\TestCase;
@@ -45,7 +45,7 @@ class FamilyHydratorTest extends TestCase
         return (new ServerRequest())
             ->withAttribute(
                 'resource',
-                new JsonApiResource($id, 'family', $data)
+                new Resource($id, 'family', $data)
             );
     }
 

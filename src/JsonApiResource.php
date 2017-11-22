@@ -3,58 +3,26 @@
 
 namespace Choredo;
 
-class JsonApiResource
+
+interface JsonApiResource
 {
-    private $id;
-    /**
-     * @var string
-     */
-    private $type;
-    /**
-     * @var array
-     */
-    private $attributes;
+    public function getId();
 
-    public function __construct(string $id, string $type, array $attributes)
-    {
-        $this->id = $id;
-        $this->type = $type;
-        $this->attributes = $attributes;
-    }
+    public function getType(): string;
 
-    /**
-     * @return string
-     */
-    public function getId(): string
-    {
-        return $this->id;
-    }
+    public function getAttributes(): array;
 
-    /**
-     * @return string
-     */
-    public function getType(): string
-    {
-        return $this->type;
-    }
+    public function getAttribute(string $key, $default = null);
 
-    /**
-     * @return array
-     */
-    public function getAttributes(): array
-    {
-        return $this->attributes;
-    }
+    public function hasAttribute(string $key) : bool;
 
-    public function getAttribute($key, $default = null)
-    {
-        return $this->hasAttribute($key)
-            ? $this->attributes[$key]
-            : $default;
-    }
+    public function hasRelationship($name): boolean;
 
-    public function hasAttribute($key)
-    {
-        return array_key_exists($key, $this->attributes);
-    }
+    public function getRelatedResource($name, $id): ?JsonApiResource;
+
+    public function getRelationship($name);
+
+    public function getRelatedResources() : array;
+
+    public function getRelationships() : array;
 }
