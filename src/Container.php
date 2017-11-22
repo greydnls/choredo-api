@@ -4,6 +4,7 @@
 namespace Choredo;
 
 use Choredo\Output\FractalAwareInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use League\Fractal\Manager;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -36,5 +37,7 @@ final class Container extends \League\Container\Container
 
         $this->inflector(FractalAwareInterface::class)
             ->invokeMethod('setManager', [$this->get(Manager::class)]);
+        $this->inflector(EntityManagerAwareInterface::class)
+            ->invokeMethod('setEntityManager', [$this->get(EntityManagerInterface::class)]);
     }
 }
