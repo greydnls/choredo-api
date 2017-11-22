@@ -23,7 +23,7 @@ trait HasUpdatedDate
     /**
      * @return \DateTime
      */
-    public function getUpdateDate() :\DateTime
+    public function getUpdateDate(): ?\DateTime
     {
         return $this->updatedDate;
     }
