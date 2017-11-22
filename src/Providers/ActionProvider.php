@@ -12,6 +12,7 @@ class ActionProvider extends AbstractServiceProvider
     protected $provides = [
         Actions\Family\GetFamily::class,
         Actions\Family\CreateFamily::class,
+        Actions\Family\ListFamilies::class,
         Actions\Chore\ListChores::class
     ];
 
@@ -26,6 +27,7 @@ class ActionProvider extends AbstractServiceProvider
     {
         // Families
         $this->container->share(Actions\Family\GetFamily::class);
+        $this->container->share(Actions\Family\ListFamilies::class);
         $this->container->share(Actions\Family\CreateFamily::class, function () {
             return new Actions\Family\CreateFamily(
                 $this->container->get(EntityManagerInterface::class)

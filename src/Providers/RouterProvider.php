@@ -8,6 +8,8 @@ use Choredo\Hydrators\FamilyHydrator;
 use Choredo\Middleware\JsonApiResourceParser;
 use Choredo\Middleware\MultiTenantFamilyHydrator;
 use Choredo\Middleware\ResourceHydrator;
+use Choredo\Middleware\PaginationParser;
+use Choredo\Middleware\SortParser;
 use Choredo\Route\RouteCollection;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Route\RouteGroup;
@@ -30,6 +32,7 @@ class RouterProvider extends AbstractServiceProvider
             function (): RouteCollection {
                 $router = new RouteCollection($this->container);
 
+                $router->get('families', [Actions\Family\ListFamilies::class, '__invoke']);
                 $router->post('/families', [Actions\Family\CreateFamily::class, '__invoke'])
                     ->middlewares(ResourceHydrator::newType('families', new FamilyHydrator()));
 
@@ -41,6 +44,11 @@ class RouterProvider extends AbstractServiceProvider
                     $routeGroup->put('/chores/{choreId}', [Actions\Chore\UpdateChore::class, '__invoke']);
                     $routeGroup->delete('/chores/{choreId}', [Actions\Chore\DeleteChore::class, '__invoke']);
                 })->middleware($this->container->get(MultiTenantFamilyHydrator::class));
+
+                // Global middleware
+                $router->middleware(new PaginationParser());
+                $router->middleware(new SortParser());
+                $router->middleware(new FilterParser());
 
                 return $router;
             }

@@ -2,9 +2,9 @@
 
 namespace Choredo\Providers;
 
+use Choredo\JsonApiSerializer;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Fractal\Manager;
-use League\Fractal\Serializer\JsonApiSerializer;
 
 class FractalProvider extends AbstractServiceProvider
 {
