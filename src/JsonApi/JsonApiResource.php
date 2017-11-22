@@ -6,6 +6,9 @@ namespace Choredo\JsonApi;
 
 interface JsonApiResource
 {
+    const TYPE_UUID = 'uuid';
+    const TYPE_NEW = 'new';
+
     public function getId();
 
     public function getType(): string;

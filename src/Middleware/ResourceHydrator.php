@@ -2,20 +2,15 @@
 
 namespace Choredo\Middleware;
 
-use Assert\Assert;
 use Assert\Assertion;
 use Choredo\Hydrators\Hydrator;
-use Choredo\JsonApi\Resource;
+use Choredo\JsonApi\JsonApiResource;
 use const Choredo\REQUEST_RESOURCE;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Ramsey\Uuid\Uuid;
 
 class ResourceHydrator
 {
-    const TYPE_UUID = 'uuid';
-    const TYPE_NEW = 'new';
-
     /**
      * @var Hydrator
      */
@@ -38,12 +33,12 @@ class ResourceHydrator
 
     public static function newType(string $expectedResourceType, Hydrator $hydrator = null)
     {
-        return new static($expectedResourceType, self::TYPE_NEW, $hydrator);
+        return new static($expectedResourceType, JsonApiResource::TYPE_NEW, $hydrator);
     }
 
     public static function uuidType(string $expectedResourceType, Hydrator $hydrator = null)
     {
-        return new static($expectedResourceType, self::TYPE_UUID, $hydrator);
+        return new static($expectedResourceType, JsonApiResource::TYPE_UUID, $hydrator);
     }
 
     public function __invoke(
@@ -54,46 +49,15 @@ class ResourceHydrator
         $body = $request->getBody()->getContents();
 
         Assertion::isJsonString($body);
-
         $body = json_decode($body, true);
 
-        Assert::that($body)
-            ->keyExists('data');
+        $resource = (new \Choredo\JsonApi\ResourceHydrator())
+            ->hydrate($this->expectedType,
+                $this->idType,
+                $body
+            );
 
-        $parsedBody = $body['data'];
-
-        Assert::lazy()
-            ->that($parsedBody, 'request::body')
-            ->keyExists('attributes')
-            ->keyExists('id')
-            ->keyExists('type')
-            ->that($parsedBody['attributes'], 'request::body::attributes')
-            ->isArray()
-            ->that($parsedBody['type'], 'request::body::type')
-            ->eq($this->expectedType)
-            ->verifyNow();
-
-        if ($this->idType === self::TYPE_UUID) {
-            Assert::lazy()
-                ->that($parsedBody['id'], 'request::body::id')
-                ->uuid()
-                ->verifyNow();
-
-            $parsedBody['id'] = Uuid::fromString($parsedBody['id']);
-        } else {
-            Assert::lazy()
-                ->that($parsedBody['id'], 'request::body::id')
-                ->eq(self::TYPE_NEW)
-                ->verifyNow();
-        }
-
-        $resource = new Resource(
-            $parsedBody['id'],
-            $parsedBody['type'],
-            $parsedBody['attributes']
-        );
-
-        if ($this->hydrator){
+        if ($this->hydrator) {
             $resource = $this->hydrator->hydrate($resource);
         }
 

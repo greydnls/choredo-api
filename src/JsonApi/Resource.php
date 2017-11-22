@@ -22,7 +22,7 @@ class Resource implements JsonApiResource
         string $id,
         string $type,
         array $attributes,
-        array $relationships
+        array $relationships = []
     ) {
         $this->id = $id;
         $this->type = $type;
