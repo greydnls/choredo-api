@@ -63,7 +63,8 @@ trait CreatesFractalScope
                 new DoctrinePaginatorAdapter(
                     $data,
                     function ($page) use ($path, $perPage) {
-                        return \Choredo\getBaseUrl() . $path . "?offset={$page}&limit={$perPage}";
+                        return \Choredo\getBaseUrl() . $path .
+                               "?page[limit]={$perPage}&page[offset]=" . $perPage * ($page-1);
                     }
                 )
             );

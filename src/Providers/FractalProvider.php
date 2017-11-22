@@ -9,7 +9,6 @@ use League\Fractal\Serializer\JsonApiSerializer;
 class FractalProvider extends AbstractServiceProvider
 {
     protected $provides = [
-        'baseUrl',
         Manager::class
     ];
 

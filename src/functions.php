@@ -6,7 +6,7 @@ namespace Choredo {
     const SHORT_DATA_FIELD_MAX_SIZE = 255;
 
     const REQUEST_HANDLER_CLASS = 'request-handler-class';
-    const REQUEST_VARIABLES      = 'request-url-vars';
+    const REQUEST_VARIABLES     = 'request-url-vars';
 
     function getBaseUrl(): string
     {
