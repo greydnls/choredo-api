@@ -10,6 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Teapot\StatusCode as Http;
 use Zend\Diactoros\Response\JsonResponse;
+use const Choredo\REQUEST_RESOURCE;
 
 class CreateFamily implements FractalAwareInterface
 {
@@ -31,7 +32,8 @@ class CreateFamily implements FractalAwareInterface
 
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response)
     {
-        $family = $request->getAttribute('familyEntity');
+        /** @var \Choredo\Entities\Family $family */
+        $family = $request->getAttribute(REQUEST_RESOURCE);
 
         $this->entityManager->persist($family);
         $this->entityManager->flush();
