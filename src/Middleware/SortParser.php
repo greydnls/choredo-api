@@ -3,7 +3,8 @@
 namespace Choredo\Middleware;
 
 use Assert\Assert;
-use Choredo\Sortable;
+use Choredo\Sort;
+use Choredo\Actions\Behaviors\Sortable;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use const Choredo\REQUEST_HANDLER_CLASS;
@@ -20,30 +21,22 @@ class SortParser
         };
 
         $sort = $request->getQueryParams()[REQUEST_SORT] ?? null;
-        if (is_null($sort)) {
-            return $next($request->withAttribute(REQUEST_SORT, $handler::getDefaultSort()), $response);
-        }
-
-        $sortParameters = $this->parseSortParameters($sort);
-        $sortFields = array_column($sortParameters, 0);
-        $allowedFields = $handler::getSortableFields();
-        Assert::lazy()
-            ->that(
-                count(array_diff($sortFields, $allowedFields)),
-                REQUEST_SORT,
-                'Cannot sort by unsortable or unknown field'
-            )->eq(0)
-            ->verifyNow();
+        $sortParameters = $this->parseSortParameters($sort, $handler::getSortableFields());
 
         if (empty($sortParameters)) {
             $sortParameters = $handler::getDefaultSort();
         }
+
         $request = $request->withAttribute(REQUEST_SORT, $sortParameters);
 
         return $next($request, $response);
     }
 
-    private function parseSortParameters(string $sort): array
+    /**
+     * @param string $sort
+     * @return Sort[]
+     */
+    private function parseSortParameters(string $sort = null, array $allowedFields): array
     {
         if (empty($sort)) {
             return [];
@@ -52,12 +45,15 @@ class SortParser
         $fields = explode(',', $sort);
 
         return array_map(
-            function ($field) {
+            function ($field) use ($allowedFields) {
                 if (substr($field, 0, 1) === '-') {
-                    return [substr($field, 1), 'DESC'];
+                    $field = substr($field, 1);
+                    Assert::that($field)->inArray($allowedFields);
+                    return new Sort($field, Sort::DIRECTION_DESCENDING);
                 }
 
-                return [$field, 'ASC'];
+                Assert::that($field)->inArray($allowedFields);
+                return new Sort($field, Sort::DIRECTION_ASCENDING);
             },
             $fields
         );

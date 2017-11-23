@@ -10,6 +10,7 @@ namespace Choredo {
     const REQUEST_PAGINATION = 'page';
     const REQUEST_RESOURCE = 'request-resource';
     const REQUEST_SORT = 'sort';
+    const REQUEST_FILTER = 'filter';
 
     function getBaseUrl(): string
     {

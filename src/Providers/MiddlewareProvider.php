@@ -5,8 +5,6 @@ namespace Choredo\Providers;
 
 use Choredo\Entities\Family;
 use Choredo\Middleware\MultiTenantFamilyHydrator;
-use Choredo\Middleware\PaginationParser;
-use Choredo\Middleware\SortParser;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
@@ -14,8 +12,6 @@ class MiddlewareProvider extends AbstractServiceProvider
 {
     protected $provides = [
         MultiTenantFamilyHydrator::class,
-        PaginationParser::class,
-        SortParser::class
     ];
 
     /**
@@ -32,8 +28,5 @@ class MiddlewareProvider extends AbstractServiceProvider
 
             return new MultiTenantFamilyHydrator($entityManager->getRepository(Family::class));
         });
-
-        $this->container->add(PaginationParser::class);
-        $this->container->add(SortParser::class);
     }
 }

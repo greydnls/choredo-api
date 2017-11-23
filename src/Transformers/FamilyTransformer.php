@@ -11,15 +11,23 @@ class FamilyTransformer extends TransformerAbstract
 {
     public function transform(Entities\Family $family)
     {
-        return [
+        $entity = [
             'id'                  => $family->getId()->toString(),
             'name'                => $family->getName(),
             'paymentStrategy'     => $family->getPaymentStrategy(),
             'completionThreshold' => $family->getCompletionThreshold(),
             'weekStartDay'        => $this->transformWeekStartDay($family->getWeekStartDay()),
-            'createdDate'         => $family->getCreatedDate()->format(\DateTime::ATOM),
-            'updatedDate'         => $family->getUpdateDate()->format(\DateTime::ATOM),
         ];
+
+        if ($family->getCreatedDate()) {
+            $entity['createdDate'] = $family->getCreatedDate()->format(\DateTime::ATOM);
+        }
+
+        if ($family->getUpdateDate()) {
+            $entity['updatedDate'] = $family->getUpdateDate()->format(\DateTime::ATOM);
+        }
+
+        return $entity;
     }
 
     private function transformWeekStartDay(int $weekStartDay): string

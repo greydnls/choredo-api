@@ -25,7 +25,7 @@ trait HasCreatedDate
     /**
      * @return \DateTime
      */
-    public function getCreatedDate() :\DateTime
+    public function getCreatedDate(): \DateTime
     {
         return $this->createdDate;
     }

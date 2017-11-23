@@ -51,7 +51,6 @@ class App implements ContainerAwareInterface
         } catch (MethodNotAllowedException $e) {
             if ($request->getMethod() !== 'OPTIONS') {
                 throw $e;
-
             }
             $response = new Response\JsonResponse([], 200, [
                 'Access-Control-Allow-Origin' => '*',
@@ -59,6 +58,9 @@ class App implements ContainerAwareInterface
                 'Access-Control-Allow-Headers' => 'Content-Type, Authorization, Content-Length, X-Requested-With',
             ]);
         } catch (\Throwable $e) {
+            if (getenv('APP_ENV') === 'local') {
+                throw $e;
+            }
             $response = new ServerErrorResponse([$e->getMessage()]);
         }
 

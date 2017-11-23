@@ -5,9 +5,9 @@ namespace Choredo\Middleware;
 use Assert\Assertion;
 use Choredo\Hydrators\Hydrator;
 use Choredo\JsonApi\JsonApiResource;
-use const Choredo\REQUEST_RESOURCE;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use const Choredo\REQUEST_RESOURCE;
 
 class ResourceHydrator
 {
@@ -29,6 +29,7 @@ class ResourceHydrator
     {
         $this->idType = $idType;
         $this->expectedType = $expectedType;
+        $this->hydrator = $hydrator;
     }
 
     public static function newType(string $expectedResourceType, Hydrator $hydrator = null)
@@ -52,7 +53,8 @@ class ResourceHydrator
         $body = json_decode($body, true);
 
         $resource = (new \Choredo\JsonApi\ResourceHydrator())
-            ->hydrate($this->expectedType,
+            ->hydrate(
+                $this->expectedType,
                 $this->idType,
                 $body
             );

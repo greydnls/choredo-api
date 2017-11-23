@@ -17,6 +17,10 @@ class JsonApiSerializer extends \League\Fractal\Serializer\JsonApiSerializer
             unset($result['meta']['pagination']);
         }
 
+        if (empty($result['meta'])) {
+            unset($result['meta']);
+        }
+
         return $result;
     }
 }

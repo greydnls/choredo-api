@@ -4,9 +4,12 @@
 namespace Choredo;
 
 use Choredo\Output\FractalAwareInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use League\Fractal\Manager;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Response\SapiEmitter;
 use Zend\Diactoros\ServerRequestFactory;
@@ -36,5 +39,9 @@ final class Container extends \League\Container\Container
 
         $this->inflector(FractalAwareInterface::class)
             ->invokeMethod('setManager', [$this->get(Manager::class)]);
+        $this->inflector(LoggerAwareInterface::class)
+            ->invokeMethod('setLogger', [$this->get(LoggerInterface::class)]);
+        $this->inflector(EntityManagerAwareInterface::class)
+            ->invokeMethod('setEntityManager', [$this->get(EntityManagerInterface::class)]);
     }
 }

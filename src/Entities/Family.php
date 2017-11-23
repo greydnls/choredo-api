@@ -11,7 +11,7 @@ use Ramsey\Uuid\UuidInterface;
  * Class Family
  * @package Choredo\Entities
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Choredo\Repositories\FamilyRepository")
  * @ORM\Table(name="families")
  * @ORM\HasLifeCycleCallbacks
  */
@@ -21,6 +21,7 @@ class Family
     use Behaviors\HasCreatedDate;
     use Behaviors\HasUpdatedDate;
 
+    const API_ENTITY_TYPE = 'families';
     const PAYMENT_STRATEGY_PER_CHORE = 'per_chore';
     const PAYMENT_STRATEGY_PER_CHILD = 'per_child';
     const MIN_COMPLETION_THRESHOLD = 0;

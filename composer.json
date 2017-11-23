@@ -16,9 +16,11 @@
         "ramsey/uuid-doctrine": "^1.4",
         "shrikeh/teapot": "^2.3",
         "vlucas/phpdotenv": "~2.2",
-        "zendframework/zend-diactoros": "^1.6"
+        "zendframework/zend-diactoros": "^1.6",
+        "zendframework/zend-paginator": "^2.8"
     },
     "require-dev": {
+        "filp/whoops": "^2.1",
         "friendsofphp/php-cs-fixer": "^2.8",
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "~0.9",
