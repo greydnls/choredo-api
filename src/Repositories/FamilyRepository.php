@@ -3,7 +3,7 @@
 namespace Choredo\Repositories;
 
 use Choredo\Filter;
-use Choredo\Pagination;
+use Choredo\LimitOffset;
 use Choredo\Sort;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -15,12 +15,12 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 class FamilyRepository extends EntityRepository
 {
     /**
-     * @param Pagination $pagination
+     * @param LimitOffset $pagination
      * @param Sort[] $sorts
      * @param Filter[] $filters
      * @return Paginator
      */
-    public function getAll(Pagination $pagination, array $sorts = [], array $filters = []): Paginator
+    public function getAll(LimitOffset $pagination, array $sorts = [], array $filters = []): Paginator
     {
         $queryBuilder = $this->createQueryBuilder('families');
         foreach ($filters as $filter) {

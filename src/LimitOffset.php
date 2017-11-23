@@ -2,7 +2,7 @@
 
 namespace Choredo;
 
-class Pagination
+class LimitOffset
 {
     /**
      * @var int

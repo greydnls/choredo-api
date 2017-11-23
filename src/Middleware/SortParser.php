@@ -4,7 +4,7 @@ namespace Choredo\Middleware;
 
 use Assert\Assert;
 use Choredo\Sort;
-use Choredo\Sortable;
+use Choredo\Actions\Behaviors\Sortable;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use const Choredo\REQUEST_HANDLER_CLASS;
@@ -26,6 +26,7 @@ class SortParser
         if (empty($sortParameters)) {
             $sortParameters = $handler::getDefaultSort();
         }
+
         $request = $request->withAttribute(REQUEST_SORT, $sortParameters);
 
         return $next($request, $response);
@@ -46,8 +47,9 @@ class SortParser
         return array_map(
             function ($field) use ($allowedFields) {
                 if (substr($field, 0, 1) === '-') {
+                    $field = substr($field, 1);
                     Assert::that($field)->inArray($allowedFields);
-                    return new Sort(substr($field, 1), Sort::DIRECTION_DESCENDING);
+                    return new Sort($field, Sort::DIRECTION_DESCENDING);
                 }
 
                 Assert::that($field)->inArray($allowedFields);

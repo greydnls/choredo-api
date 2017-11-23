@@ -3,8 +3,8 @@
 namespace Choredo\Middleware;
 
 use Assert\Assert;
-use Choredo\Pageable;
-use Choredo\Pagination;
+use Choredo\Actions\Behaviors\Pageable;
+use Choredo\LimitOffset;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use const Choredo\REQUEST_HANDLER_CLASS;
@@ -20,8 +20,6 @@ class PaginationParser
             return $next($request, $response);
         };
 
-
-
         $page = array_merge(
             ['limit' => $handler::getDefaultLimit(), 'offset' => Pageable::DEFAULT_OFFSET],
             $request->getQueryParams()['page'] ?? []
@@ -32,7 +30,7 @@ class PaginationParser
             ->that($page['offset'], 'page[offset]')->numeric()->greaterOrEqualThan(0)
             ->verifyNow();
 
-        $request = $request->withAttribute(REQUEST_PAGINATION, new Pagination($page['limit'], $page['offset']));
+        $request = $request->withAttribute(REQUEST_PAGINATION, new LimitOffset($page['limit'], $page['offset']));
 
         return $next($request, $response);
     }
