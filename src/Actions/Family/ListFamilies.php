@@ -30,23 +30,6 @@ class ListFamilies implements
     use Behaviors\HasDefaultPaginationLimits;
 
     /**
-     * @return array {
-     * @type string $field Name of the field which requires a transform
-     * @type callable $callable A callable transform function `function ($value) {}`
-     * }
-     */
-    public static function getFilterTransforms(): array
-    {
-        return [
-            'weekStartDay' => function ($value) {
-                Assert::that($value)->inArray(DAYS_OF_WEEK);
-
-                return array_search($value, DAYS_OF_WEEK);
-            },
-        ];
-    }
-
-    /**
      * @return string[]
      */
     public static function getSortableFields(): array
@@ -62,6 +45,23 @@ class ListFamilies implements
     public static function getFilterableFields(): array
     {
         return ['name', 'paymentStrategy', 'completionThreshold', 'weekStartDay'];
+    }
+
+    /**
+     * @return array {
+     * @type string $field Name of the field which requires a transform
+     * @type callable $callable A callable transform function `function ($value) {}`
+     * }
+     */
+    public static function getFilterTransforms(): array
+    {
+        return [
+            'weekStartDay' => function ($value) {
+                Assert::that($value)->inArray(DAYS_OF_WEEK);
+
+                return array_search($value, DAYS_OF_WEEK);
+            },
+        ];
     }
 
     public function __invoke(Request $request, Response $response, array $vars): Response
