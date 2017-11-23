@@ -27,9 +27,7 @@ class CompoundDocument implements JsonApiResource
 
     public function getRelatedResource(Relation $relation): ?JsonApiResource
     {
-        $relationship = array_pop(array_filter($this->included, function (JsonApiResource $included) use ($relation) {
-            return $included->getId() === $relation->getId() && $included->getType() == $relation->getType();
-        }));
+        $relationship = $this->filterIncludedByRelation($relation);
 
         if ($relationship instanceof JsonApiResource) {
             return $relationship;
@@ -40,9 +38,7 @@ class CompoundDocument implements JsonApiResource
 
     public function hasRelatedResource(Relation $relation): bool
     {
-        return array_pop(array_filter($this->included, function (JsonApiResource $included) use ($relation) {
-            return $included->getId() === $relation->getId() && $included->getType() == $relation->getType();
-        })) instanceof  JsonApiResource;
+        return $this->filterIncludedByRelation($relation) instanceof JsonApiResource;
     }
 
     public function getRelatedResources(): array
@@ -88,5 +84,21 @@ class CompoundDocument implements JsonApiResource
     public function hasAttribute(string $key): bool
     {
         $this->resource->hasAttribute($key);
+    }
+
+    /**
+     * @param Relation $relation
+     *
+     * @return JsonApiResource|null
+     */
+    private function filterIncludedByRelation(Relation $relation): ?JsonApiResource
+    {
+        $relationMatches = function (JsonApiResource $included) use ($relation) {
+            return $included->getId() === $relation->getId() && $included->getType() == $relation->getType();
+        };
+
+        return array_pop(
+            array_filter($this->included, $relationMatches)
+        );
     }
 }
