@@ -22,18 +22,11 @@ class FamilyRepository extends EntityRepository
      */
     public function getAll(LimitOffset $pagination, array $sorts = [], array $filters = []): Paginator
     {
-        $queryBuilder = $this->createQueryBuilder('families');
-        foreach ($filters as $filter) {
-            $queryBuilder->andWhere("families.{$filter->getField()} = :{$filter->getField()}")
-                ->setParameter($filter->getField(), $filter->getValue());
-        }
-        foreach ($sorts as $sort) {
-            $queryBuilder->orderBy("families.{$sort->getField()}", $sort->getDirection());
-        }
-
-        $paginator = new Paginator($queryBuilder);
-        $paginator->getQuery()->setFirstResult($pagination->getOffset())->setMaxResults($pagination->getLimit());
-
-        return $paginator;
+        return StandardQueryModifier::apply(
+            $this->createQueryBuilder('families'),
+            $pagination,
+            $sorts,
+            $filters
+        );
     }
 }
