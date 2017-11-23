@@ -5,48 +5,35 @@ namespace Choredo\Test\Hydrators;
 use Assert\InvalidArgumentException;
 use Assert\LazyAssertionException;
 use Choredo\Entities;
-use Choredo\JsonApiResource;
-use Choredo\Middleware\FamilyHydrator;
-use Choredo\Middleware\JsonApiResourceParser;
+use Choredo\JsonApi\JsonApiResource;
+use Choredo\JsonApi\Resource;
+use Choredo\Hydrators\FamilyHydrator;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\UuidInterface;
-use Zend\Diactoros\Response;
-use Zend\Diactoros\ServerRequest;
 use const Choredo\SHORT_DATA_FIELD_MAX_SIZE;
 
 class FamilyHydratorTest extends TestCase
 {
     protected $dataStub = [
-        'name'            => 'test family',
+        'name' => 'test family',
         'paymentStrategy' => Entities\Family::PAYMENT_STRATEGY_PER_CHORE,
-        'weekStartDay'    => 'sunday',
+        'weekStartDay' => 'sunday',
     ];
 
     public function testHydratorGeneratesIdWhenNotProvided()
     {
-        (new FamilyHydrator())(
-            $this->getRequest(),
-            (new Response()),
-            function (ServerRequest $request, Response $response) {
-                /** @var Entities\Family $family */
-                $family = $request->getAttribute('familyEntity');
-                $this->assertInstanceOf(Entities\Family::class, $family);
-                $this->assertInstanceOf(UuidInterface::class, $family->getId());
+        $family = (new FamilyHydrator())->hydrate($this->getResource());
 
-                return $response;
-            }
-        );
+        $this->assertInstanceOf(Entities\Family::class, $family);
+        $this->assertInstanceOf(UuidInterface::class, $family->getId());
+
     }
 
-    private function getRequest($id = JsonApiResourceParser::TYPE_NEW, $data = [])
+    private function getResource($id = JsonApiResource::TYPE_NEW, $data = [])
     {
         $data = array_merge($this->dataStub, $data);
 
-        return (new ServerRequest())
-            ->withAttribute(
-                'resource',
-                new JsonApiResource($id, 'family', $data)
-            );
+        return new Resource($id, 'family', $data);
     }
 
     /**
@@ -55,13 +42,7 @@ class FamilyHydratorTest extends TestCase
      */
     public function testHydratorThrowsExceptionOnInvalidId()
     {
-        (new FamilyHydrator())(
-            $this->getRequest('this_is_not_a_uuid'),
-            (new Response),
-            function (ServerRequest $request, Response $response) {
-                return $response;
-            }
-        );
+        (new FamilyHydrator())->hydrate($this->getResource('this_is_not_a_uuid'));
     }
 
     /**
@@ -74,19 +55,14 @@ class FamilyHydratorTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage($exceptionMessage);
-        (new FamilyHydrator())(
-            $this->getRequest(
+        (new FamilyHydrator())->hydrate(
+            $this->getResource(
                 'new',
                 [
-                    'paymentStrategy'     => Entities\Family::PAYMENT_STRATEGY_PER_CHILD,
+                    'paymentStrategy' => Entities\Family::PAYMENT_STRATEGY_PER_CHILD,
                     'completionThreshold' => $completionThreshold,
                 ]
-            ),
-            (new Response),
-            function (ServerRequest $request, Response $response) {
-                return $response;
-            }
-        );
+            ));
     }
 
     public function invalidPaymentStrategyCompletionThresholdCombinationsProvider(): array
@@ -116,13 +92,8 @@ class FamilyHydratorTest extends TestCase
     {
         $this->expectException(LazyAssertionException::class);
         $this->expectExceptionMessage($exceptionMessage);
-        (new FamilyHydrator())(
-            $this->getRequest('new', ['name' => $name]),
-            (new Response),
-            function (ServerRequest $request, Response $response) {
-                return $response;
-            }
-        );
+
+        (new FamilyHydrator())->hydrate($this->getResource('new', ['name' => $name]));
     }
 
     public function invalidNameProvider(): array
@@ -144,40 +115,27 @@ class FamilyHydratorTest extends TestCase
 
     public function testHydratorValidatesPaymentStrategyForPerChoreWithNullCompletionThreshold()
     {
-        (new FamilyHydrator())(
-            $this->getRequest('new', ['paymentStrategy' => Entities\Family::PAYMENT_STRATEGY_PER_CHORE]),
-            (new Response),
-            function (ServerRequest $request, Response $response) {
-                /** @var Entities\Family $family */
-                $family = $request->getAttribute('familyEntity');
-                $this->assertEquals(Entities\Family::PAYMENT_STRATEGY_PER_CHORE, $family->getPaymentStrategy());
-                $this->assertNull($family->getCompletionThreshold());
-
-                return $response;
-            }
+        $family = (new FamilyHydrator())->hydrate(
+            $this->getResource('new', ['paymentStrategy' => Entities\Family::PAYMENT_STRATEGY_PER_CHORE])
         );
+
+        $this->assertEquals(Entities\Family::PAYMENT_STRATEGY_PER_CHORE, $family->getPaymentStrategy());
+        $this->assertNull($family->getCompletionThreshold());
     }
 
     public function testHydratorValidatesPaymentStrategyPerChildWithCompletionThreshold()
     {
-        (new FamilyHydrator())(
-            $this->getRequest(
+        $family = (new FamilyHydrator())->hydrate(
+            $this->getResource(
                 'new',
                 [
-                    'paymentStrategy'     => Entities\Family::PAYMENT_STRATEGY_PER_CHORE,
+                    'paymentStrategy' => Entities\Family::PAYMENT_STRATEGY_PER_CHORE,
                     'completionThreshold' => 100,
                 ]
-            ),
-            (new Response),
-            function (ServerRequest $request, Response $response) {
-                /** @var Entities\Family $family */
-                $family = $request->getAttribute('familyEntity');
-                $this->assertEquals(Entities\Family::PAYMENT_STRATEGY_PER_CHORE, $family->getPaymentStrategy());
-                $this->assertEquals(100, $family->getCompletionThreshold());
+            ));
 
-                return $response;
-            }
-        );
+        $this->assertEquals(Entities\Family::PAYMENT_STRATEGY_PER_CHORE, $family->getPaymentStrategy());
+        $this->assertEquals(100, $family->getCompletionThreshold());
     }
 
     public function testHydratorThrowsExceptionWithInvalidStrategy()
@@ -187,13 +145,7 @@ class FamilyHydratorTest extends TestCase
             "Family::paymentStrategy: Value \"this is not a real strategy\" is not an element of" .
             " the valid values: per_child, per_chore"
         );
-        (new FamilyHydrator())(
-            $this->getRequest('new', ['paymentStrategy' => "this is not a real strategy"]),
-            (new Response),
-            function (ServerRequest $request, Response $response) {
-                return $response;
-            }
-        );
+        (new FamilyHydrator())->hydrate($this->getResource('new', ['paymentStrategy' => "this is not a real strategy"]));
     }
 
     public function testHydratorThrowsExceptionOnInvalidWeekStartDay()
@@ -203,12 +155,7 @@ class FamilyHydratorTest extends TestCase
             "Family::weekStartDay: Value \"this is not a real day\" is not an element of the valid values: sunday," .
             " monday, tuesday, wednesday, thursday, friday, saturday"
         );
-        (new FamilyHydrator())(
-            $this->getRequest('new', ['weekStartDay' => 'this is not a real day']),
-            (new Response),
-            function (ServerRequest $request, Response $response) {
-                return $response;
-            }
-        );
+        (new FamilyHydrator())->hydrate(
+            $this->getResource('new', ['weekStartDay' => 'this is not a real day']));
     }
 }

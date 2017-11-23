@@ -1,41 +1,30 @@
 <?php
 
-namespace Choredo\Middleware;
+
+namespace Choredo\Hydrators;
 
 use Assert\Assert;
 use Assert\Assertion;
+use Choredo\JsonApi\JsonApiResource;
 use Choredo\Entities;
-use Choredo\JsonApiResource;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Ramsey\Uuid\Uuid;
+
 use const Choredo\DAYS_OF_WEEK;
 use const Choredo\SHORT_DATA_FIELD_MAX_SIZE;
 
-class FamilyHydrator
+class FamilyHydrator implements Hydrator
 {
-    public function __invoke(
-        ServerRequestInterface $request,
-        ResponseInterface $response,
-        callable $next
-    ): ResponseInterface {
-        /** @var JsonApiResource $resource */
-        $resource = $request->getAttribute('resource');
-        Assertion::isInstanceOf($request->getAttribute('resource'), JsonApiResource::class);
-
+    public function hydrate(JsonApiResource $resource)
+    {
         $this->validateResource($resource);
 
-        $family = new Entities\Family(
+        return new Entities\Family(
             $resource->getId() === "new" ? Uuid::uuid4() : Uuid::fromString($resource->getId()),
             $resource->getAttribute('name'),
             $resource->getAttribute('paymentStrategy'),
             array_search($resource->getAttribute('weekStartDay'), DAYS_OF_WEEK),
             $resource->getAttribute('completionThreshold')
         );
-
-        $request = $request->withAttribute('familyEntity', $family);
-
-        return $next($request, $response);
     }
 
     private function validateResource(JsonApiResource $resource): void
