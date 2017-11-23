@@ -3,15 +3,16 @@
 namespace Choredo\Test;
 
 use Choredo\Exception\InvalidRequestException;
-use Choredo\Middleware\MultiTenantFamilyHydrator;
+use Choredo\Middleware\FamilyEntityLoader;
 use Doctrine\ORM\EntityRepository;
+use League\Route\Http\Exception\NotFoundException;
 use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Uri;
 
-class MultiTenantFamilyHydratorTest extends TestCase
+class FamilyEntityLoaderTest extends TestCase
 {
     /**
      * @var PHPUnit_Framework_MockObject_MockObject|EntityRepository
@@ -55,14 +56,14 @@ class MultiTenantFamilyHydratorTest extends TestCase
 
         $response = new Response();
 
-        $this->expectException(InvalidRequestException::class);
-        $this->expectExceptionMessage('Invalid or non-existent family requested');
+        $this->expectException(NotFoundException::class);
+        $this->expectExceptionMessage('Not Found');
 
         $this->constructSubject()($request, $response, function(){});
     }
 
     public function constructSubject()
     {
-        return new MultiTenantFamilyHydrator($this->repository);
+        return new FamilyEntityLoader($this->repository);
     }
 }

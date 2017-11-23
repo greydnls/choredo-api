@@ -4,7 +4,7 @@ namespace Choredo;
 
 use Doctrine\ORM\EntityManagerInterface;
 
-interface EntityManagerAwareInterface
+interface EntityManagerAware
 {
     public function setEntityManager(EntityManagerInterface $entityManager): void;
 }

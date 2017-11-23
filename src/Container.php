@@ -39,9 +39,9 @@ final class Container extends \League\Container\Container
 
         $this->inflector(FractalAwareInterface::class)
             ->invokeMethod('setManager', [$this->get(Manager::class)]);
+        $this->inflector(EntityManagerAware::class)
+            ->invokeMethod('setEntityManager', [$this->get(EntityManagerInterface::class)]);
         $this->inflector(LoggerAwareInterface::class)
             ->invokeMethod('setLogger', [$this->get(LoggerInterface::class)]);
-        $this->inflector(EntityManagerAwareInterface::class)
-            ->invokeMethod('setEntityManager', [$this->get(EntityManagerInterface::class)]);
     }
 }
