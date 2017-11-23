@@ -37,14 +37,8 @@ class FilterParser
 
         $filters = [];
         foreach ($filter as $field => $value) {
-            Assert::that($field)->inArray($filterableFields);
-
-            if (array_key_exists($field, $filterTransforms)) {
-                $filters[] = new Filter($field, $value, $filterTransforms[$field]);
-                continue;
-            }
-
-            $filters[] = new Filter($field, $value);
+            $transform = $filterTransforms[$field] ?? null;
+            $filters[] = new Filter($field, $value, $transform);
         }
 
         return $filters;
