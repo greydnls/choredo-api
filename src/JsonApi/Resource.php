@@ -66,7 +66,7 @@ class Resource implements JsonApiResource
         return array_key_exists($key, $this->attributes);
     }
 
-    public function hasRelationship($name): boolean
+    public function hasRelationship($name): bool
     {
         return array_key_exists($name, $this->relationships);
     }
@@ -104,7 +104,8 @@ class Resource implements JsonApiResource
     private function setRelationships(array $relationships): void
     {
         foreach ($relationships as $relationship) {
-            foreach ((array)$relationship as $relation) {
+            $relationship = is_array($relationship) ? $relationship : [$relationship];
+            foreach ($relationship as $relation) {
                 if (!$relation instanceof Relation) {
                     throw new \InvalidArgumentException('Invalid Relationship provided');
                 }

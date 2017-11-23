@@ -25,24 +25,24 @@ class CompoundDocument implements JsonApiResource
         $this->included = $includedData;
     }
 
-    public function getRelationshipResource(Relation $relation): ?JsonApiResource
+    public function getRelatedResource(Relation $relation): ?JsonApiResource
     {
-        $relationship = array_filter($this->included, function(JsonApiResource $included) use ($relation){
+        $relationship = array_pop(array_filter($this->included, function (JsonApiResource $included) use ($relation) {
             return $included->getId() === $relation->getId() && $included->getType() == $relation->getType();
-        });
+        }));
 
-        if ($relationship instanceof JsonApiResource){
+        if ($relationship instanceof JsonApiResource) {
             return $relationship;
         }
 
         throw new \InvalidArgumentException('Invalid Related Resource Requested');
     }
 
-    public function hasRelatedResource(Relation $relation) : bool
+    public function hasRelatedResource(Relation $relation): bool
     {
-        return array_filter($this->included, function(JsonApiResource $included) use ($relation){
+        return array_pop(array_filter($this->included, function (JsonApiResource $included) use ($relation) {
             return $included->getId() === $relation->getId() && $included->getType() == $relation->getType();
-        }) instanceof JsonApiResource;
+        })) instanceof  JsonApiResource;
     }
 
     public function getRelatedResources(): array
@@ -50,19 +50,19 @@ class CompoundDocument implements JsonApiResource
         return $this->included;
     }
 
-    public function hasRelationship($name): boolean
+    public function hasRelationship($name): bool
     {
         return $this->resource->hasRelationship($name);
     }
 
-    public function getRelationship($name): array
+    public function getRelationship($name, $default = [])
     {
-        return $this->resource->getRelationship($name);
+        return $this->resource->getRelationship($name, $default = []);
     }
 
     public function getRelationships(): array
     {
-       return $this->resource->getRelationships();
+        return $this->resource->getRelationships();
     }
 
     public function getId()

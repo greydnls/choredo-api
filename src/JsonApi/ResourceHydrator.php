@@ -7,6 +7,10 @@ use Ramsey\Uuid\Uuid;
 
 class ResourceHydrator
 {
+    public static function instance()
+    {
+        return new self;
+    }
     public function hydrate(string $expectedType, string $idType, array $data)
     {
         Assert::that($data)->keyExists('data');
@@ -14,7 +18,7 @@ class ResourceHydrator
 
         $this->validateResource($expectedType, $idType, $parsedBody);
 
-        return $this->hydrateResource($parsedBody, $body['included'] ?? []);
+        return $this->hydrateResource($parsedBody, $data['included'] ?? []);
     }
 
     private function hydrateRelations(array $relationships)
@@ -25,8 +29,8 @@ class ResourceHydrator
             };
 
             return (array_key_exists('id', $relation['data']))
-                ? $hydrateRelation($relation)
-                : array_map($hydrateRelation, $relation);
+                ? $hydrateRelation($relation['data'])
+                : array_map($hydrateRelation, $relation['data']);
         }, $relationships);
     }
 
@@ -49,7 +53,7 @@ class ResourceHydrator
             $parsedBody['id'],
             $parsedBody['type'],
             $parsedBody['attributes'],
-            $this->hydrateRelations($parsedBody['relationships'])
+            $this->hydrateRelations($parsedBody['relationships'] ?? [])
         );
 
         if (!empty($includedData)) {
