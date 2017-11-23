@@ -43,5 +43,7 @@ final class Container extends \League\Container\Container
             ->invokeMethod('setLogger', [$this->get(LoggerInterface::class)]);
         $this->inflector(EntityManagerAwareInterface::class)
             ->invokeMethod('setEntityManager', [$this->get(EntityManagerInterface::class)]);
+        $this->inflector(LoggerAwareInterface::class)
+            ->invokeMethod('setLogger', [$this->get(LoggerInterface::class)]);
     }
 }

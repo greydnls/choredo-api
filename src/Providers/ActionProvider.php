@@ -13,6 +13,7 @@ class ActionProvider extends AbstractServiceProvider
         Actions\Family\GetFamily::class,
         Actions\Family\CreateFamily::class,
         Actions\Family\ListFamilies::class,
+        Actions\Family\DeleteFamily::class,
         Actions\Chore\ListChores::class
     ];
 
@@ -33,6 +34,7 @@ class ActionProvider extends AbstractServiceProvider
                 $this->container->get(EntityManagerInterface::class)
             );
         });
+        $this->container->share(Actions\Family\DeleteFamily::class);
 
         $this->getContainer()->share(Actions\Chore\ListChores::class);
     }
