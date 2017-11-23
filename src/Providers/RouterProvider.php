@@ -38,6 +38,7 @@ class RouterProvider extends AbstractServiceProvider
 
                 $router->group('families/{familyId:uuid}', function (RouteGroup $routeGroup) {
                     $routeGroup->get('/', [Actions\Family\GetFamily::class, '__invoke']);
+                    $routeGroup->delete('/', [Actions\Family\DeleteFamily::class, '__invoke']);
                     $routeGroup->get('chores', [Actions\Chore\ListChores::class, '__invoke']);
                     $routeGroup->get('/chores/{choreId}', [Actions\Chore\GetChore::class, '__invoke']);
                     $routeGroup->post('/chores/', [Actions\Chore\CreateChore::class, '__invoke']);
