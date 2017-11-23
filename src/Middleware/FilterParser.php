@@ -3,8 +3,8 @@
 namespace Choredo\Middleware;
 
 use Assert\Assert;
+use Choredo\Actions\Behaviors\Filterable;
 use Choredo\Filter;
-use Choredo\Filterable;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use const Choredo\REQUEST_FILTER;
@@ -20,30 +20,33 @@ class FilterParser
             return $next($request, $response);
         };
 
-        $filters = $this->parseFilter(
-            $request->getQueryParams()[REQUEST_FILTER] ?? [],
-            $handler::getFilterableFields()
-        );
-
-        if (empty($filters)) {
+        $filter = $request->getQueryParams()[REQUEST_FILTER] ?? [];
+        if (empty($filter)) {
             return $next($request, $response);
         }
+
+        $filters = $this->parseFilter($filter, $handler::getFilterableFields(), $handler::getFilterTransforms());
 
         return $next($request->withAttribute(REQUEST_FILTER, $filters), $response);
     }
 
-    private function parseFilter(array $filter, array $filterableFields): array
+    private function parseFilter(array $filter, array $filterableFields, array $filterTransforms = []): array
     {
+        // No filters should exist in the keys of the $filter hash that are not in the filterable fields array
+        Assert::that(count(array_diff(array_keys($filter), $filterableFields)))->eq(0);
+
         $filters = [];
         foreach ($filter as $field => $value) {
-            Assert::that($field)->inArray(array_keys($filterableFields));
-            if (is_callable($filterableFields[$field])) {
-                $filters[] = new Filter($field, $value, $filterableFields[$field]);
+            Assert::that($field)->inArray($filterableFields);
+
+            if (array_key_exists($field, $filterTransforms)) {
+                $filters[] = new Filter($field, $value, $filterTransforms[$field]);
                 continue;
             }
 
             $filters[] = new Filter($field, $value);
         }
+
         return $filters;
     }
 }

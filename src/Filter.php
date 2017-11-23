@@ -37,10 +37,6 @@ class Filter
 
     public function getValue()
     {
-        if (is_callable($this->transform)) {
-            return call_user_func($this->transform, $this->value);
-        }
-
-        return $this->value;
+        return is_callable($this->transform) ? call_user_func($this->transform, $this->value) : $this->value;
     }
 }
