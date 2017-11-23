@@ -5,8 +5,8 @@ namespace Choredo\Providers;
 
 use Choredo\Actions;
 use Choredo\Hydrators\FamilyHydrator;
+use Choredo\Middleware\FamilyEntityLoader;
 use Choredo\Middleware\FilterParser;
-use Choredo\Middleware\MultiTenantFamilyHydrator;
 use Choredo\Middleware\PaginationParser;
 use Choredo\Middleware\ResourceHydrator;
 use Choredo\Middleware\SortParser;
@@ -43,7 +43,7 @@ class RouterProvider extends AbstractServiceProvider
                     $routeGroup->post('/chores/', [Actions\Chore\CreateChore::class, '__invoke']);
                     $routeGroup->put('/chores/{choreId}', [Actions\Chore\UpdateChore::class, '__invoke']);
                     $routeGroup->delete('/chores/{choreId}', [Actions\Chore\DeleteChore::class, '__invoke']);
-                })->middleware($this->container->get(MultiTenantFamilyHydrator::class));
+                })->middleware($this->container->get(FamilyEntityLoader::class));
 
                 // Global middleware
                 $router->middleware(new PaginationParser());
