@@ -21,6 +21,8 @@ class FamilyTransformerTest extends TestCase
     public function testDayOfWeekConversion(Uuid $id, string $name, $paymentStrategy, $weekStartDay, $weekStartDayText)
     {
         $family = new Entities\Family($id, $name, $paymentStrategy, $weekStartDay);
+        $family->updateCreatedDate();
+        $family->updateUpdatedDate();
 
         $transformer = new Transformers\FamilyTransformer();
         $resource = $transformer->transform($family);
