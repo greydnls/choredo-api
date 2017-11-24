@@ -3,6 +3,7 @@
 namespace Choredo\Entities;
 
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\UuidInterface;
 
 /**
  * @package Choredo\Entities
@@ -69,7 +70,7 @@ class Account
      * @var \DateTime
      *
      * @ORM\Column(
-     *     type="string",
+     *     type="datetime",
      *     name ="last_login"
      * )
      */
@@ -77,6 +78,7 @@ class Account
 
     /**
      * Account constructor.
+     * @param UuidInterface $id
      * @param string $emailAddress
      * @param string $firstName
      * @param string $lastName
@@ -86,6 +88,7 @@ class Account
      * @param Family $family
      */
     public function __construct(
+        UuidInterface $id,
         string $emailAddress,
         string $firstName,
         string $lastName,
@@ -94,6 +97,7 @@ class Account
         \DateTime $lastLogin,
         Family $family
     ) {
+        $this->id = $id;
         $this->emailAddress = $emailAddress;
         $this->firstName = $firstName;
         $this->lastName = $lastName;

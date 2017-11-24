@@ -276,12 +276,15 @@ class ResourceHydratorTest extends TestCase
             $data
         );
 
-        $this->assertInstanceOf(CompoundDocument::class, $result);
+        $this->assertInstanceOf(Resource::class, $result);
         $this->assertTrue($result->hasRelationship('friend'));
 
+        /** @var Relation $relation */
         $relation = $result->getRelationship('friend');
 
-        $this->assertTrue($result->hasRelatedResource($relation));
-        $this->assertInstanceOf(JsonApiResource::class, $result->getRelatedResource($relation));
+        $this->assertTrue($relation->isLoaded());
+        $this->assertInstanceOf(Relation::class, $relation);
+        $this->assertSame('friend', $relation->getType());
+        $this->assertSame('Jim', $relation->getAttribute('name'));
     }
 }

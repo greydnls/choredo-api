@@ -4,38 +4,73 @@
 namespace Choredo\JsonApi;
 
 
-class Relation
+class Relation implements JsonApiResource
 {
     /**
-     * @var string
+     * @var JsonApiResource
      */
-    private $type;
-    private $id;
+    private $resource;
+    /**
+     * @var bool
+     */
+    private $isLoaded;
 
     /**
      * Relationship constructor.
-     * @param string $type
-     * @param $id
+     * @param JsonApiResource $resource
+     * @param bool $isLoaded
      */
-    public function __construct(string $type, $id)
+    public function __construct(JsonApiResource $resource, bool $isLoaded = true)
     {
-        $this->type = $type;
-        $this->id = $id;
+        $this->resource = $resource;
+        $this->isLoaded = $isLoaded;
     }
 
     /**
-     * @return string
+     * @return bool
      */
-    public function getType(): string
+    public function isLoaded(): bool
     {
-        return $this->type;
+        return $this->isLoaded;
     }
 
-    /**
-     * @return mixed
-     */
     public function getId()
     {
-        return $this->id;
+        return $this->resource->getId();
+    }
+
+    public function getType(): string
+    {
+        return $this->resource->getType();
+    }
+
+    public function getAttributes(): array
+    {
+        return $this->resource->getAttributes();
+    }
+
+    public function getAttribute(string $key, $default = null)
+    {
+        return $this->resource->getAttribute($key, $default);
+    }
+
+    public function hasAttribute(string $key): bool
+    {
+        return $this->resource->hasAttribute($key);
+    }
+
+    public function hasRelationship($name): bool
+    {
+        return $this->resource->hasRelationship($name);
+    }
+
+    public function getRelationship($name, $default = [])
+    {
+        return $this->resource->getRelationship($name, $default);
+    }
+
+    public function getRelationships(): array
+    {
+        return $this->resource->getRelationships();
     }
 }

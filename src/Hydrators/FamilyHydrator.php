@@ -19,7 +19,7 @@ class FamilyHydrator implements Hydrator
         $this->validateResource($resource);
 
         return new Entities\Family(
-            $resource->getId() === "new" ? Uuid::uuid4() : Uuid::fromString($resource->getId()),
+            $resource->getId() === JsonApiResource::TYPE_NEW ? Uuid::uuid4() : Uuid::fromString($resource->getId()),
             $resource->getAttribute('name'),
             $resource->getAttribute('paymentStrategy'),
             array_search($resource->getAttribute('weekStartDay'), DAYS_OF_WEEK),
@@ -29,7 +29,7 @@ class FamilyHydrator implements Hydrator
 
     private function validateResource(JsonApiResource $resource): void
     {
-        if ($resource->getId() !== "new") {
+        if ($resource->getId() !== JsonApiResource::TYPE_NEW) {
             Assertion::uuid($resource->getId());
         }
 

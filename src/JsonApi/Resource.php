@@ -103,11 +103,11 @@ class Resource implements JsonApiResource
      */
     private function setRelationships(array $relationships): void
     {
-        foreach ($relationships as $relationship) {
+        foreach ($relationships as $name => $relationship) {
             $relationship = is_array($relationship) ? $relationship : [$relationship];
             foreach ($relationship as $relation) {
-                if (!$relation instanceof Relation) {
-                    throw new \InvalidArgumentException('Invalid Relationship provided');
+                if (!$relation instanceof Relation && $relation !== null) {
+                    throw new \InvalidArgumentException('Invalid '.$name.' Relationship provided');
                 }
             }
         }

@@ -11,6 +11,7 @@ class ResourceHydrator
     {
         return new self;
     }
+
     public function hydrate(string $expectedType, string $idType, array $data)
     {
         Assert::that($data)->keyExists('data');
@@ -21,11 +22,22 @@ class ResourceHydrator
         return $this->hydrateResource($parsedBody, $data['included'] ?? []);
     }
 
-    private function hydrateRelations(array $relationships)
+    private function hydrateRelations(array $relationships, array $includedData)
     {
-        return array_map(function ($relation) {
-            $hydrateRelation = function (array $relation) {
-                return new Relation($relation['type'], $relation['id']);
+        return array_map(function ($relation) use ($includedData) {
+            if (empty($relation['data'])){
+                return null;
+            }
+            $hydrateRelation = function (array $relation) use ($includedData) {
+                $included = array_filter($includedData, function ($included) use ($relation) {
+                    return $included['id'] === $relation['id'] && $included['type'] == $relation['type'];
+                });
+
+                [$relation, $isLoaded] = (!empty($included))
+                    ? [current($included), true]
+                    : [$relation, false];
+
+                return  new Relation($this->hydrateResource($relation), $isLoaded);
             };
 
             return (array_key_exists('id', $relation['data']))
@@ -34,32 +46,22 @@ class ResourceHydrator
         }, $relationships);
     }
 
-    private function hydrateIncluded(array $included)
-    {
-        return array_map(function ($includedResource) {
-            return $this->hydrateResource($includedResource);
-        }, $included);
-    }
-
     /**
      * @param $parsedBody
      * @param array $includedData
      *
      * @return JsonApiResource
      */
-    private function hydrateResource($parsedBody, $includedData = []) : JsonApiResource
+    private function hydrateResource(array $parsedBody, $includedData = []): JsonApiResource
     {
-        $resource = new Resource(
+        $relations = $this->hydrateRelations($parsedBody['relationships'] ?? [], $includedData);
+
+        return new Resource(
             $parsedBody['id'],
             $parsedBody['type'],
-            $parsedBody['attributes'],
-            $this->hydrateRelations($parsedBody['relationships'] ?? [])
+            $parsedBody['attributes'] ?? [],
+            $relations
         );
-
-        if (!empty($includedData)) {
-            $resource = new CompoundDocument($resource, $this->hydrateIncluded($includedData));
-        }
-        return $resource;
     }
 
     private function validateResource($expectedType, $idType, $parsedBody)
@@ -69,11 +71,16 @@ class ResourceHydrator
             ->keyExists('attributes')
             ->keyExists('id')
             ->keyExists('type')
-            ->that($parsedBody['attributes'], 'request::body::attributes')
-            ->isArray()
             ->that($parsedBody['type'], 'request::body::type')
             ->eq($expectedType)
             ->verifyNow();
+
+        if (array_key_exists('attributes', $parsedBody)) {
+            Assert::lazy()
+                ->that($parsedBody['attributes'], 'request::body::attributes')
+                ->isArray()
+                ->verifyNow();
+        }
 
         if ($idType === JsonApiResource::TYPE_UUID) {
             Assert::lazy()
