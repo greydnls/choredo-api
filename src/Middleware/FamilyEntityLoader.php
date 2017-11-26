@@ -3,12 +3,13 @@
 
 namespace Choredo\Middleware;
 
-use Choredo\Exception\InvalidRequestException;
 use Doctrine\ORM\EntityRepository;
+use League\Route\Http\Exception\NotFoundException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use const Choredo\REQUEST_FAMILY;
 
-class MultiTenantFamilyHydrator
+class FamilyEntityLoader
 {
     private $repository;
 
@@ -32,10 +33,10 @@ class MultiTenantFamilyHydrator
         $family = $this->repository->findOneBy(['id' => $familyId]);
 
         if ($family == null) {
-            throw new InvalidRequestException("Invalid or non-existent family requested");
+            throw new NotFoundException();
         }
 
-        $request = $request->withAttribute('family', $family);
+        $request = $request->withAttribute(REQUEST_FAMILY, $family);
 
         return $next($request, $response);
     }
