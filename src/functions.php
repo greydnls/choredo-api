@@ -11,6 +11,7 @@ namespace Choredo {
     const REQUEST_RESOURCE = 'request-resource';
     const REQUEST_SORT = 'sort';
     const REQUEST_FILTER = 'filter';
+    const REQUEST_FAMILY = 'request-family';
 
     function getBaseUrl(): string
     {

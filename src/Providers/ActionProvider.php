@@ -3,8 +3,6 @@
 namespace Choredo\Providers;
 
 use Choredo\Actions;
-use Choredo\Hydrators;
-use Doctrine\ORM\EntityManagerInterface;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
 class ActionProvider extends AbstractServiceProvider
@@ -28,12 +26,9 @@ class ActionProvider extends AbstractServiceProvider
         // Families
         $this->container->share(Actions\Family\GetFamily::class);
         $this->container->share(Actions\Family\ListFamilies::class);
-        $this->container->share(Actions\Family\CreateFamily::class, function () {
-            return new Actions\Family\CreateFamily(
-                $this->container->get(EntityManagerInterface::class)
-            );
-        });
+        $this->container->share(Actions\Family\CreateFamily::class);
 
-        $this->getContainer()->share(Actions\Chore\ListChores::class);
+        // Chores
+        $this->container->share(Actions\Chore\ListChores::class);
     }
 }

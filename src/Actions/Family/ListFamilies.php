@@ -5,7 +5,7 @@ namespace Choredo\Actions\Family;
 use Assert\Assert;
 use Choredo\Actions\Behaviors;
 use Choredo\Entities\Family;
-use Choredo\EntityManagerAwareInterface;
+use Choredo\EntityManagerAware;
 use Choredo\HasEntityManager;
 use Choredo\Output;
 use Choredo\Transformers\FamilyTransformer;
@@ -18,7 +18,7 @@ use const Choredo\REQUEST_PAGINATION;
 use const Choredo\REQUEST_SORT;
 
 class ListFamilies implements
-    EntityManagerAwareInterface,
+    EntityManagerAware,
     Output\FractalAwareInterface,
     Behaviors\Filterable,
     Behaviors\Pageable,
