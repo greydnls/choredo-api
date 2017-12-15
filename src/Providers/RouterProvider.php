@@ -4,6 +4,7 @@
 namespace Choredo\Providers;
 
 use Choredo\Actions;
+use Choredo\Hydrators\AccountHydrator;
 use Choredo\Hydrators\FamilyHydrator;
 use Choredo\Middleware\FamilyEntityLoader;
 use Choredo\Middleware\FilterParser;
@@ -31,6 +32,8 @@ class RouterProvider extends AbstractServiceProvider
             \League\Route\RouteCollection::class,
             function (): RouteCollection {
                 $router = new RouteCollection($this->container);
+                $router->post('/register', [Actions\Register::class, '__invoke'])
+                    ->middlewares(ResourceHydrator::newType('accounts', new AccountHydrator()));
 
                 $router->get('families', [Actions\Family\ListFamilies::class, '__invoke']);
                 $router->post('/families', [Actions\Family\CreateFamily::class, '__invoke'])

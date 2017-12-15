@@ -8,6 +8,7 @@ use League\Container\ServiceProvider\AbstractServiceProvider;
 class ActionProvider extends AbstractServiceProvider
 {
     protected $provides = [
+        Actions\Register::class,
         Actions\Family\GetFamily::class,
         Actions\Family\CreateFamily::class,
         Actions\Family\ListFamilies::class,
@@ -23,6 +24,9 @@ class ActionProvider extends AbstractServiceProvider
      */
     public function register()
     {
+        // Register
+        $this->container->share(Actions\Register::class);
+
         // Families
         $this->container->share(Actions\Family\GetFamily::class);
         $this->container->share(Actions\Family\ListFamilies::class);
