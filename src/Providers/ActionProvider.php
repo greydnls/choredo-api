@@ -25,11 +25,7 @@ class ActionProvider extends AbstractServiceProvider
     public function register()
     {
         // Register
-        $this->container->share(Actions\Register::class, function () {
-            return new Actions\Register(
-                $this->container->get(EntityManagerInterface::class)
-            );
-        });
+        $this->container->share(Actions\Register::class);
 
         // Families
         $this->container->share(Actions\Family\GetFamily::class);
