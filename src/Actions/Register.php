@@ -3,7 +3,7 @@
 namespace Choredo\Actions;
 
 use Choredo\Entities\Account;
-use Choredo\EntityManagerAwareInterface;
+use Choredo\EntityManagerAware;
 use Choredo\HasEntityManager;
 use Choredo\Output\CreatesFractalScope;
 use Choredo\Output\FractalAwareInterface;
@@ -16,7 +16,7 @@ use Psr\Log\LoggerAwareTrait;
 use Teapot\StatusCode\Http;
 use Zend\Diactoros\Response\JsonResponse;
 
-class Register implements EntityManagerAwareInterface, FractalAwareInterface, LoggerAwareInterface
+class Register implements EntityManagerAware, FractalAwareInterface, LoggerAwareInterface
 {
     use CreatesFractalScope;
     use HasEntityManager;
