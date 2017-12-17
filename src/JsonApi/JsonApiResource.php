@@ -3,7 +3,6 @@
 
 namespace Choredo\JsonApi;
 
-
 interface JsonApiResource
 {
     const TYPE_UUID = 'uuid';

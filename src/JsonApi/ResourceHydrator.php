@@ -25,7 +25,7 @@ class ResourceHydrator
     private function hydrateRelations(array $relationships, array $includedData)
     {
         return array_map(function ($relation) use ($includedData) {
-            if (empty($relation['data'])){
+            if (empty($relation['data'])) {
                 return null;
             }
             $hydrateRelation = function (array $relation) use ($includedData) {
@@ -95,6 +95,5 @@ class ResourceHydrator
                 ->eq(JsonApiResource::TYPE_NEW)
                 ->verifyNow();
         }
-
     }
 }
