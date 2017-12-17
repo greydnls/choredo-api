@@ -21,7 +21,7 @@
     "require-dev": {
         "filp/whoops": "^2.1",
         "friendsofphp/php-cs-fixer": "^2.8",
-        "fzaninotto/faker": "~1.4",
+        "fzaninotto/faker": "^1.7",
         "mockery/mockery": "~0.9",
         "phpunit/phpunit": "~6.0",
         "squizlabs/php_codesniffer": "^3.1"

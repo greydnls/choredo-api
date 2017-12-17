@@ -2,6 +2,7 @@
 
 namespace Choredo\Providers;
 
+use Choredo\Entities\Filters\FamilyFilter;
 use Doctrine\Common;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM;
@@ -45,6 +46,8 @@ class EntityManagerProvider extends AbstractServiceProvider
                 $config->setAutoGenerateProxyClasses(Common\Proxy\AbstractProxyFactory::AUTOGENERATE_ALWAYS);
             }
 
+            $config->addFilter("family", FamilyFilter::class);
+
             $dbParams = [
                 'driver'   => 'pdo_pgsql',
                 'user'     => getenv('DB_USER'),
@@ -53,7 +56,8 @@ class EntityManagerProvider extends AbstractServiceProvider
                 'dbname'   => getenv('DB_DATABASE') ?? 'choredo',
             ];
 
-            return ORM\EntityManager::create($dbParams, $config);
+            $orm = ORM\EntityManager::create($dbParams, $config);
+            $orm->getFilters()->enable('family');          // This is on by default to enforce tenant segregation
         });
     }
 }
