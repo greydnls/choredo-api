@@ -44,13 +44,11 @@ class ListAccounts implements
      */
     public static function getSortableFields(): array
     {
-        return ['createdDate', 'lastLogin'];
+        return ['createdDate', 'lastLogin', 'firstName', 'lastName'];
     }
 
     public function __invoke(Request $request, Response $response, array $vars): Response
     {
-
-
         /** @var \Choredo\LimitOffset $pagination */
         $pagination = $request->getAttribute(REQUEST_PAGINATION);
 
