@@ -8,7 +8,7 @@ use Ramsey\Uuid\UuidInterface;
 /**
  * @package Choredo\Entities
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Choredo\Repositories\AccountRepository")
  * @ORM\Table(name="accounts")
  * @ORM\HasLifeCycleCallbacks
  */
@@ -18,6 +18,8 @@ class Account
     use Behaviors\HasCreatedDate;
     use Behaviors\HasUpdatedDate;
     use Behaviors\BelongsToFamily;
+
+    const API_ENTITY_TYPE = 'accounts';
 
     /**
      * @var string

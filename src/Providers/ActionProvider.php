@@ -12,6 +12,8 @@ class ActionProvider extends AbstractServiceProvider
         Actions\Family\GetFamily::class,
         Actions\Family\CreateFamily::class,
         Actions\Family\ListFamilies::class,
+        Actions\Account\GetAccount::class,
+        Actions\Account\ListAccounts::class,
         Actions\Chore\ListChores::class
     ];
 
@@ -31,6 +33,10 @@ class ActionProvider extends AbstractServiceProvider
         $this->container->share(Actions\Family\GetFamily::class);
         $this->container->share(Actions\Family\ListFamilies::class);
         $this->container->share(Actions\Family\CreateFamily::class);
+
+        // Accounts
+        $this->container->share(Actions\Account\ListAccounts::class);
+        $this->container->share(Actions\Account\GetAccount::class);
 
         // Chores
         $this->container->share(Actions\Chore\ListChores::class);

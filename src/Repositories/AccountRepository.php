@@ -8,7 +8,11 @@ use Choredo\Sort;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 
-class ChildRepository extends EntityRepository
+/**
+ * Class AccountRepository
+ * @package Choredo\Repositories
+ */
+class AccountRepository extends EntityRepository
 {
     /**
      * @param LimitOffset $pagination
@@ -19,7 +23,7 @@ class ChildRepository extends EntityRepository
     public function getAll(LimitOffset $pagination, array $sorts = [], array $filters = []): Paginator
     {
         return StandardQueryModifier::apply(
-            $this->createQueryBuilder('children'),
+            $this->createQueryBuilder('accounts'),
             $pagination,
             $sorts,
             $filters

@@ -3,7 +3,6 @@
 
 namespace Choredo\JsonApi;
 
-
 class Relation implements JsonApiResource
 {
     /**
