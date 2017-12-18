@@ -16,7 +16,7 @@ return PhpCsFixer\Config::create()
         'concat_space'                          => ['spacing' => 'one'],
         'declare_strict_types'                  => true,
         'dir_constant'                          => true,
-        'increment_style'                       => ['style' => 'post'],
+        'increment_style'                       => false,
         'linebreak_after_opening_tag'           => true,
         'mb_str_functions'                      => true,
         'no_null_property_initialization'       => true,
@@ -28,7 +28,6 @@ return PhpCsFixer\Config::create()
         'ordered_imports'                       => true,
         'phpdoc_order'                          => true,
         'psr4'                                  => true,
-        'strict_param'                          => true,
         'yoda_style'                            => [
             'equal' => false,
             'identical' => false,
