@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Choredo\Actions\Chore;
 
 use Choredo\Output\CreatesFractalScope;
-use Choredo\Output\FractalAwareInterface;
+use Choredo\Output\FractalAware;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\JsonResponse;
 
-class GetChore implements FractalAwareInterface
+class GetChore implements FractalAware
 {
     use CreatesFractalScope;
 

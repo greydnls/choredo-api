@@ -6,7 +6,7 @@ namespace Choredo\Output;
 
 use League\Fractal\Manager;
 
-interface FractalAwareInterface
+interface FractalAware
 {
     /**
      * @param Manager $manager

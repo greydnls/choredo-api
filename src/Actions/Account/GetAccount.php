@@ -8,7 +8,7 @@ use Choredo\Entities\Account;
 use Choredo\EntityManagerAware;
 use Choredo\HasEntityManager;
 use Choredo\Output\CreatesFractalScope;
-use Choredo\Output\FractalAwareInterface;
+use Choredo\Output\FractalAware;
 use Choredo\Transformers;
 use League\Route\Http\Exception\NotFoundException;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -16,7 +16,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Zend\Diactoros\Response\JsonResponse;
 use const Choredo\REQUEST_FAMILY;
 
-class GetAccount implements FractalAwareInterface, EntityManagerAware
+class GetAccount implements FractalAware, EntityManagerAware
 {
     use CreatesFractalScope;
     use HasEntityManager;

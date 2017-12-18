@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Choredo\Actions\Family;
 
 use Choredo\Output\CreatesFractalScope;
-use Choredo\Output\FractalAwareInterface;
+use Choredo\Output\FractalAware;
 use Choredo\Transformers;
 use League\Route\Http\Exception\NotFoundException;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -13,7 +13,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Zend\Diactoros\Response\JsonResponse;
 use const Choredo\REQUEST_FAMILY;
 
-class GetFamily implements FractalAwareInterface
+class GetFamily implements FractalAware
 {
     use CreatesFractalScope;
 

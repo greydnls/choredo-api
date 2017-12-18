@@ -19,7 +19,7 @@ use const Choredo\REQUEST_FILTER;
 use const Choredo\REQUEST_PAGINATION;
 use const Choredo\REQUEST_SORT;
 
-class ListFamilies implements EntityManagerAware, Output\FractalAwareInterface, Behaviors\Filterable, Behaviors\Pageable, Behaviors\Sortable
+class ListFamilies implements EntityManagerAware, Output\FractalAware, Behaviors\Filterable, Behaviors\Pageable, Behaviors\Sortable
 {
     use Output\CreatesFractalScope;
     use HasEntityManager;

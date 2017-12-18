@@ -7,7 +7,7 @@ namespace Choredo\Actions\Family;
 use Choredo\EntityManagerAware;
 use Choredo\HasEntityManager;
 use Choredo\Output\CreatesFractalScope;
-use Choredo\Output\FractalAwareInterface;
+use Choredo\Output\FractalAware;
 use Choredo\Transformers\FamilyTransformer;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -17,7 +17,7 @@ use Teapot\StatusCode as Http;
 use Zend\Diactoros\Response\JsonResponse;
 use const Choredo\REQUEST_RESOURCE;
 
-class CreateFamily implements FractalAwareInterface, LoggerAwareInterface, EntityManagerAware
+class CreateFamily implements FractalAware, LoggerAwareInterface, EntityManagerAware
 {
     use CreatesFractalScope;
     use LoggerAwareTrait;
