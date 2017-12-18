@@ -6,6 +6,7 @@ namespace Choredo\Providers;
 
 use Choredo\Actions;
 use Choredo\Hydrators\AccountHydrator;
+use Choredo\Hydrators\ChildHydrator;
 use Choredo\Hydrators\FamilyHydrator;
 use Choredo\Middleware\FamilyEntityLoader;
 use Choredo\Middleware\FilterParser;
@@ -44,12 +45,20 @@ class RouterProvider extends AbstractServiceProvider
                     $routeGroup->get('/', [Actions\Family\GetFamily::class, '__invoke']);
                     $routeGroup->get('/accounts/{accountId:uuid}', [Actions\Account\GetAccount::class, '__invoke']);
                     $routeGroup->get('/accounts', [Actions\Account\ListAccounts::class, '__invoke']);
+
+                    // Children
+
                     $routeGroup->get('chores', [Actions\Chore\ListChores::class, '__invoke']);
                     $routeGroup->get('/chores/{choreId}', [Actions\Chore\GetChore::class, '__invoke']);
                     $routeGroup->post('/chores/', [Actions\Chore\CreateChore::class, '__invoke']);
                     $routeGroup->put('/chores/{choreId}', [Actions\Chore\UpdateChore::class, '__invoke']);
                     $routeGroup->delete('/chores/{choreId}', [Actions\Chore\DeleteChore::class, '__invoke']);
                 })->middleware($this->container->get(FamilyEntityLoader::class));
+
+                $router->post('/families/{familyId:uuid}/children', [Actions\Child\CreateChild::class, '__invoke'])
+                       ->middleware(ResourceHydrator::newType('children', new ChildHydrator()))
+                       ->middleware($this->container->get(FamilyEntityLoader::class))
+                ;
 
                 // Global middleware
                 $router->middleware(new PaginationParser());
