@@ -144,7 +144,7 @@ class ResourceHydratorTest extends TestCase
 
     public function testHydratesResourceWithUuidIdType()
     {
-        $id   = Uuid::uuid4();
+        $id   = Uuid::uuid4()->toString();
         $data = [
             'data' => [
                 'id'         => $id,
@@ -168,7 +168,7 @@ class ResourceHydratorTest extends TestCase
 
     public function testHydratesResourceWithSingleEntityRelationship()
     {
-        $id   = Uuid::uuid4();
+        $id   = Uuid::uuid4()->toString();
         $data = [
             'data' => [
                 'id'         => $id,
@@ -201,7 +201,7 @@ class ResourceHydratorTest extends TestCase
 
     public function testHydratesResourceWithEntityArrayRelationship()
     {
-        $id   = Uuid::uuid4();
+        $id   = Uuid::uuid4()->toString();
         $data = [
             'data' => [
                 'id'         => $id,
@@ -243,7 +243,7 @@ class ResourceHydratorTest extends TestCase
 
     public function testHydratesRelationshipWithIncludedResource()
     {
-        $id   = Uuid::uuid4();
+        $id   = Uuid::uuid4()->toString();
         $data = [
             'data' => [
                 'id'         => $id,
