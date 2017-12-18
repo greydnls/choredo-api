@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Choredo\Response;
 
 use Zend\Diactoros\Response\JsonResponse;

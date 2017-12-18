@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Choredo\Test\Hydrators;
 
 use Assert\InvalidArgumentException;
 use Assert\LazyAssertionException;
 use Choredo\Entities;
+use Choredo\Hydrators\FamilyHydrator;
 use Choredo\JsonApi\JsonApiResource;
 use Choredo\JsonApi\Resource;
-use Choredo\Hydrators\FamilyHydrator;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\UuidInterface;
 use const Choredo\SHORT_DATA_FIELD_MAX_SIZE;
@@ -15,9 +17,9 @@ use const Choredo\SHORT_DATA_FIELD_MAX_SIZE;
 class FamilyHydratorTest extends TestCase
 {
     protected $dataStub = [
-        'name' => 'test family',
+        'name'            => 'test family',
         'paymentStrategy' => Entities\Family::PAYMENT_STRATEGY_PER_CHORE,
-        'weekStartDay' => 'sunday',
+        'weekStartDay'    => 'sunday',
     ];
 
     public function testHydratorGeneratesIdWhenNotProvided()
@@ -26,18 +28,10 @@ class FamilyHydratorTest extends TestCase
 
         $this->assertInstanceOf(Entities\Family::class, $family);
         $this->assertInstanceOf(UuidInterface::class, $family->getId());
-
-    }
-
-    private function getResource($id = JsonApiResource::TYPE_NEW, $data = [])
-    {
-        $data = array_merge($this->dataStub, $data);
-
-        return new Resource($id, 'family', $data);
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Value "this_is_not_a_uuid" is not a valid UUID.
      */
     public function testHydratorThrowsExceptionOnInvalidId()
@@ -59,7 +53,7 @@ class FamilyHydratorTest extends TestCase
             $this->getResource(
                 'new',
                 [
-                    'paymentStrategy' => Entities\Family::PAYMENT_STRATEGY_PER_CHILD,
+                    'paymentStrategy'     => Entities\Family::PAYMENT_STRATEGY_PER_CHILD,
                     'completionThreshold' => $completionThreshold,
                 ]
             ));
@@ -68,16 +62,16 @@ class FamilyHydratorTest extends TestCase
     public function invalidPaymentStrategyCompletionThresholdCombinationsProvider(): array
     {
         return [
-            [null, "Family::completionThreshold: Value \"<NULL>\" is null, but non null value was expected."],
+            [null, 'Family::completionThreshold: Value "<NULL>" is null, but non null value was expected.'],
             [
                 Entities\Family::MIN_COMPLETION_THRESHOLD - 1,
-                "Family::completionThreshold: Provided \"-1\" is neither greater than or equal to \"0\" " .
-                "nor less than or equal to \"100\".",
+                'Family::completionThreshold: Provided "-1" is neither greater than or equal to "0" ' .
+                'nor less than or equal to "100".',
             ],
             [
                 Entities\Family::MAX_COMPLETION_THRESHOLD + 1,
-                "Family::completionThreshold: Provided \"101\" is neither greater than or equal to \"0\" " .
-                "nor less than or equal to \"100\"",
+                'Family::completionThreshold: Provided "101" is neither greater than or equal to "0" ' .
+                'nor less than or equal to "100"',
             ],
         ];
     }
@@ -100,15 +94,15 @@ class FamilyHydratorTest extends TestCase
     {
         return [
             [
-                "",
-                "Family::name: Value \"\" is too short, it should have at least 1 characters," .
-                " but only has 0 characters.",
+                '',
+                'Family::name: Value "" is too short, it should have at least 1 characters,' .
+                ' but only has 0 characters.',
             ],
             [
                 str_repeat('a', SHORT_DATA_FIELD_MAX_SIZE + 1),
-                "Family::name: Value \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" .
-                "aaaaaaaaaaaaaaaaaaaaaa...\" is too long, it should have no more than 255 characters, but has 256 " .
-                "characters.",
+                'Family::name: Value "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' .
+                'aaaaaaaaaaaaaaaaaaaaaa..." is too long, it should have no more than 255 characters, but has 256 ' .
+                'characters.',
             ],
         ];
     }
@@ -129,7 +123,7 @@ class FamilyHydratorTest extends TestCase
             $this->getResource(
                 'new',
                 [
-                    'paymentStrategy' => Entities\Family::PAYMENT_STRATEGY_PER_CHORE,
+                    'paymentStrategy'     => Entities\Family::PAYMENT_STRATEGY_PER_CHORE,
                     'completionThreshold' => 100,
                 ]
             ));
@@ -142,20 +136,27 @@ class FamilyHydratorTest extends TestCase
     {
         $this->expectException(LazyAssertionException::class);
         $this->expectExceptionMessage(
-            "Family::paymentStrategy: Value \"this is not a real strategy\" is not an element of" .
-            " the valid values: per_child, per_chore"
+            'Family::paymentStrategy: Value "this is not a real strategy" is not an element of' .
+            ' the valid values: per_child, per_chore'
         );
-        (new FamilyHydrator())->hydrate($this->getResource('new', ['paymentStrategy' => "this is not a real strategy"]));
+        (new FamilyHydrator())->hydrate($this->getResource('new', ['paymentStrategy' => 'this is not a real strategy']));
     }
 
     public function testHydratorThrowsExceptionOnInvalidWeekStartDay()
     {
         $this->expectException(LazyAssertionException::class);
         $this->expectExceptionMessage(
-            "Family::weekStartDay: Value \"this is not a real day\" is not an element of the valid values: sunday," .
-            " monday, tuesday, wednesday, thursday, friday, saturday"
+            'Family::weekStartDay: Value "this is not a real day" is not an element of the valid values: sunday,' .
+            ' monday, tuesday, wednesday, thursday, friday, saturday'
         );
         (new FamilyHydrator())->hydrate(
             $this->getResource('new', ['weekStartDay' => 'this is not a real day']));
+    }
+
+    private function getResource($id = JsonApiResource::TYPE_NEW, $data = [])
+    {
+        $data = array_merge($this->dataStub, $data);
+
+        return new Resource($id, 'family', $data);
     }
 }

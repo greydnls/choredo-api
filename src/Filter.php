@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Choredo;
 
 class Filter
@@ -19,14 +21,15 @@ class Filter
 
     /**
      * Filter constructor.
-     * @param string $field
-     * @param mixed $value
+     *
+     * @param string        $field
+     * @param mixed         $value
      * @param callable|null $transform
      */
     public function __construct(string $field, $value, callable $transform = null)
     {
-        $this->field = $field;
-        $this->value = $value;
+        $this->field     = $field;
+        $this->value     = $value;
         $this->transform = $transform;
     }
 

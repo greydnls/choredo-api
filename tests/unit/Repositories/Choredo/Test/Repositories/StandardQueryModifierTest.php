@@ -1,10 +1,9 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Choredo\Test\Repositories;
 
-
-use Choredo\Actions\Behaviors\Sortable;
 use Choredo\Filter;
 use Choredo\LimitOffset;
 use Choredo\Repositories\StandardQueryModifier;
@@ -54,7 +53,7 @@ class StandardQueryModifierTest extends TestCase
         $pagination = $this->createMock(LimitOffset::class);
 
         $sorts = [
-            new Sort('name', Sort::DIRECTION_ASCENDING)
+            new Sort('name', Sort::DIRECTION_ASCENDING),
         ];
 
         StandardQueryModifier::apply($qb, $pagination, $sorts);
@@ -83,7 +82,7 @@ class StandardQueryModifierTest extends TestCase
         $pagination = $this->createMock(LimitOffset::class);
 
         $filters = [
-            new Filter('name', 'Bob')
+            new Filter('name', 'Bob'),
         ];
 
         StandardQueryModifier::apply($qb, $pagination, [], $filters);
@@ -91,16 +90,28 @@ class StandardQueryModifierTest extends TestCase
 
     private function getQuery()
     {
-        return new class extends AbstractQuery {
-            public function __construct(){}
-            public function setFirstResult(int $result) {
+        return new class() extends AbstractQuery {
+            public function __construct()
+            {
+            }
+
+            public function setFirstResult(int $result)
+            {
                 return $this;
             }
-            public function setMaxResults(int $result) {
+
+            public function setMaxResults(int $result)
+            {
                 return $this;
             }
-            public function getSQL(){}
-            protected function _doExecute() {}
+
+            public function getSQL()
+            {
+            }
+
+            protected function _doExecute()
+            {
+            }
         };
     }
 }

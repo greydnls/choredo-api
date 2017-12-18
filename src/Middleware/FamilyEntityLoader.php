@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Choredo\Middleware;
 
@@ -24,7 +25,7 @@ class FamilyEntityLoader
 
         $prefix = array_shift($uriParts);
 
-        if ($prefix !== 'families') {
+        if ('families' !== $prefix) {
             return $next($request, $response);
         }
 
@@ -32,7 +33,7 @@ class FamilyEntityLoader
 
         $family = $this->repository->findOneBy(['id' => $familyId]);
 
-        if ($family == null) {
+        if (null == $family) {
             throw new NotFoundException();
         }
 

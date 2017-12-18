@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Choredo\Entities\Behaviors;
 
 trait HasCreatedDate
@@ -17,7 +19,7 @@ trait HasCreatedDate
     /** @ORM\PrePersist */
     public function updateCreatedDate()
     {
-        if ($this->createdDate === null) {
+        if (null === $this->createdDate) {
             $this->createdDate = new \DateTime();
         }
     }

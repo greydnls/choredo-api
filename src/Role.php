@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Choredo;
 
 class Role
@@ -18,17 +20,19 @@ class Role
 
     /**
      * Role constructor.
-     * @param string $name
+     *
+     * @param string   $name
      * @param string[] $permissions
      */
     private function __construct(string $name, array $permissions = [])
     {
-        $this->name = $name;
+        $this->name        = $name;
         $this->permissions = $permissions;
     }
 
     /**
      * @param string $roleName
+     *
      * @return Role
      */
     public static function create(string $roleName): self
@@ -42,6 +46,7 @@ class Role
 
     /**
      * @param string $roleName
+     *
      * @return bool
      */
     public static function exists(string $roleName): bool
@@ -63,11 +68,12 @@ class Role
 
     /**
      * @param string $permission
+     *
      * @return bool
      */
     public function hasPermission(string $permission): bool
     {
-        return in_array($permission, $this->permissions);
+        return in_array($permission, $this->permissions, true);
     }
 
     /**

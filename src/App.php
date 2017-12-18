@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Choredo;
 
 use Assert\AssertionFailedException;
@@ -33,7 +35,7 @@ class App implements ContainerAwareInterface
             $request = $this->container->get(ServerRequestInterface::class);
 
             /** @var RouteCollection $router */
-            $router = $this->container->get(RouteCollection::class);
+            $router     = $this->container->get(RouteCollection::class);
             $dispatcher = $router->getDispatcher($request);
 
             $result = $dispatcher->dispatch(
@@ -41,7 +43,7 @@ class App implements ContainerAwareInterface
                 $request->getUri()->getPath()
             );
 
-            if ($result[0] === \FastRoute\Dispatcher::FOUND) {
+            if (\FastRoute\Dispatcher::FOUND === $result[0]) {
                 $request = $request
                     ->withAttribute(REQUEST_HANDLER_CLASS, get_class($result[1][0]->getCallable()[0]))
                     ->withAttribute(REQUEST_VARIABLES, $result[2]);
@@ -53,7 +55,7 @@ class App implements ContainerAwareInterface
         } catch (NotFoundException $e) {
             $response = new Response\JsonResponse([], Http::NOT_FOUND);
         } catch (MethodNotAllowedException $e) {
-            if ($request->getMethod() !== 'OPTIONS') {
+            if ('OPTIONS' !== $request->getMethod()) {
                 $response = new Response\JsonResponse([], Http::METHOD_NOT_ALLOWED, $e->getHeaders());
             } else {
                 $response = new Response\JsonResponse([], Http::OK, [
@@ -63,7 +65,7 @@ class App implements ContainerAwareInterface
                 ]);
             }
         } catch (\Throwable $e) {
-            if (getenv('APP_ENV') === 'local') {
+            if ('local' === getenv('APP_ENV')) {
                 throw $e;
             }
             $response = new ServerErrorResponse([$e->getMessage()]);

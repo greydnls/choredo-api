@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Choredo\Test;
 
 use Choredo\Permissions;
@@ -8,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 
 class RoleTest extends TestCase
 {
-
     public function testRoleThrowsExceptionForInvalidRoleName()
     {
         $this->expectException(\InvalidArgumentException::class);

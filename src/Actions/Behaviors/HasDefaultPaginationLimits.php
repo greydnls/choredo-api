@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Choredo\Actions\Behaviors;
 
 trait HasDefaultPaginationLimits
 {
     /**
-     * Return the default limit (resources per page)
+     * Return the default limit (resources per page).
      *
      * @return int
      */
@@ -15,7 +17,7 @@ trait HasDefaultPaginationLimits
     }
 
     /**
-     * Return the maximum page size
+     * Return the maximum page size.
      *
      * @return int
      */

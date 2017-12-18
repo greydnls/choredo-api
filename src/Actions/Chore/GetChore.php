@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Choredo\Actions\Chore;
 
@@ -15,15 +16,16 @@ class GetChore implements FractalAwareInterface
 
     /**
      * @param ServerRequestInterface $request
-     * @param ResponseInterface $response
-     * @param array $vars
+     * @param ResponseInterface      $response
+     * @param array                  $vars
+     *
      * @return ResponseInterface
      */
     public function __invoke(
         ServerRequestInterface $request,
         ResponseInterface $response,
         array $vars
-    ) : ResponseInterface {
-        return new JsonResponse(__CLASS__."::".__FUNCTION__);
+    ): ResponseInterface {
+        return new JsonResponse(__CLASS__ . '::' . __FUNCTION__);
     }
 }

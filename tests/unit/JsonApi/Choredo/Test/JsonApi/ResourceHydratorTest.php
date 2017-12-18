@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Choredo\Test\JsonApi;
 
 use Assert\AssertionFailedException;
-use Choredo\JsonApi\CompoundDocument;
 use Choredo\JsonApi\JsonApiResource;
 use Choredo\JsonApi\Relation;
 use Choredo\JsonApi\Resource;
@@ -17,12 +18,12 @@ class ResourceHydratorTest extends TestCase
     {
         $data = [
             'data' => [
-                'id' => 'nope',
-                'type' => 'resources',
+                'id'         => 'nope',
+                'type'       => 'resources',
                 'attributes' => [
-                    'name' => 'test'
-                ]
-            ]
+                    'name' => 'test',
+                ],
+            ],
         ];
 
         $this->expectException(AssertionFailedException::class);
@@ -38,12 +39,12 @@ class ResourceHydratorTest extends TestCase
     {
         $data = [
             'data' => [
-                'id' => 'nope',
-                'type' => 'resources',
+                'id'         => 'nope',
+                'type'       => 'resources',
                 'attributes' => [
-                    'name' => 'test'
-                ]
-            ]
+                    'name' => 'test',
+                ],
+            ],
         ];
 
         $this->expectException(AssertionFailedException::class);
@@ -59,12 +60,12 @@ class ResourceHydratorTest extends TestCase
     {
         $data = [
             'notData' => [
-                'id' => 'new',
-                'type' => 'resources',
+                'id'         => 'new',
+                'type'       => 'resources',
                 'attributes' => [
-                    'name' => 'test'
-                ]
-            ]
+                    'name' => 'test',
+                ],
+            ],
         ];
 
         $this->expectException(AssertionFailedException::class);
@@ -80,9 +81,9 @@ class ResourceHydratorTest extends TestCase
     {
         $data = [
             'notData' => [
-                'id' => 'new',
-                'type' => 'resources'
-            ]
+                'id'   => 'new',
+                'type' => 'resources',
+            ],
         ];
 
         $this->expectException(AssertionFailedException::class);
@@ -98,12 +99,12 @@ class ResourceHydratorTest extends TestCase
     {
         $data = [
             'notData' => [
-                'id' => 'new',
-                'type' => 'not-what-you-expected',
+                'id'         => 'new',
+                'type'       => 'not-what-you-expected',
                 'attributes' => [
-                    'name' => 'test'
-                ]
-            ]
+                    'name' => 'test',
+                ],
+            ],
         ];
 
         $this->expectException(AssertionFailedException::class);
@@ -119,12 +120,12 @@ class ResourceHydratorTest extends TestCase
     {
         $data = [
             'data' => [
-                'id' => 'new',
-                'type' => 'resources',
+                'id'         => 'new',
+                'type'       => 'resources',
                 'attributes' => [
-                    'name' => 'test'
-                ]
-            ]
+                    'name' => 'test',
+                ],
+            ],
         ];
 
         $result = ResourceHydrator::instance()->hydrate(
@@ -143,15 +144,15 @@ class ResourceHydratorTest extends TestCase
 
     public function testHydratesResourceWithUuidIdType()
     {
-        $id = Uuid::uuid4();
+        $id   = Uuid::uuid4();
         $data = [
             'data' => [
-                'id' => $id,
-                'type' => 'resources',
+                'id'         => $id,
+                'type'       => 'resources',
                 'attributes' => [
-                    'name' => 'test'
-                ]
-            ]
+                    'name' => 'test',
+                ],
+            ],
         ];
 
         $result = ResourceHydrator::instance()->hydrate(
@@ -167,23 +168,23 @@ class ResourceHydratorTest extends TestCase
 
     public function testHydratesResourceWithSingleEntityRelationship()
     {
-        $id = Uuid::uuid4();
+        $id   = Uuid::uuid4();
         $data = [
             'data' => [
-                'id' => $id,
-                'type' => 'resources',
+                'id'         => $id,
+                'type'       => 'resources',
                 'attributes' => [
-                    'name' => 'test'
+                    'name' => 'test',
                 ],
                 'relationships' => [
                     'friend' => [
                         'data' => [
-                            'id' => 'new',
-                            'type' => 'friend'
-                        ]
-                    ]
-                ]
-            ]
+                            'id'   => 'new',
+                            'type' => 'friend',
+                        ],
+                    ],
+                ],
+            ],
         ];
 
         $result = ResourceHydrator::instance()->hydrate(
@@ -200,29 +201,29 @@ class ResourceHydratorTest extends TestCase
 
     public function testHydratesResourceWithEntityArrayRelationship()
     {
-        $id = Uuid::uuid4();
+        $id   = Uuid::uuid4();
         $data = [
             'data' => [
-                'id' => $id,
-                'type' => 'resources',
+                'id'         => $id,
+                'type'       => 'resources',
                 'attributes' => [
-                    'name' => 'test'
+                    'name' => 'test',
                 ],
                 'relationships' => [
                     'friends' => [
                         'data' => [
                             [
-                                'id' => 'new1',
-                                'type' => 'friend'
+                                'id'   => 'new1',
+                                'type' => 'friend',
                             ],
                             [
-                                'id' => 'new2',
-                                'type' => 'friend'
+                                'id'   => 'new2',
+                                'type' => 'friend',
                             ],
-                        ]
-                    ]
-                ]
-            ]
+                        ],
+                    ],
+                ],
+            ],
         ];
 
         $result = ResourceHydrator::instance()->hydrate(
@@ -234,7 +235,7 @@ class ResourceHydratorTest extends TestCase
         $this->assertInstanceOf(Resource::class, $result);
         $this->assertTrue($result->hasRelationship('friends'));
         $this->assertCount(2, $result->getRelationship('friends'));
-        foreach ($result->getRelationship('friends') as $relationship){
+        foreach ($result->getRelationship('friends') as $relationship) {
             $this->assertInstanceOf(Relation::class, $relationship);
         }
         $this->assertCount(1, $result->getRelationships());
@@ -242,32 +243,32 @@ class ResourceHydratorTest extends TestCase
 
     public function testHydratesRelationshipWithIncludedResource()
     {
-        $id = Uuid::uuid4();
+        $id   = Uuid::uuid4();
         $data = [
             'data' => [
-                'id' => $id,
-                'type' => 'resources',
+                'id'         => $id,
+                'type'       => 'resources',
                 'attributes' => [
-                    'name' => 'test'
+                    'name' => 'test',
                 ],
                 'relationships' => [
                     'friend' => [
                         'data' => [
-                            'id' => 'new',
-                            'type' => 'friend'
-                        ]
-                    ]
-                ]
+                            'id'   => 'new',
+                            'type' => 'friend',
+                        ],
+                    ],
+                ],
             ],
             'included' => [
                 [
-                    'id' => 'new',
-                    'type' => 'friend',
+                    'id'         => 'new',
+                    'type'       => 'friend',
                     'attributes' => [
-                        'name' => 'Jim'
-                    ]
-                ]
-            ]
+                        'name' => 'Jim',
+                    ],
+                ],
+            ],
         ];
 
         $result = ResourceHydrator::instance()->hydrate(

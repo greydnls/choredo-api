@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Choredo\Actions\Family;
 
 use Choredo\EntityManagerAware;
@@ -29,11 +31,11 @@ class CreateFamily implements FractalAwareInterface, LoggerAwareInterface, Entit
         $this->entityManager->persist($family);
         $this->entityManager->flush();
 
-        $this->logger->info("New Family created", ["id" => $family->getId()->toString()]);
+        $this->logger->info('New Family created', ['id' => $family->getId()->toString()]);
 
         $item = $this->outputItem($family, new FamilyTransformer(), 'families')->toArray();
 
         return (new JsonResponse($item, Http::CREATED))
-            ->withHeader("location", "/families/" . $family->getId()->toString());
+            ->withHeader('location', '/families/' . $family->getId()->toString());
     }
 }

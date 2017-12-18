@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Choredo\Actions\Account;
 
 use Choredo\Entities\Account;
@@ -22,10 +24,10 @@ class GetAccount implements FractalAwareInterface, EntityManagerAware
     public function __invoke(Request $request, Response $response, array $params = []): Response
     {
         $accountId = $params['accountId'];
-        $family = $request->getAttribute(REQUEST_FAMILY);
+        $family    = $request->getAttribute(REQUEST_FAMILY);
 
         $repository = $this->entityManager->getRepository(Account::class);
-        $account = $repository->findOneBy(['id' => $accountId, 'family' => $family->getId()]);
+        $account    = $repository->findOneBy(['id' => $accountId, 'family' => $family->getId()]);
 
         if (!$account) {
             throw new NotFoundException();

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Choredo\Repositories;
 
 use Choredo\Filter;
@@ -9,15 +11,15 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
- * Class AccountRepository
- * @package Choredo\Repositories
+ * Class AccountRepository.
  */
 class AccountRepository extends EntityRepository
 {
     /**
      * @param LimitOffset $pagination
-     * @param Sort[] $sorts
-     * @param Filter[] $filters
+     * @param Sort[]      $sorts
+     * @param Filter[]    $filters
+     *
      * @return Paginator
      */
     public function getAll(LimitOffset $pagination, array $sorts = [], array $filters = []): Paginator

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Choredo\Providers;
 
 use Choredo\Entities\Filters\FamilyFilter;
@@ -10,21 +12,19 @@ use League\Container\ServiceProvider\AbstractServiceProvider;
 use Ramsey\Uuid\Doctrine\UuidType;
 
 /**
- * Class EntityManagerProvider
- *
- * @package Choredo\Providers
+ * Class EntityManagerProvider.
  */
 class EntityManagerProvider extends AbstractServiceProvider
 {
     protected $provides = [
-        ORM\EntityManagerInterface::class
+        ORM\EntityManagerInterface::class,
     ];
 
     public function register()
     {
         $this->container->share(ORM\EntityManagerInterface::class, function () {
             $environment = getenv('ENV') ?? 'production';
-            $isProduction = $environment === 'production';
+            $isProduction = 'production' === $environment;
 
             $entityDirectory = realpath(__DIR__ . '/../Entities');
             $proxyDirectory = realpath(__DIR__ . '/../proxies/');
@@ -46,7 +46,7 @@ class EntityManagerProvider extends AbstractServiceProvider
                 $config->setAutoGenerateProxyClasses(Common\Proxy\AbstractProxyFactory::AUTOGENERATE_ALWAYS);
             }
 
-            $config->addFilter("family", FamilyFilter::class);
+            $config->addFilter('family', FamilyFilter::class);
 
             $dbParams = [
                 'driver'   => 'pdo_pgsql',

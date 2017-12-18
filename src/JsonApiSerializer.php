@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Choredo;
 
 class JsonApiSerializer extends \League\Fractal\Serializer\JsonApiSerializer

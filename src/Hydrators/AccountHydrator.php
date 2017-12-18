@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Choredo\Hydrators;
 
 use Assert\Assert;
 use Assert\Assertion;
 use Choredo\Entities\Account;
 use Choredo\JsonApi\JsonApiResource;
-use const Choredo\SHORT_DATA_FIELD_MAX_SIZE;
 use Ramsey\Uuid\Uuid;
+use const Choredo\SHORT_DATA_FIELD_MAX_SIZE;
 
 class AccountHydrator implements Hydrator
 {
@@ -30,7 +32,7 @@ class AccountHydrator implements Hydrator
         );
 
         return new Account(
-            $resource->getId() === JsonApiResource::TYPE_NEW
+            JsonApiResource::TYPE_NEW === $resource->getId()
                 ? Uuid::uuid4()
                 : Uuid::fromString($resource->getId()),
             $resource->getAttribute('email'),
@@ -45,7 +47,7 @@ class AccountHydrator implements Hydrator
 
     private function validateResource(JsonApiResource $resource): void
     {
-        if ($resource->getId() !== JsonApiResource::TYPE_NEW) {
+        if (JsonApiResource::TYPE_NEW !== $resource->getId()) {
             Assertion::uuid($resource->getId());
         }
 

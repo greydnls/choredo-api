@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Choredo\Providers;
 
 use Choredo\JsonApiSerializer;
@@ -9,7 +11,7 @@ use League\Fractal\Manager;
 class FractalProvider extends AbstractServiceProvider
 {
     protected $provides = [
-        Manager::class
+        Manager::class,
     ];
 
     /**

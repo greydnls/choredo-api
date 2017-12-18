@@ -1,14 +1,14 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Choredo\Hydrators;
 
 use Assert\Assert;
 use Assert\Assertion;
-use Choredo\JsonApi\JsonApiResource;
 use Choredo\Entities;
+use Choredo\JsonApi\JsonApiResource;
 use Ramsey\Uuid\Uuid;
-
 use const Choredo\DAYS_OF_WEEK;
 use const Choredo\SHORT_DATA_FIELD_MAX_SIZE;
 
@@ -19,17 +19,17 @@ class FamilyHydrator implements Hydrator
         $this->validateResource($resource);
 
         return new Entities\Family(
-            $resource->getId() === JsonApiResource::TYPE_NEW ? Uuid::uuid4() : Uuid::fromString($resource->getId()),
+            JsonApiResource::TYPE_NEW === $resource->getId() ? Uuid::uuid4() : Uuid::fromString($resource->getId()),
             $resource->getAttribute('name'),
             $resource->getAttribute('paymentStrategy'),
-            array_search($resource->getAttribute('weekStartDay'), DAYS_OF_WEEK),
+            array_search($resource->getAttribute('weekStartDay'), DAYS_OF_WEEK, true),
             $resource->getAttribute('completionThreshold')
         );
     }
 
     private function validateResource(JsonApiResource $resource): void
     {
-        if ($resource->getId() !== JsonApiResource::TYPE_NEW) {
+        if (JsonApiResource::TYPE_NEW !== $resource->getId()) {
             Assertion::uuid($resource->getId());
         }
 
@@ -51,7 +51,7 @@ class FamilyHydrator implements Hydrator
             )
             ->verifyNow();
 
-        if ($resource->getAttribute('paymentStrategy') === Entities\Family::PAYMENT_STRATEGY_PER_CHILD) {
+        if (Entities\Family::PAYMENT_STRATEGY_PER_CHILD === $resource->getAttribute('paymentStrategy')) {
             Assert::lazy()
                 ->that($resource->getAttribute('completionThreshold'), 'Family::completionThreshold')
                 ->notNull()

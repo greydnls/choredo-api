@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Choredo\Actions\Behaviors;
 
 interface Sortable
@@ -11,9 +13,10 @@ interface Sortable
 
     /**
      * @return array $sort {
-     * @type string $field
-     * @type string $direction
-     * }
+     *
+     * @var string $field
+     * @var string $direction
+     *             }
      */
     public static function getDefaultSort(): array;
 }

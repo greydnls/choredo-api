@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Choredo\Actions\Account;
 
 use Choredo\Actions\Behaviors;
@@ -16,36 +18,13 @@ use const Choredo\REQUEST_FILTER;
 use const Choredo\REQUEST_PAGINATION;
 use const Choredo\REQUEST_SORT;
 
-class ListAccounts implements
-    EntityManagerAware,
-    Output\FractalAwareInterface,
-    Behaviors\Filterable,
-    Behaviors\Pageable,
-    Behaviors\Sortable
+class ListAccounts implements EntityManagerAware, Output\FractalAwareInterface, Behaviors\Filterable, Behaviors\Pageable, Behaviors\Sortable
 {
     use Output\CreatesFractalScope;
     use HasEntityManager;
     use Behaviors\HasDefaultCreateDateSort;
     use Behaviors\HasDefaultPaginationLimits;
     use Behaviors\HasNoFilterTransforms;
-
-    /**
-     * Return an array of fields that can be filtered via the API
-     *
-     * @return string[]
-     */
-    public static function getFilterableFields(): array
-    {
-        return ['emailAddress', 'firstName', 'lastName'];
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getSortableFields(): array
-    {
-        return ['createdDate', 'lastLogin', 'firstName', 'lastName'];
-    }
 
     public function __invoke(Request $request, Response $response, array $vars): Response
     {
@@ -75,5 +54,23 @@ class ListAccounts implements
         );
 
         return new JsonResponse($collection->toArray());
+    }
+
+    /**
+     * Return an array of fields that can be filtered via the API.
+     *
+     * @return string[]
+     */
+    public static function getFilterableFields(): array
+    {
+        return ['emailAddress', 'firstName', 'lastName'];
+    }
+
+    /**
+     * @return string[]
+     */
+    public static function getSortableFields(): array
+    {
+        return ['createdDate', 'lastLogin', 'firstName', 'lastName'];
     }
 }

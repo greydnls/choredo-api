@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Choredo\JsonApi;
 
 class Resource implements JsonApiResource
@@ -24,8 +26,8 @@ class Resource implements JsonApiResource
         array $attributes,
         array $relationships = []
     ) {
-        $this->id = $id;
-        $this->type = $type;
+        $this->id         = $id;
+        $this->type       = $type;
         $this->attributes = $attributes;
         $this->setRelationships($relationships);
     }
@@ -106,8 +108,8 @@ class Resource implements JsonApiResource
         foreach ($relationships as $name => $relationship) {
             $relationship = is_array($relationship) ? $relationship : [$relationship];
             foreach ($relationship as $relation) {
-                if (!$relation instanceof Relation && $relation !== null) {
-                    throw new \InvalidArgumentException('Invalid '.$name.' Relationship provided');
+                if (!$relation instanceof Relation && null !== $relation) {
+                    throw new \InvalidArgumentException('Invalid ' . $name . ' Relationship provided');
                 }
             }
         }

@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Choredo\Transformers;
 
@@ -20,11 +21,11 @@ class AccountTransformer extends TransformerAbstract
     public function transform(Account $account)
     {
         return [
-            'id' => $account->getId(),
+            'id'        => $account->getId(),
             'firstName' => $account->getFirstName(),
-            'lastName' => $account->getLastName(),
-            'email' => $account->getEmailAddress(),
-            'avatarUri' => $account->getAvatarUri()
+            'lastName'  => $account->getLastName(),
+            'email'     => $account->getEmailAddress(),
+            'avatarUri' => $account->getAvatarUri(),
         ];
     }
 
