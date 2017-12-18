@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Choredo\JsonApi;
 
 use Assert\Assert;
@@ -9,7 +11,7 @@ class ResourceHydrator
 {
     public static function instance()
     {
-        return new self;
+        return new self();
     }
 
     public function hydrate(string $expectedType, string $idType, array $data)

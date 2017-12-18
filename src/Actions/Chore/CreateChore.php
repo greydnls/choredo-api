@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Choredo\Actions\Chore;
 
@@ -13,7 +14,7 @@ class CreateChore
         ServerRequestInterface $request,
         ResponseInterface $response,
         array $vars
-    ) : ResponseInterface {
-        return new JsonResponse(__CLASS__."::".__FUNCTION__);
+    ): ResponseInterface {
+        return new JsonResponse(__CLASS__ . '::' . __FUNCTION__);
     }
 }

@@ -1,14 +1,14 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Choredo\Hydrators;
 
 use Assert\Assert;
 use Assert\Assertion;
-use Choredo\JsonApi\JsonApiResource;
 use Choredo\Entities;
+use Choredo\JsonApi\JsonApiResource;
 use Ramsey\Uuid\Uuid;
-
 use const Choredo\DAYS_OF_WEEK;
 use const Choredo\SHORT_DATA_FIELD_MAX_SIZE;
 
@@ -22,7 +22,7 @@ class FamilyHydrator implements Hydrator
             $resource->getId() === JsonApiResource::TYPE_NEW ? Uuid::uuid4() : Uuid::fromString($resource->getId()),
             $resource->getAttribute('name'),
             $resource->getAttribute('paymentStrategy'),
-            array_search($resource->getAttribute('weekStartDay'), DAYS_OF_WEEK),
+            array_search($resource->getAttribute('weekStartDay'), DAYS_OF_WEEK, true),
             $resource->getAttribute('completionThreshold')
         );
     }

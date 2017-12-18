@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Choredo\JsonApi;
 
@@ -16,8 +17,9 @@ class Relation implements JsonApiResource
 
     /**
      * Relationship constructor.
+     *
      * @param JsonApiResource $resource
-     * @param bool $isLoaded
+     * @param bool            $isLoaded
      */
     public function __construct(JsonApiResource $resource, bool $isLoaded = true)
     {

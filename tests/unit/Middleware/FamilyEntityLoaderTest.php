@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Choredo\Test;
 
-use Choredo\Exception\InvalidRequestException;
 use Choredo\Middleware\FamilyEntityLoader;
 use Doctrine\ORM\EntityRepository;
 use League\Route\Http\Exception\NotFoundException;
@@ -38,8 +39,7 @@ class FamilyEntityLoaderTest extends TestCase
 
         $response = new Response();
 
-        $this->constructSubject()($request, $response, function(){});
-
+        $this->constructSubject()($request, $response, function () {});
     }
 
     public function testInvalidFamilyIdThrowsInvalidRequestException()
@@ -59,7 +59,7 @@ class FamilyEntityLoaderTest extends TestCase
         $this->expectException(NotFoundException::class);
         $this->expectExceptionMessage('Not Found');
 
-        $this->constructSubject()($request, $response, function(){});
+        $this->constructSubject()($request, $response, function () {});
     }
 
     public function constructSubject()

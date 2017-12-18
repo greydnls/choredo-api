@@ -1,13 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Choredo\Entities;
 
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
 
 /**
- * @package Choredo\Entities
- *
  * @ORM\Entity(repositoryClass="Choredo\Repositories\AccountRepository")
  * @ORM\Table(name="accounts")
  * @ORM\HasLifeCycleCallbacks
@@ -26,7 +26,7 @@ class Account
      *
      * @ORM\Column(
      *     type="string",
-     *     name ="email_address"
+     *     name="email_address"
      * )
      */
     private $emailAddress;
@@ -36,7 +36,7 @@ class Account
      *
      * @ORM\Column(
      *     type="string",
-     *     name ="first_name"
+     *     name="first_name"
      * )
      */
     private $firstName;
@@ -46,7 +46,7 @@ class Account
      *
      * @ORM\Column(
      *     type="string",
-     *     name ="last_name"
+     *     name="last_name"
      * )
      */
     private $lastName;
@@ -56,7 +56,7 @@ class Account
      *
      * @ORM\Column(
      *     type="string",
-     *     name ="avatar_uri"
+     *     name="avatar_uri"
      * )
      */
     private $avatarUri;
@@ -73,21 +73,22 @@ class Account
      *
      * @ORM\Column(
      *     type="datetime",
-     *     name ="last_login"
+     *     name="last_login"
      * )
      */
     private $lastLogin;
 
     /**
      * Account constructor.
+     *
      * @param UuidInterface $id
-     * @param string $emailAddress
-     * @param string $firstName
-     * @param string $lastName
-     * @param string $avatarUri
-     * @param string $token
-     * @param \DateTime $lastLogin
-     * @param Family $family
+     * @param string        $emailAddress
+     * @param string        $firstName
+     * @param string        $lastName
+     * @param string        $avatarUri
+     * @param string        $token
+     * @param \DateTime     $lastLogin
+     * @param Family        $family
      */
     public function __construct(
         UuidInterface $id,
@@ -99,14 +100,14 @@ class Account
         \DateTime $lastLogin,
         Family $family
     ) {
-        $this->id = $id;
+        $this->id           = $id;
         $this->emailAddress = $emailAddress;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->avatarUri = $avatarUri;
-        $this->token = $token;
-        $this->lastLogin = $lastLogin;
-        $this->family = $family;
+        $this->firstName    = $firstName;
+        $this->lastName     = $lastName;
+        $this->avatarUri    = $avatarUri;
+        $this->token        = $token;
+        $this->lastLogin    = $lastLogin;
+        $this->family       = $family;
     }
 
     /**

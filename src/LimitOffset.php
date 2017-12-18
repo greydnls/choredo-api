@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Choredo;
 
 class LimitOffset
@@ -15,13 +17,14 @@ class LimitOffset
 
     /**
      * Pagination constructor.
+     *
      * @param int $limit
      * @param int $offset
      */
     public function __construct(int $limit, int $offset)
     {
         $this->offset = $offset;
-        $this->limit = $limit;
+        $this->limit  = $limit;
     }
 
     /**

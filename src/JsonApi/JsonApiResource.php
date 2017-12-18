@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Choredo\JsonApi;
 
 interface JsonApiResource
 {
     const TYPE_UUID = 'uuid';
-    const TYPE_NEW = 'new';
+    const TYPE_NEW  = 'new';
 
     public function getId();
 
@@ -16,11 +17,11 @@ interface JsonApiResource
 
     public function getAttribute(string $key, $default = null);
 
-    public function hasAttribute(string $key) : bool;
+    public function hasAttribute(string $key): bool;
 
     public function hasRelationship($name): bool;
 
     public function getRelationship($name, $default = []);
 
-    public function getRelationships() : array;
+    public function getRelationships(): array;
 }

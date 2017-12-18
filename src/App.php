@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Choredo;
 
 use Assert\AssertionFailedException;
@@ -33,7 +35,7 @@ class App implements ContainerAwareInterface
             $request = $this->container->get(ServerRequestInterface::class);
 
             /** @var RouteCollection $router */
-            $router = $this->container->get(RouteCollection::class);
+            $router     = $this->container->get(RouteCollection::class);
             $dispatcher = $router->getDispatcher($request);
 
             $result = $dispatcher->dispatch(

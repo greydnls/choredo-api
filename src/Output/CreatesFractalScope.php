@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Choredo\Output;
 
@@ -30,7 +31,8 @@ trait CreatesFractalScope
     /**
      * @param $data
      * @param TransformerAbstract $transformer
-     * @param string $type
+     * @param string              $type
+     *
      * @return Scope
      */
     public function outputItem(
@@ -42,23 +44,24 @@ trait CreatesFractalScope
     }
 
     /**
-     * @param array|Paginator $data
+     * @param array|Paginator     $data
      * @param TransformerAbstract $transformer
-     * @param string $type
-     * @param string $path
+     * @param string              $type
+     * @param string              $path
+     *
      * @return Scope
      */
     public function outputCollection(
         $data,
         TransformerAbstract $transformer,
         string $type,
-        string $path = ""
+        string $path = ''
     ): Scope {
         Assertion::true(((is_array($data)) || $data instanceof Paginator));
 
         if ($data instanceof Paginator) {
             $collection = new Collection(iterator_to_array($data->getIterator()), $transformer, $type);
-            $perPage = $data->getQuery()->getMaxResults();
+            $perPage    = $data->getQuery()->getMaxResults();
             $collection->setPaginator(
                 new DoctrinePaginatorAdapter(
                     $data,

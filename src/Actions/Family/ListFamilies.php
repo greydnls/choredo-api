@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Choredo\Actions\Family;
 
 use Assert\Assert;
@@ -17,52 +19,12 @@ use const Choredo\REQUEST_FILTER;
 use const Choredo\REQUEST_PAGINATION;
 use const Choredo\REQUEST_SORT;
 
-class ListFamilies implements
-    EntityManagerAware,
-    Output\FractalAwareInterface,
-    Behaviors\Filterable,
-    Behaviors\Pageable,
-    Behaviors\Sortable
+class ListFamilies implements EntityManagerAware, Output\FractalAwareInterface, Behaviors\Filterable, Behaviors\Pageable, Behaviors\Sortable
 {
     use Output\CreatesFractalScope;
     use HasEntityManager;
     use Behaviors\HasDefaultCreateDateSort;
     use Behaviors\HasDefaultPaginationLimits;
-
-    /**
-     * @return string[]
-     */
-    public static function getSortableFields(): array
-    {
-        return ['createdDate'];
-    }
-
-    /**
-     * Return an array of fields that can be filtered via the API
-     *
-     * @return string[]
-     */
-    public static function getFilterableFields(): array
-    {
-        return ['name', 'paymentStrategy', 'completionThreshold', 'weekStartDay'];
-    }
-
-    /**
-     * @return array {
-     * @type string $field Name of the field which requires a transform
-     * @type callable $callable A callable transform function `function ($value) {}`
-     * }
-     */
-    public static function getFilterTransforms(): array
-    {
-        return [
-            'weekStartDay' => function ($value) {
-                Assert::that($value)->inArray(DAYS_OF_WEEK);
-
-                return array_search($value, DAYS_OF_WEEK);
-            },
-        ];
-    }
 
     public function __invoke(Request $request, Response $response, array $vars): Response
     {
@@ -89,5 +51,41 @@ class ListFamilies implements
         );
 
         return new JsonResponse($collection->toArray());
+    }
+
+    /**
+     * @return string[]
+     */
+    public static function getSortableFields(): array
+    {
+        return ['createdDate'];
+    }
+
+    /**
+     * Return an array of fields that can be filtered via the API.
+     *
+     * @return string[]
+     */
+    public static function getFilterableFields(): array
+    {
+        return ['name', 'paymentStrategy', 'completionThreshold', 'weekStartDay'];
+    }
+
+    /**
+     * @return array {
+     *
+     * @var string   $field Name of the field which requires a transform
+     * @var callable $callable A callable transform function `function ($value) {}`
+     *               }
+     */
+    public static function getFilterTransforms(): array
+    {
+        return [
+            'weekStartDay' => function ($value) {
+                Assert::that($value)->inArray(DAYS_OF_WEEK);
+
+                return array_search($value, DAYS_OF_WEEK, true);
+            },
+        ];
     }
 }

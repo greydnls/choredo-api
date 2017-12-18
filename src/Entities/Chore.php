@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Choredo\Entities;
 
@@ -7,8 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
 
 /**
- * @package Choredo\Entities
- *
  * @ORM\Entity
  * @ORM\Table(name="chores")
  * @ORM\HasLifeCycleCallbacks
@@ -31,8 +30,8 @@ class Chore
      * @var string
      *
      * @ORM\Column(
-     *      type="string",
-     *      nullable = true
+     *     type="string",
+     *     nullable=true
      * )
      */
     private $description;
@@ -41,11 +40,11 @@ class Chore
      * @var int
      *
      * @ORM\Column(
-     *      type="integer",
-     *      nullable=true
+     *     type="integer",
+     *     nullable=true
      * )
      */
-    private $value = null;
+    private $value;
 
     public function __construct(
         Family $family,
@@ -54,10 +53,10 @@ class Chore
         string $description = null,
         int $value = null
     ) {
-        $this->id = $id;
-        $this->name = $name;
+        $this->id          = $id;
+        $this->name        = $name;
         $this->description = $description;
-        $this->value = $value;
+        $this->value       = $value;
     }
 
     /**

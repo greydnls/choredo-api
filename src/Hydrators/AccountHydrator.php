@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Choredo\Hydrators;
 
 use Assert\Assert;
 use Assert\Assertion;
 use Choredo\Entities\Account;
 use Choredo\JsonApi\JsonApiResource;
-use const Choredo\SHORT_DATA_FIELD_MAX_SIZE;
 use Ramsey\Uuid\Uuid;
+use const Choredo\SHORT_DATA_FIELD_MAX_SIZE;
 
 class AccountHydrator implements Hydrator
 {

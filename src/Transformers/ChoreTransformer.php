@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Choredo\Transformers;
 
@@ -11,10 +12,10 @@ class ChoreTransformer extends TransformerAbstract
     public function transform(Chore $chore)
     {
         return [
-            'id' => $chore->getId(),
-            'name' => $chore->getName(),
+            'id'          => $chore->getId(),
+            'name'        => $chore->getName(),
             'description' => $chore->getDescription(),
-            'value' => $chore->getValue()
+            'value'       => $chore->getValue(),
         ];
     }
 }

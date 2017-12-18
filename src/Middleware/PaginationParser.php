@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Choredo\Middleware;
 
 use Assert\Assert;
@@ -16,9 +18,9 @@ class PaginationParser
     {
         /** @var Pageable $handler */
         $handler = $request->getAttribute(REQUEST_HANDLER_CLASS);
-        if (!in_array(Pageable::class, class_implements($handler))) {
+        if (!in_array(Pageable::class, class_implements($handler), true)) {
             return $next($request, $response);
-        };
+        }
 
         $page = array_merge(
             ['limit' => $handler::getDefaultLimit(), 'offset' => Pageable::DEFAULT_OFFSET],

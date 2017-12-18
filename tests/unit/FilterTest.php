@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Choredo\Test;
 
 use Choredo\Filter;
@@ -9,9 +11,9 @@ class FilterTest extends TestCase
 {
     public function testTransformIsAppliedWhenSet()
     {
-        $field = 'foo';
-        $value = 'bar';
+        $field  = 'foo';
+        $value  = 'bar';
         $filter = new Filter($field, $value, 'strtoupper');
-        $this->assertEquals(strtoupper($value), $filter->getValue());
+        $this->assertEquals(mb_strtoupper($value), $filter->getValue());
     }
 }

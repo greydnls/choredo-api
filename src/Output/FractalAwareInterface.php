@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Choredo\Output;
 
@@ -9,6 +10,7 @@ interface FractalAwareInterface
 {
     /**
      * @param Manager $manager
+     *
      * @return mixed
      */
     public function setManager(Manager $manager);

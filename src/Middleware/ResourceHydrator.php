@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Choredo\Middleware;
 
 use Assert\Assertion;
@@ -27,19 +29,9 @@ class ResourceHydrator
 
     private function __construct(string $expectedType, string $idType, Hydrator $hydrator = null)
     {
-        $this->idType = $idType;
+        $this->idType       = $idType;
         $this->expectedType = $expectedType;
-        $this->hydrator = $hydrator;
-    }
-
-    public static function newType(string $expectedResourceType, Hydrator $hydrator = null)
-    {
-        return new static($expectedResourceType, JsonApiResource::TYPE_NEW, $hydrator);
-    }
-
-    public static function uuidType(string $expectedResourceType, Hydrator $hydrator = null)
-    {
-        return new static($expectedResourceType, JsonApiResource::TYPE_UUID, $hydrator);
+        $this->hydrator     = $hydrator;
     }
 
     public function __invoke(
@@ -66,5 +58,15 @@ class ResourceHydrator
         $request = $request->withAttribute(REQUEST_RESOURCE, $resource);
 
         return $next($request, $response);
+    }
+
+    public static function newType(string $expectedResourceType, Hydrator $hydrator = null)
+    {
+        return new static($expectedResourceType, JsonApiResource::TYPE_NEW, $hydrator);
+    }
+
+    public static function uuidType(string $expectedResourceType, Hydrator $hydrator = null)
+    {
+        return new static($expectedResourceType, JsonApiResource::TYPE_UUID, $hydrator);
     }
 }

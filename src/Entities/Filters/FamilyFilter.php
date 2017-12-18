@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Choredo\Entities\Filters;
 
 use Doctrine\ORM\Mapping\ClassMetaData;
@@ -13,6 +15,6 @@ class FamilyFilter extends SQLFilter
             return $targetTableAlias . '.family_id = ' . $this->getParameter('familyId');
         }
 
-        return "";
+        return '';
     }
 }

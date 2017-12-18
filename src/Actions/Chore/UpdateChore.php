@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Choredo\Actions\Chore;
 
@@ -9,8 +10,8 @@ use Zend\Diactoros\Response\JsonResponse;
 
 class UpdateChore
 {
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $vars) : ResponseInterface
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $vars): ResponseInterface
     {
-        return new JsonResponse(__CLASS__."::".__FUNCTION__);
+        return new JsonResponse(__CLASS__ . '::' . __FUNCTION__);
     }
 }

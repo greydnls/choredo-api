@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Choredo\Actions\Chore;
 
 use Choredo\Output\CreatesFractalScope;
@@ -13,7 +15,7 @@ class ListChores implements FractalAwareInterface
 {
     use CreatesFractalScope;
 
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $vars) : ResponseInterface
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $vars): ResponseInterface
     {
         return new JsonResponse($this->outputCollection([], new ChoreTransformer(), 'chores'));
     }

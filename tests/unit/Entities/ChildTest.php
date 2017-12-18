@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Choredo\Test\Entities;
 
 use Assert\InvalidArgumentException;
@@ -13,21 +15,9 @@ class ChildTest extends TestCase
 {
     private $faker;
 
-    /**
-     * @return Generator
-     */
-    private function getFaker(): Generator
-    {
-        if (!isset($this->faker)) {
-            $this->faker = \Faker\Factory::create();
-        }
-
-        return $this->faker;
-    }
-
     public function testConstructionWithNoAvatarUriOrColorThrowsException()
     {
-        $faker = $this->getFaker();
+        $faker  = $this->getFaker();
         $family = $this->createMock(Family::class);
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage("Either 'avatarUri' or 'color' must be set");
@@ -36,7 +26,7 @@ class ChildTest extends TestCase
 
     public function testConstructionWithInvalidAvatarUri()
     {
-        $faker = $this->getFaker();
+        $faker  = $this->getFaker();
         $family = $this->createMock(Family::class);
         $badUri = $faker->text(20);
         $this->expectException(InvalidArgumentException::class);
@@ -48,10 +38,10 @@ class ChildTest extends TestCase
 
     public function testConstructionWithAValidAvatarUri()
     {
-        $faker = $this->getFaker();
+        $faker  = $this->getFaker();
         $family = $this->createMock(Family::class);
-        $url = $faker->url;
-        $child = new Child(Uuid::uuid4(), $family, $faker->firstName, $url);
+        $url    = $faker->url;
+        $child  = new Child(Uuid::uuid4(), $family, $faker->firstName, $url);
         $this->assertSame($url, $child->getAvatarUri());
     }
 
@@ -62,10 +52,10 @@ class ChildTest extends TestCase
      */
     public function testConstructionWithInvalidColor($color)
     {
-        $faker = $this->getFaker();
+        $faker  = $this->getFaker();
         $family = $this->createMock(Family::class);
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("Child::color must be a valid hexadecimal color code");
+        $this->expectExceptionMessage('Child::color must be a valid hexadecimal color code');
         new Child(Uuid::uuid4(), $family, $faker->firstName, null, $color);
     }
 
@@ -76,9 +66,9 @@ class ChildTest extends TestCase
      */
     public function testConstructionWithValidColors($color)
     {
-        $faker = $this->getFaker();
+        $faker  = $this->getFaker();
         $family = $this->createMock(Family::class);
-        $child = new Child(Uuid::uuid4(), $family, $faker->firstName, null, $color);
+        $child  = new Child(Uuid::uuid4(), $family, $faker->firstName, null, $color);
         $this->assertSame($color, $child->getColor());
     }
 
@@ -105,8 +95,19 @@ class ChildTest extends TestCase
         return [
             ['frank'],          // lol no
             ['#a0b1c2d3'],      // too long
-            ['aa00cc']          // no leading hash
+            ['aa00cc'],          // no leading hash
         ];
     }
 
+    /**
+     * @return Generator
+     */
+    private function getFaker(): Generator
+    {
+        if (!isset($this->faker)) {
+            $this->faker = \Faker\Factory::create();
+        }
+
+        return $this->faker;
+    }
 }

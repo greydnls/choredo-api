@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Choredo\Test\Transformers;
 
 use Choredo\Entities;
@@ -10,7 +12,7 @@ use Ramsey\Uuid\Uuid;
 class FamilyTransformerTest extends TestCase
 {
     /**
-     * @param Uuid $id
+     * @param Uuid   $id
      * @param string $name
      * @param $paymentStrategy
      * @param $weekStartDay
@@ -25,7 +27,7 @@ class FamilyTransformerTest extends TestCase
         $family->updateUpdatedDate();
 
         $transformer = new Transformers\FamilyTransformer();
-        $resource = $transformer->transform($family);
+        $resource    = $transformer->transform($family);
 
         $this->assertSame($weekStartDayText, $resource['weekStartDay']);
     }

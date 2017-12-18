@@ -1,15 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Choredo\Entities;
 
 use Assert\Assert;
-use Choredo\Entities\Behaviors;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
 
 /**
- * @package Choredo\Entities
- *
  * @ORM\Entity(repositoryClass="Choredo\Repositories\ChildRepository")
  * @ORM\Table(name="children")
  * @ORM\HasLifeCycleCallbacks
@@ -38,7 +37,7 @@ class Child
     /**
      * @var string
      *
-     * @ORM\Column(type="string", nullable=true, length=7, options={"fixed" = true})
+     * @ORM\Column(type="string", nullable=true, length=7, options={"fixed": true})
      */
     private $color;
 
@@ -51,12 +50,13 @@ class Child
 
     /**
      * Child constructor.
+     *
      * @param UuidInterface $id
-     * @param Family $family
-     * @param string $name
-     * @param string $avatarUri
-     * @param string $color
-     * @param string $accessCode
+     * @param Family        $family
+     * @param string        $name
+     * @param string        $avatarUri
+     * @param string        $color
+     * @param string        $accessCode
      */
     public function __construct(
         UuidInterface $id,
@@ -66,9 +66,9 @@ class Child
         string $color = null,
         string $accessCode = null
     ) {
-        $this->id = $id;
+        $this->id     = $id;
         $this->family = $family;
-        $this->name = $name;
+        $this->name   = $name;
         $this->setAvatarUriAndColor($avatarUri, $color);
         $this->accessCode = $accessCode;
     }

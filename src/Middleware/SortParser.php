@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Choredo\Middleware;
 
 use Assert\Assert;
-use Choredo\Sort;
 use Choredo\Actions\Behaviors\Sortable;
+use Choredo\Sort;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use const Choredo\REQUEST_HANDLER_CLASS;
@@ -16,11 +18,11 @@ class SortParser
     {
         /** @var Sortable $handler */
         $handler = $request->getAttribute(REQUEST_HANDLER_CLASS);
-        if (!in_array(Sortable::class, class_implements($handler))) {
+        if (!in_array(Sortable::class, class_implements($handler), true)) {
             return $next($request, $response);
-        };
+        }
 
-        $sort = $request->getQueryParams()[REQUEST_SORT] ?? null;
+        $sort           = $request->getQueryParams()[REQUEST_SORT] ?? null;
         $sortParameters = $this->parseSortParameters($sort, $handler::getSortableFields());
 
         if (empty($sortParameters)) {
@@ -34,6 +36,7 @@ class SortParser
 
     /**
      * @param string $sort
+     *
      * @return Sort[]
      */
     private function parseSortParameters(string $sort = null, array $allowedFields): array
@@ -46,13 +49,15 @@ class SortParser
 
         return array_map(
             function ($field) use ($allowedFields) {
-                if (substr($field, 0, 1) === '-') {
-                    $field = substr($field, 1);
+                if (mb_substr($field, 0, 1) === '-') {
+                    $field = mb_substr($field, 1);
                     Assert::that($field)->inArray($allowedFields);
+
                     return new Sort($field, Sort::DIRECTION_DESCENDING);
                 }
 
                 Assert::that($field)->inArray($allowedFields);
+
                 return new Sort($field, Sort::DIRECTION_ASCENDING);
             },
             $fields
