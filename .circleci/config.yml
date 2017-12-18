@@ -34,14 +34,15 @@ jobs:
           key: v1-dependencies-{{ checksum "composer.json" }}
         
       # run tests!
-#      - run:
-#          name: Run CS tests
-#          command: vendor/bin/phpcs --standard=PSR2 src/
+      - run:
+          name: Run CS tests
+          command: make cs-check -e CONTAINER=0
+          when: always
       - run:
           name: Run Unit tests
           command: |
             mkdir -p ~/phpunit
-            vendor/bin/phpunit --log-junit ~/phpunit/junit.xml tests
+            vendor/bin/phpunit --log-junit ~/phpunit/junit.xml --coverage-html ~/phpunit/coverage tests
           when: always
       - store_test_results:
           path: ~/phpunit
