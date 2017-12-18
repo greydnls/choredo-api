@@ -84,7 +84,7 @@ class ResourceHydrator
                 ->verifyNow();
         }
 
-        if (JsonApiResource::TYPE_UUID === $idType) {
+        if ($idType === JsonApiResource::TYPE_UUID) {
             Assert::lazy()
                 ->that($parsedBody['id'], 'request::body::id')
                 ->uuid()

@@ -19,7 +19,7 @@ trait HasCreatedDate
     /** @ORM\PrePersist */
     public function updateCreatedDate()
     {
-        if (null === $this->createdDate) {
+        if ($this->createdDate === null) {
             $this->createdDate = new \DateTime();
         }
     }

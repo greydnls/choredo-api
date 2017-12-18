@@ -24,7 +24,7 @@ class EntityManagerProvider extends AbstractServiceProvider
     {
         $this->container->share(ORM\EntityManagerInterface::class, function () {
             $environment = getenv('ENV') ?? 'production';
-            $isProduction = 'production' === $environment;
+            $isProduction = $environment === 'production';
 
             $entityDirectory = realpath(__DIR__ . '/../Entities');
             $proxyDirectory = realpath(__DIR__ . '/../proxies/');

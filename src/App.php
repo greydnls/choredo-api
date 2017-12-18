@@ -43,7 +43,7 @@ class App implements ContainerAwareInterface
                 $request->getUri()->getPath()
             );
 
-            if (\FastRoute\Dispatcher::FOUND === $result[0]) {
+            if ($result[0] === \FastRoute\Dispatcher::FOUND) {
                 $request = $request
                     ->withAttribute(REQUEST_HANDLER_CLASS, get_class($result[1][0]->getCallable()[0]))
                     ->withAttribute(REQUEST_VARIABLES, $result[2]);
@@ -55,7 +55,7 @@ class App implements ContainerAwareInterface
         } catch (NotFoundException $e) {
             $response = new Response\JsonResponse([], Http::NOT_FOUND);
         } catch (MethodNotAllowedException $e) {
-            if ('OPTIONS' !== $request->getMethod()) {
+            if ($request->getMethod() !== 'OPTIONS') {
                 $response = new Response\JsonResponse([], Http::METHOD_NOT_ALLOWED, $e->getHeaders());
             } else {
                 $response = new Response\JsonResponse([], Http::OK, [
@@ -65,7 +65,7 @@ class App implements ContainerAwareInterface
                 ]);
             }
         } catch (\Throwable $e) {
-            if ('local' === getenv('APP_ENV')) {
+            if (getenv('APP_ENV') === 'local') {
                 throw $e;
             }
             $response = new ServerErrorResponse([$e->getMessage()]);

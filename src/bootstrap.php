@@ -8,7 +8,7 @@ try {
 } catch (Dotenv\Exception\InvalidPathException $e) {
 }
 
-if ('local' === getenv('APP_ENV')) {
+if (getenv('APP_ENV') === 'local') {
     $whoops = new \Whoops\Run();
     $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler());
     $whoops->register();

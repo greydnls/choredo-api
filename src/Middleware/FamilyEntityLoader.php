@@ -25,7 +25,7 @@ class FamilyEntityLoader
 
         $prefix = array_shift($uriParts);
 
-        if ('families' !== $prefix) {
+        if ($prefix !== 'families') {
             return $next($request, $response);
         }
 
@@ -33,7 +33,7 @@ class FamilyEntityLoader
 
         $family = $this->repository->findOneBy(['id' => $familyId]);
 
-        if (null == $family) {
+        if ($family == null) {
             throw new NotFoundException();
         }
 

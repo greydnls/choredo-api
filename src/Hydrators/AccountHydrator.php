@@ -32,7 +32,7 @@ class AccountHydrator implements Hydrator
         );
 
         return new Account(
-            JsonApiResource::TYPE_NEW === $resource->getId()
+            $resource->getId() === JsonApiResource::TYPE_NEW
                 ? Uuid::uuid4()
                 : Uuid::fromString($resource->getId()),
             $resource->getAttribute('email'),
@@ -47,7 +47,7 @@ class AccountHydrator implements Hydrator
 
     private function validateResource(JsonApiResource $resource): void
     {
-        if (JsonApiResource::TYPE_NEW !== $resource->getId()) {
+        if ($resource->getId() !== JsonApiResource::TYPE_NEW) {
             Assertion::uuid($resource->getId());
         }
 

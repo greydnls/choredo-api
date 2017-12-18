@@ -19,7 +19,7 @@ class FamilyHydrator implements Hydrator
         $this->validateResource($resource);
 
         return new Entities\Family(
-            JsonApiResource::TYPE_NEW === $resource->getId() ? Uuid::uuid4() : Uuid::fromString($resource->getId()),
+            $resource->getId() === JsonApiResource::TYPE_NEW ? Uuid::uuid4() : Uuid::fromString($resource->getId()),
             $resource->getAttribute('name'),
             $resource->getAttribute('paymentStrategy'),
             array_search($resource->getAttribute('weekStartDay'), DAYS_OF_WEEK, true),
@@ -29,7 +29,7 @@ class FamilyHydrator implements Hydrator
 
     private function validateResource(JsonApiResource $resource): void
     {
-        if (JsonApiResource::TYPE_NEW !== $resource->getId()) {
+        if ($resource->getId() !== JsonApiResource::TYPE_NEW) {
             Assertion::uuid($resource->getId());
         }
 
@@ -51,7 +51,7 @@ class FamilyHydrator implements Hydrator
             )
             ->verifyNow();
 
-        if (Entities\Family::PAYMENT_STRATEGY_PER_CHILD === $resource->getAttribute('paymentStrategy')) {
+        if ($resource->getAttribute('paymentStrategy') === Entities\Family::PAYMENT_STRATEGY_PER_CHILD) {
             Assert::lazy()
                 ->that($resource->getAttribute('completionThreshold'), 'Family::completionThreshold')
                 ->notNull()

@@ -108,7 +108,7 @@ class Resource implements JsonApiResource
         foreach ($relationships as $name => $relationship) {
             $relationship = is_array($relationship) ? $relationship : [$relationship];
             foreach ($relationship as $relation) {
-                if (!$relation instanceof Relation && null !== $relation) {
+                if (!$relation instanceof Relation && $relation !== null) {
                     throw new \InvalidArgumentException('Invalid ' . $name . ' Relationship provided');
                 }
             }

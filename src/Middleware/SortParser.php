@@ -49,7 +49,7 @@ class SortParser
 
         return array_map(
             function ($field) use ($allowedFields) {
-                if ('-' === mb_substr($field, 0, 1)) {
+                if (mb_substr($field, 0, 1) === '-') {
                     $field = mb_substr($field, 1);
                     Assert::that($field)->inArray($allowedFields);
 

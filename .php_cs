@@ -28,7 +28,12 @@ return PhpCsFixer\Config::create()
         'ordered_imports'                       => true,
         'phpdoc_order'                          => true,
         'psr4'                                  => true,
+        'strict_param'                          => true,
+        'yoda_style'                            => [
+            'equal' => false,
+            'identical' => false,
+            'less_and_greater' => false
+        ],
 
-        'strict_param' => true,
     ])
     ->setFinder($finder);
