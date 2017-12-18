@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Choredo\Middleware;
 
 use Assert\Assertion;
+use Choredo\FamilyAware;
 use Choredo\Hydrators\Hydrator;
 use Choredo\JsonApi\JsonApiResource;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use const Choredo\REQUEST_FAMILY;
 use const Choredo\REQUEST_RESOURCE;
 
 class ResourceHydrator
@@ -52,6 +54,16 @@ class ResourceHydrator
             );
 
         if ($this->hydrator) {
+            if ($this->hydrator instanceof FamilyAware) {
+                $family = $request->getAttribute(REQUEST_FAMILY);
+                if (!$family) {
+                    throw new \RuntimeException(
+                        "Attempted to hydrate a FamilyAware hydrator but there is no Family entity registered. Check " .
+                        "middlewares are running in the expected order!"
+                    );
+                }
+                $this->hydrator->setFamily($request->getAttribute(REQUEST_FAMILY));
+            }
             $resource = $this->hydrator->hydrate($resource);
         }
 

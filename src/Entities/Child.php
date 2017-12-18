@@ -7,6 +7,7 @@ namespace Choredo\Entities;
 use Assert\Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
+use const Choredo\HEX_COLOR_REGEX;
 
 /**
  * @ORM\Entity(repositoryClass="Choredo\Repositories\ChildRepository")
@@ -44,7 +45,7 @@ class Child
     /**
      * @var string
      *
-     * @ORM\Column(type="string", nullable=true, name="access_code")
+     * @ORM\Column(type="string", nullable=true, length=6, name="access_code", options={"fixed": true})
      */
     private $accessCode;
 
@@ -84,7 +85,7 @@ class Child
     /**
      * @return string
      */
-    public function getAccessCode(): string
+    public function getAccessCode(): ?string
     {
         return $this->accessCode;
     }
@@ -92,7 +93,7 @@ class Child
     /**
      * @return string
      */
-    public function getAvatarUri(): string
+    public function getAvatarUri(): ?string
     {
         return $this->avatarUri;
     }
@@ -100,7 +101,7 @@ class Child
     /**
      * @return string
      */
-    public function getColor(): string
+    public function getColor(): ?string
     {
         return $this->color;
     }
@@ -122,7 +123,7 @@ class Child
 
         if ($color) {
             Assert::that($color)->regex(
-                '/(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i',
+                HEX_COLOR_REGEX,
                 'Child::color must be a valid hexadecimal color code'
             );
             $this->color = $color;
