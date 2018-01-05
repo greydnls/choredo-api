@@ -32,24 +32,6 @@ class ListChildren implements EntityManagerAware, FractalAware, Pageable, Sortab
     use HasDefaultCreateDateSort;
     use HasNoFilterTransforms;
 
-    /**
-     * Return an array of fields that can be filtered via the API.
-     *
-     * @return string[]
-     */
-    public static function getFilterableFields(): array
-    {
-        return ['name', 'accessCode'];
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getSortableFields(): array
-    {
-        return ['name', 'createdDate', 'updatedDate'];
-    }
-
     public function __invoke(Request $request, Response $response, array $params = []): Response
     {
         $pagination = $request->getAttribute(REQUEST_PAGINATION);
@@ -71,5 +53,23 @@ class ListChildren implements EntityManagerAware, FractalAware, Pageable, Sortab
         );
 
         return new JsonResponse($collection->toArray());
+    }
+
+    /**
+     * Return an array of fields that can be filtered via the API.
+     *
+     * @return string[]
+     */
+    public static function getFilterableFields(): array
+    {
+        return ['name', 'accessCode'];
+    }
+
+    /**
+     * @return string[]
+     */
+    public static function getSortableFields(): array
+    {
+        return ['name', 'createdDate', 'updatedDate'];
     }
 }
