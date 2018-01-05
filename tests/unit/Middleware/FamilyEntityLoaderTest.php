@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Choredo\Test;
 
 use Choredo\Middleware\FamilyEntityLoader;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use League\Route\Http\Exception\NotFoundException;
 use PHPUnit\Framework\TestCase;
@@ -16,13 +17,16 @@ use Zend\Diactoros\Uri;
 class FamilyEntityLoaderTest extends TestCase
 {
     /**
-     * @var PHPUnit_Framework_MockObject_MockObject|EntityRepository
+     * @var PHPUnit_Framework_MockObject_MockObject|\Doctrine\ORM\EntityManagerInterface
      */
+    private $entityManager;
+
     private $repository;
 
     public function setUp()
     {
-        $this->repository = $this->createMock(EntityRepository::class);
+        $this->repository    = $this->createMock(EntityRepository::class);
+        $this->entityManager = $this->createMock(EntityManagerInterface::class);
     }
 
     public function testUrisOutsideFamilyDomainDontThrowException()
@@ -54,6 +58,8 @@ class FamilyEntityLoaderTest extends TestCase
             ->method('getUri')
             ->willReturn($uri);
 
+        $this->entityManager->expects($this->once())->method('getRepository')->willReturn($this->repository);
+
         $response = new Response();
 
         $this->expectException(NotFoundException::class);
@@ -64,6 +70,9 @@ class FamilyEntityLoaderTest extends TestCase
 
     public function constructSubject()
     {
-        return new FamilyEntityLoader($this->repository);
+        $subject = new FamilyEntityLoader();
+        $subject->setEntityManager($this->entityManager);
+
+        return $subject;
     }
 }

@@ -47,7 +47,10 @@ class RouterProvider extends AbstractServiceProvider
                     $routeGroup->get('/accounts', [Actions\Account\ListAccounts::class, '__invoke']);
 
                     // Children
+                    $routeGroup->get('children', [Actions\Child\ListChildren::class, '__invoke']);
+                    $routeGroup->get('children/{childId:uuid}', [Actions\Child\GetChild::class, '__invoke']);
 
+                    // Chores
                     $routeGroup->get('chores', [Actions\Chore\ListChores::class, '__invoke']);
                     $routeGroup->get('/chores/{choreId}', [Actions\Chore\GetChore::class, '__invoke']);
                     $routeGroup->post('/chores/', [Actions\Chore\CreateChore::class, '__invoke']);

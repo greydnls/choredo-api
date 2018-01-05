@@ -57,7 +57,6 @@ class EntityManagerProvider extends AbstractServiceProvider
             ];
 
             $orm = ORM\EntityManager::create($dbParams, $config);
-            $orm->getFilters()->enable('family');          // This is on by default to enforce tenant segregation
 
             return $orm;
         });
