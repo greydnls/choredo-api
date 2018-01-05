@@ -56,9 +56,7 @@ class EntityManagerProvider extends AbstractServiceProvider
                 'dbname'   => getenv('DB_DATABASE') ?? 'choredo',
             ];
 
-            $orm = ORM\EntityManager::create($dbParams, $config);
-
-            return $orm;
+            return ORM\EntityManager::create($dbParams, $config);
         });
     }
 }
