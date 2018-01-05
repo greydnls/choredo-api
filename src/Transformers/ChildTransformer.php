@@ -13,6 +13,7 @@ class ChildTransformer extends TransformerAbstract
 
     private $familyTransformer;
 
+
     public function __construct(FamilyTransformer $familyTransformer = null)
     {
         $this->familyTransformer = $familyTransformer ?? new FamilyTransformer();
@@ -40,6 +41,7 @@ class ChildTransformer extends TransformerAbstract
 
         return $entity;
     }
+
 
     public function includeFamily(Child $child)
     {
