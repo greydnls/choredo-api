@@ -7,15 +7,17 @@ namespace Choredo\Hydrators;
 use Assert\Assert;
 use Assert\Assertion;
 use Choredo\Entities;
-use Choredo\Entities\Family;
 use Choredo\FamilyAware;
+use Choredo\FamilyAwareTrait;
 use Choredo\JsonApi\JsonApiResource;
-use Ramsey\Uuid\Uuid;
+use Choredo\JsonApi\ResourceIdGenerator;
 use const Choredo\HEX_COLOR_REGEX;
 use const Choredo\SHORT_DATA_FIELD_MAX_SIZE;
 
 class ChildHydrator implements Hydrator, FamilyAware
 {
+    use FamilyAwareTrait;
+
     /**
      * @var \Choredo\Entities\Family
      */
@@ -26,29 +28,13 @@ class ChildHydrator implements Hydrator, FamilyAware
         $this->validateResource($resource);
 
         return new Entities\Child(
-            $resource->getId() === JsonApiResource::TYPE_NEW ? Uuid::uuid4() : Uuid::fromString($resource->getId()),
+            ResourceIdGenerator::generateId($resource),
             $this->family,
             $resource->getAttribute('name'),
             $resource->getAttribute('avatarUri'),
             $resource->getAttribute('color'),
             $resource->getAttribute('accessCode')
         );
-    }
-
-    /**
-     * @return \Choredo\Entities\Family
-     */
-    public function getFamily(): Family
-    {
-        return $this->family;
-    }
-
-    /**
-     * @param \Choredo\Entities\Family $family
-     */
-    public function setFamily(Family $family): void
-    {
-        $this->family = $family;
     }
 
     private function validateResource(JsonApiResource $resource): void

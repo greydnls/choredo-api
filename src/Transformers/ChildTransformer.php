@@ -13,7 +13,6 @@ class ChildTransformer extends TransformerAbstract
 
     private $familyTransformer;
 
-
     public function __construct(FamilyTransformer $familyTransformer = null)
     {
         $this->familyTransformer = $familyTransformer ?? new FamilyTransformer();
@@ -27,21 +26,12 @@ class ChildTransformer extends TransformerAbstract
             'color'       => $child->getColor(),
             'accessCode'  => $child->getAccessCode(),
             'avatarUri'   => $child->getAvatarUri(),
-            'createdDate' => $child->getCreatedDate(),
-            'updatedDate' => $child->getUpdateDate(),
+            'createdDate' => $child->getCreatedDate()->format(\DateTime::ATOM),
+            'updatedDate' => $child->getUpdateDate()->format(\DateTime::ATOM),
         ];
-
-        if ($child->getCreatedDate()) {
-            $entity['createdDate'] = $child->getCreatedDate()->format(\DateTime::ATOM);
-        }
-
-        if ($child->getUpdateDate()) {
-            $entity['updatedDate'] = $child->getUpdateDate()->format(\DateTime::ATOM);
-        }
 
         return $entity;
     }
-
 
     public function includeFamily(Child $child)
     {

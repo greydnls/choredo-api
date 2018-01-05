@@ -37,9 +37,12 @@ class CreateChild implements FractalAware, LoggerAwareInterface, EntityManagerAw
         $this->entityManager->persist($child);
         $this->entityManager->flush();
 
+        $childId  = $child->getId()->toString();
+        $familyId = $child->getFamily()->getId()->toString();
+
         $this->logger->info(
             'New Child created',
-            ['id' => $child->getId()->toString(), 'familyId' => $child->getFamily()->getId()->toString()]
+            ['id' => $child->getId()->toString(), 'familyId' => $familyId]
         );
 
         $item = $this->outputItem($child, new ChildTransformer(), 'children')->toArray();
@@ -47,8 +50,8 @@ class CreateChild implements FractalAware, LoggerAwareInterface, EntityManagerAw
         return (new JsonResponse($item, Http::CREATED))
             ->withHeader(
                 'location',
-                '/families/' . $child->getFamily()->getId()->toString() .
-                '/children/' . $child->getId()->toString()
+                '/families/' . $familyId .
+                '/children/' . $childId
             );
     }
 }

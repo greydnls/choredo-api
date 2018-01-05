@@ -2,16 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Choredo;
+namespace Choredo\JsonApi;
 
-use Choredo\JsonApi\JsonApiResource;
-use Choredo\JsonApi\Resource;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
 class ResourceIdGenerator
 {
-    public static function generateId(Resource $resource): UuidInterface
+    public static function generateId(JsonApiResource $resource): UuidInterface
     {
         $id = $resource->getId();
 
