@@ -21,6 +21,8 @@ class Child
     use Behaviors\HasUpdatedDate;
     use Behaviors\BelongsToFamily;
 
+    const API_ENTITY_TYPE = 'children';
+
     /**
      * @var string
      *

@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Choredo\Providers;
 
-use Choredo\Entities\Family;
 use Choredo\Middleware\FamilyEntityLoader;
-use Doctrine\ORM\EntityManagerInterface;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
 class MiddlewareProvider extends AbstractServiceProvider
@@ -22,10 +20,6 @@ class MiddlewareProvider extends AbstractServiceProvider
      */
     public function register()
     {
-        $this->container->share(FamilyEntityLoader::class, function () {
-            $entityManager = $this->container->get(EntityManagerInterface::class);
-
-            return new FamilyEntityLoader($entityManager->getRepository(Family::class));
-        });
+        $this->container->share(FamilyEntityLoader::class);
     }
 }
