@@ -8,6 +8,7 @@ use Assert\Assert;
 use Assert\Assertion;
 use Choredo\Entities\Account;
 use Choredo\JsonApi\JsonApiResource;
+use Choredo\JsonApi\ResourceIdGenerator;
 use Ramsey\Uuid\Uuid;
 use const Choredo\SHORT_DATA_FIELD_MAX_SIZE;
 
@@ -32,9 +33,7 @@ class AccountHydrator implements Hydrator
         );
 
         return new Account(
-            $resource->getId() === JsonApiResource::TYPE_NEW
-                ? Uuid::uuid4()
-                : Uuid::fromString($resource->getId()),
+            ResourceIdGenerator::generateId($resource),
             $resource->getAttribute('email'),
             $resource->getAttribute('firstName'),
             $resource->getAttribute('lastName'),

@@ -8,6 +8,7 @@ use Assert\Assert;
 use Assert\Assertion;
 use Choredo\Entities;
 use Choredo\JsonApi\JsonApiResource;
+use Choredo\JsonApi\ResourceIdGenerator;
 use Ramsey\Uuid\Uuid;
 use const Choredo\DAYS_OF_WEEK;
 use const Choredo\SHORT_DATA_FIELD_MAX_SIZE;
@@ -19,7 +20,7 @@ class FamilyHydrator implements Hydrator
         $this->validateResource($resource);
 
         return new Entities\Family(
-            $resource->getId() === JsonApiResource::TYPE_NEW ? Uuid::uuid4() : Uuid::fromString($resource->getId()),
+            ResourceIdGenerator::generateId($resource),
             $resource->getAttribute('name'),
             $resource->getAttribute('paymentStrategy'),
             array_search($resource->getAttribute('weekStartDay'), DAYS_OF_WEEK, true),
