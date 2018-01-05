@@ -20,14 +20,17 @@ class ChildTransformer extends TransformerAbstract
 
     public function transform(Child $child)
     {
-        return [
+        $entity = [
             'id'          => $child->getId(),
             'name'        => $child->getName(),
+            'color'       => $child->getColor(),
             'accessCode'  => $child->getAccessCode(),
             'avatarUri'   => $child->getAvatarUri(),
-            'createdDate' => $child->getCreatedDate(),
-            'updatedDate' => $child->getUpdateDate(),
+            'createdDate' => $child->getCreatedDate()->format(\DateTime::ATOM),
+            'updatedDate' => $child->getUpdateDate()->format(\DateTime::ATOM),
         ];
+
+        return $entity;
     }
 
     public function includeFamily(Child $child)

@@ -18,7 +18,7 @@ use const Choredo\REQUEST_FILTER;
 use const Choredo\REQUEST_PAGINATION;
 use const Choredo\REQUEST_SORT;
 
-class ListAccounts implements EntityManagerAware, Output\FractalAwareInterface, Behaviors\Filterable, Behaviors\Pageable, Behaviors\Sortable
+class ListAccounts implements EntityManagerAware, Output\FractalAware, Behaviors\Filterable, Behaviors\Pageable, Behaviors\Sortable
 {
     use Output\CreatesFractalScope;
     use HasEntityManager;

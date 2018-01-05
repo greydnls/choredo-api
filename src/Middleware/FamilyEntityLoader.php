@@ -4,20 +4,17 @@ declare(strict_types=1);
 
 namespace Choredo\Middleware;
 
-use Doctrine\ORM\EntityRepository;
+use Choredo\Entities\Family;
+use Choredo\EntityManagerAware;
+use Choredo\HasEntityManager;
 use League\Route\Http\Exception\NotFoundException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use const Choredo\REQUEST_FAMILY;
 
-class FamilyEntityLoader
+class FamilyEntityLoader implements EntityManagerAware
 {
-    private $repository;
-
-    public function __construct(EntityRepository $repository)
-    {
-        $this->repository = $repository;
-    }
+    use HasEntityManager;
 
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next)
     {
@@ -31,11 +28,14 @@ class FamilyEntityLoader
 
         $familyId = array_shift($uriParts);
 
-        $family = $this->repository->findOneBy(['id' => $familyId]);
+        $repository = $this->entityManager->getRepository(Family::class);
+        $family     = $repository->findOneBy(['id' => $familyId]);
 
         if ($family == null) {
             throw new NotFoundException();
         }
+
+        $this->entityManager->getFilters()->enable('family')->setParameter('familyId', $family->getId()->toString());
 
         $request = $request->withAttribute(REQUEST_FAMILY, $family);
 

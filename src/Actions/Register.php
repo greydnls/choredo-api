@@ -8,7 +8,7 @@ use Choredo\Entities\Account;
 use Choredo\EntityManagerAware;
 use Choredo\HasEntityManager;
 use Choredo\Output\CreatesFractalScope;
-use Choredo\Output\FractalAwareInterface;
+use Choredo\Output\FractalAware;
 use Choredo\Transformers\AccountTransformer;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -18,7 +18,7 @@ use Teapot\StatusCode\Http;
 use Zend\Diactoros\Response\JsonResponse;
 use const Choredo\REQUEST_RESOURCE;
 
-class Register implements EntityManagerAware, FractalAwareInterface, LoggerAwareInterface
+class Register implements EntityManagerAware, FractalAware, LoggerAwareInterface
 {
     use CreatesFractalScope;
     use HasEntityManager;

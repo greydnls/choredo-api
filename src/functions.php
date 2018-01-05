@@ -14,6 +14,8 @@ namespace Choredo {
     const REQUEST_FILTER        = 'filter';
     const REQUEST_FAMILY        = 'request-family';
 
+    const HEX_COLOR_REGEX = '/(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i';
+
     function getBaseUrl(): string
     {
         $url = $_SERVER['HTTPS'] ? 'https://' : 'http://';

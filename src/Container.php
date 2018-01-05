@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Choredo;
 
-use Choredo\Output\FractalAwareInterface;
+use Choredo\Output\FractalAware;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Fractal\Manager;
 use Psr\Http\Message\ResponseInterface;
@@ -38,7 +38,7 @@ final class Container extends \League\Container\Container
         $this->addServiceProvider(new Providers\RouterProvider());
         $this->addServiceProvider(new Providers\LoggerProvider());
 
-        $this->inflector(FractalAwareInterface::class)
+        $this->inflector(FractalAware::class)
             ->invokeMethod('setManager', [$this->get(Manager::class)]);
         $this->inflector(EntityManagerAware::class)
             ->invokeMethod('setEntityManager', [$this->get(EntityManagerInterface::class)]);
