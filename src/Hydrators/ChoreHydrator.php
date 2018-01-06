@@ -25,7 +25,7 @@ class ChoreHydrator implements Hydrator, FamilyAware
             ResourceIdGenerator::generateId($resource),
             $this->getFamily(),
             $resource->getAttribute('name'),
-            $resource->getAttribute('frequency'),
+            $resource->getAttribute('schedule'),
             $resource->getAttribute('description'),
             $resource->getAttribute('value')
         );

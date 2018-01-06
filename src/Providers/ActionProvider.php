@@ -11,15 +11,23 @@ class ActionProvider extends AbstractServiceProvider
 {
     protected $provides = [
         Actions\Register::class,
+
+        // Families
         Actions\Family\GetFamily::class,
         Actions\Family\CreateFamily::class,
         Actions\Family\ListFamilies::class,
+
+        // Accounts
         Actions\Account\GetAccount::class,
         Actions\Account\ListAccounts::class,
+
+        // Children
         Actions\Child\CreateChild::class,
         Actions\Child\GetChild::class,
         Actions\Child\ListChildren::class,
-        Actions\Chore\ListChores::class,
+
+        // Chores
+        Actions\Chore\CreateChore::class,
     ];
 
     /**
@@ -47,6 +55,6 @@ class ActionProvider extends AbstractServiceProvider
         $this->container->share(Actions\Child\ListChildren::class);
 
         // Chores
-        $this->container->share(Actions\Chore\ListChores::class);
+        $this->container->share(Actions\Chore\CreateChore::class);
     }
 }
