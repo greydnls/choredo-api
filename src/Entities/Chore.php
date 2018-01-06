@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Choredo\Entities;
 
+use Assert\Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
+use const Choredo\DAYS_OF_WEEK;
+use const Choredo\SHORT_DATA_FIELD_MAX_SIZE;
 
 /**
  * @ORM\Entity
@@ -19,12 +22,21 @@ class Chore
     use Behaviors\HasUpdatedDate;
     use Behaviors\BelongsToFamily;
 
+    public const API_ENTITY_TYPE = 'chores';
+
     /**
      * @var string
      *
      * @ORM\Column(type="string")
      */
     private $name;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(type="json")
+     */
+    private $schedule;
 
     /**
      * @var string
@@ -47,14 +59,17 @@ class Chore
     private $value;
 
     public function __construct(
-        Family $family,
         UuidInterface $id,
+        Family $family,
         string $name,
+        array $schedule,
         string $description = null,
         int $value = null
     ) {
+        static::validate($name, $schedule, $description);
         $this->id          = $id;
         $this->name        = $name;
+        $this->schedule    = $schedule;
         $this->description = $description;
         $this->value       = $value;
     }
@@ -65,6 +80,14 @@ class Chore
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSchedule(): array
+    {
+        return $this->schedule;
     }
 
     /**
@@ -81,5 +104,26 @@ class Chore
     public function getValue()
     {
         return $this->value;
+    }
+
+    /**
+     * @param string      $name
+     * @param array       $schedule
+     * @param string|null $description
+     *
+     * @return bool
+     */
+    public static function validate(string $name, array $schedule, string $description = null): bool
+    {
+        return Assert::lazy()
+                     ->that($name, 'Chore::name')->maxLength(SHORT_DATA_FIELD_MAX_SIZE)
+                     ->that(array_keys($schedule), 'Chore::schedule')
+                     ->all()->choice(DAYS_OF_WEEK, 'Schedule keys must be valid weekdays')
+                     ->that($schedule, 'Chore::schedule')
+                     ->all()->boolean('Schedule values must be true or false')
+                     ->that($description, 'Chore::description')
+                     ->nullOr()->maxLength(SHORT_DATA_FIELD_MAX_SIZE)
+                     ->verifyNow()
+            ;
     }
 }
