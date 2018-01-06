@@ -60,6 +60,14 @@ class AssignmentCompletion
     private $date;
 
     /**
+     * @var AssignmentApproval
+     *
+     * @ORM\OneToOne(targetEntity="Choredo\Entities\AssignmentApproval", inversedBy="completion")
+     * @ORM\JoinColumn(name="approval_id", referencedColumnName="id", nullable=true)
+     */
+    private $approval;
+
+    /**
      * AssignmentCompletion constructor.
      *
      * @param \Ramsey\Uuid\UuidInterface   $id
@@ -86,21 +94,6 @@ class AssignmentCompletion
         $this->choreDescription = $choreDescription;
         $this->choreValue       = $choreValue;
         $this->date             = $date;
-    }
-
-    private static function validate($id, $family, $assignment, $child, $choreDescription, $choreValue, $date)
-    {
-        return Assert::lazy()
-                     ->that($id, 'AssignmentCompletion::id')->isInstanceOf(UuidInterface::class)
-                     ->that($family, 'AssignmentCompletion::family')->isInstanceOf(Family::class)
-                     ->that($assignment, 'AssignmentCompletion::assignment')->isInstanceOf(Assignment::class)
-                     ->that($child, 'AssignmentCompletion::child')->isInstanceOf(Child::class)
-                     ->that($choreDescription, 'AssignmentCompletion::choreDescription')
-                     ->string()->maxLength(SHORT_DATA_FIELD_MAX_SIZE)
-                     ->that($choreValue, 'AssignmentCompletion::choreValue')->integer()
-                     ->that($date, 'AssignmentCompletion::date')->isInstanceOf(\DateTime::class)
-                     ->verifyNow()
-            ;
     }
 
     /**
@@ -181,5 +174,65 @@ class AssignmentCompletion
         $this->assignment = $assignment;
 
         return $this;
+    }
+
+    /**
+     * @return AssignmentApproval
+     */
+    public function getApproval(): AssignmentApproval
+    {
+        return $this->approval;
+    }
+
+    /**
+     * @param AssignmentApproval $approval
+     *
+     * @return \Choredo\Entities\AssignmentCompletion
+     */
+    public function setApproval(AssignmentApproval $approval): self
+    {
+        $this->approval = $approval;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDate(): \DateTime
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param \DateTime $date
+     *
+     * @return \Choredo\Entities\AssignmentCompletion
+     */
+    public function setDate(\DateTime $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function isApproved(): bool
+    {
+        return !is_null($this->getApproval());
+    }
+
+    private static function validate($id, $family, $assignment, $child, $choreDescription, $choreValue, $date)
+    {
+        return Assert::lazy()
+                     ->that($id, 'AssignmentCompletion::id')->isInstanceOf(UuidInterface::class)
+                     ->that($family, 'AssignmentCompletion::family')->isInstanceOf(Family::class)
+                     ->that($assignment, 'AssignmentCompletion::assignment')->isInstanceOf(Assignment::class)
+                     ->that($child, 'AssignmentCompletion::child')->isInstanceOf(Child::class)
+                     ->that($choreDescription, 'AssignmentCompletion::choreDescription')
+                     ->string()->maxLength(SHORT_DATA_FIELD_MAX_SIZE)
+                     ->that($choreValue, 'AssignmentCompletion::choreValue')->integer()
+                     ->that($date, 'AssignmentCompletion::date')->isInstanceOf(\DateTime::class)
+                     ->verifyNow()
+            ;
     }
 }
