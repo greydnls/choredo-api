@@ -55,7 +55,6 @@ class RouterProvider extends AbstractServiceProvider
                     // Chores
                     $routeGroup->get('chores', [Actions\Chore\ListChores::class, '__invoke']);
                     $routeGroup->get('/chores/{choreId}', [Actions\Chore\GetChore::class, '__invoke']);
-                    $routeGroup->put('/chores/{choreId}', [Actions\Chore\UpdateChore::class, '__invoke']);
                     $routeGroup->delete('/chores/{choreId}', [Actions\Chore\DeleteChore::class, '__invoke']);
                 })->middleware($this->container->get(FamilyEntityLoader::class));
 
@@ -67,6 +66,14 @@ class RouterProvider extends AbstractServiceProvider
 
                 $router->post('/families/{familyId:uuid}/chores', [Actions\Chore\CreateChore::class, '__invoke'])
                        ->middleware(ResourceHydrator::newType(Chore::API_ENTITY_TYPE, new ChoreHydrator()))
+                       ->middleware($this->container->get(FamilyEntityLoader::class))
+                ;
+
+                // Update Routes
+                $router->put(
+                    '/families/{familyId:uuid}/chores/{choreId:uuid}',
+                    [Actions\Chore\UpdateChore::class, '__invoke']
+                )->middleware(ResourceHydrator::uuidType(Chore::API_ENTITY_TYPE, new ChoreHydrator()))
                        ->middleware($this->container->get(FamilyEntityLoader::class))
                 ;
 
