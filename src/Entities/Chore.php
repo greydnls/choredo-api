@@ -11,7 +11,7 @@ use const Choredo\DAYS_OF_WEEK;
 use const Choredo\SHORT_DATA_FIELD_MAX_SIZE;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Choredo\Repositories\ChildRepository")
  * @ORM\Table(name="chores")
  * @ORM\HasLifeCycleCallbacks
  */
