@@ -11,7 +11,9 @@ use const Choredo\SHORT_DATA_FIELD_MAX_SIZE;
 
 /**
  * @ORM\Entity(repositoryClass="Choredo\Repositories\AssignmentCompletionRepository")
- * @ORM\Table(name="assignment_completions")
+ * @ORM\Table(name="assignment_completions", uniqueConstraints={
+ *     @ORM\UniqueConstraint(name="chore_date_unique", columns={"assignment_id", "date"})
+ * })
  */
 class AssignmentCompletion
 {
@@ -51,6 +53,13 @@ class AssignmentCompletion
     private $choreValue;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="date")
+     */
+    private $date;
+
+    /**
      * AssignmentCompletion constructor.
      *
      * @param \Ramsey\Uuid\UuidInterface   $id
@@ -66,18 +75,20 @@ class AssignmentCompletion
         Assignment $assignment,
         Child $child,
         $choreDescription,
-        $choreValue
+        $choreValue,
+        \DateTime $date
     ) {
-        static::validate($id, $family, $assignment, $child, $choreDescription, $choreValue);
+        static::validate($id, $family, $assignment, $child, $choreDescription, $choreValue, $date);
         $this->id               = $id;
         $this->family           = $family;
         $this->assignment       = $assignment;
         $this->child            = $child;
         $this->choreDescription = $choreDescription;
         $this->choreValue       = $choreValue;
+        $this->date             = $date;
     }
 
-    private static function validate($id, $family, $assignment, $child, $choreDescription, $choreValue)
+    private static function validate($id, $family, $assignment, $child, $choreDescription, $choreValue, $date)
     {
         return Assert::lazy()
                      ->that($id, 'AssignmentCompletion::id')->isInstanceOf(UuidInterface::class)
@@ -87,6 +98,7 @@ class AssignmentCompletion
                      ->that($choreDescription, 'AssignmentCompletion::choreDescription')
                      ->string()->maxLength(SHORT_DATA_FIELD_MAX_SIZE)
                      ->that($choreValue, 'AssignmentCompletion::choreValue')->integer()
+                     ->that($date, 'AssignmentCompletion::date')->isInstanceOf(\DateTime::class)
                      ->verifyNow()
             ;
     }
