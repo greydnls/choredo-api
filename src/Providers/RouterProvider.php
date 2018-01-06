@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Choredo\Providers;
 
 use Choredo\Actions;
+use Choredo\Entities\Chore;
 use Choredo\Hydrators\AccountHydrator;
 use Choredo\Hydrators\ChildHydrator;
+use Choredo\Hydrators\ChoreHydrator;
 use Choredo\Hydrators\FamilyHydrator;
 use Choredo\Middleware\FamilyEntityLoader;
 use Choredo\Middleware\FilterParser;
@@ -53,13 +55,18 @@ class RouterProvider extends AbstractServiceProvider
                     // Chores
                     $routeGroup->get('chores', [Actions\Chore\ListChores::class, '__invoke']);
                     $routeGroup->get('/chores/{choreId}', [Actions\Chore\GetChore::class, '__invoke']);
-                    $routeGroup->post('/chores/', [Actions\Chore\CreateChore::class, '__invoke']);
                     $routeGroup->put('/chores/{choreId}', [Actions\Chore\UpdateChore::class, '__invoke']);
                     $routeGroup->delete('/chores/{choreId}', [Actions\Chore\DeleteChore::class, '__invoke']);
                 })->middleware($this->container->get(FamilyEntityLoader::class));
 
+                // Create Routes
                 $router->post('/families/{familyId:uuid}/children', [Actions\Child\CreateChild::class, '__invoke'])
                        ->middleware(ResourceHydrator::newType('children', new ChildHydrator()))
+                       ->middleware($this->container->get(FamilyEntityLoader::class))
+                ;
+
+                $router->post('/families/{familyId:uuid}/chores', [Actions\Chore\CreateChore::class, '__invoke'])
+                       ->middleware(ResourceHydrator::newType(Chore::API_ENTITY_TYPE, new ChoreHydrator()))
                        ->middleware($this->container->get(FamilyEntityLoader::class))
                 ;
 
