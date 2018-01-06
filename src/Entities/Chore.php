@@ -94,7 +94,7 @@ class Chore
                      ->that($schedule, 'Chore::schedule')->isArray()->all()->boolean()
                      ->that(array_keys($schedule), 'Chore::schedule')->all()->choice(DAYS_OF_WEEK)
                      ->that($description, 'Chore::description')->nullOr()->maxLength(SHORT_DATA_FIELD_MAX_SIZE)
-                     ->that($value, 'Chore::value')->integer()
+                     ->that($value, 'Chore::value')->nullOr()->integer()
                      ->verifyNow()
             ;
     }
