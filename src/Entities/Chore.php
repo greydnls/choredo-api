@@ -68,6 +68,7 @@ class Chore
     ) {
         static::validate($name, $schedule, $description);
         $this->id          = $id;
+        $this->family      = $family;
         $this->name        = $name;
         $this->schedule    = $schedule;
         $this->description = $description;

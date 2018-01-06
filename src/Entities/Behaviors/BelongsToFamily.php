@@ -19,7 +19,7 @@ trait BelongsToFamily
     /**
      * @return mixed
      */
-    public function getFamily()
+    public function getFamily(): Family
     {
         return $this->family;
     }
