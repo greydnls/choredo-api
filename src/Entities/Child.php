@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Choredo\Entities;
 
 use Assert\Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
 use const Choredo\HEX_COLOR_REGEX;
@@ -52,6 +53,11 @@ class Child
     private $accessCode;
 
     /**
+     * @ORM\OneToMany(targetEntity="Choredo\Entities\Assignment", mappedBy="child")
+     */
+    private $assignments;
+
+    /**
      * Child constructor.
      *
      * @param UuidInterface $id
@@ -73,7 +79,16 @@ class Child
         $this->family = $family;
         $this->name   = $name;
         $this->setAvatarUriAndColor($avatarUri, $color);
-        $this->accessCode = $accessCode;
+        $this->accessCode  = $accessCode;
+        $this->assignments = new ArrayCollection();
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getAssignments(): ArrayCollection
+    {
+        return $this->assignments;
     }
 
     /**

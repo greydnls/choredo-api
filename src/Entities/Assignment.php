@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Choredo\Entities;
 
 use Assert\Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
 
@@ -27,7 +28,7 @@ class Assignment
     /**
      * @var Child
      *
-     * @ORM\ManyToOne(targetEntity="Choredo\Entities\Child")
+     * @ORM\ManyToOne(targetEntity="Choredo\Entities\Child", inversedBy="assignments")
      * @ORM\JoinColumn(name="child_id", referencedColumnName="id", nullable=false)
      */
     private $child;
@@ -48,6 +49,13 @@ class Assignment
     private $dayOfWeek;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Choredo\Entities\AssignmentCompletion", mappedBy="assignment")
+     */
+    private $completions;
+
+    /**
      * Assignment constructor.
      *
      * @param \Ramsey\Uuid\UuidInterface $id
@@ -59,11 +67,12 @@ class Assignment
     public function __construct(UuidInterface $id, Family $family, Child $child, Chore $chore, int $dayOfWeek)
     {
         static::validate($id, $family, $child, $chore, $dayOfWeek);
-        $this->id        = $id;
-        $this->family    = $family;
-        $this->child     = $child;
-        $this->chore     = $chore;
-        $this->dayOfWeek = $dayOfWeek;
+        $this->id          = $id;
+        $this->family      = $family;
+        $this->child       = $child;
+        $this->chore       = $chore;
+        $this->dayOfWeek   = $dayOfWeek;
+        $this->completions = new ArrayCollection();
     }
 
     /**
@@ -124,6 +133,14 @@ class Assignment
         $this->dayOfWeek = $dayOfWeek;
 
         return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getCompletions(): ArrayCollection
+    {
+        return $this->completions;
     }
 
     private static function validate($id, $family, $child, $chore, $dayOfWeek)
