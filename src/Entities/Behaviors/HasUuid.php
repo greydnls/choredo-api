@@ -23,4 +23,12 @@ trait HasUuid
     {
         return $this->id;
     }
+
+    /**
+     * @param UuidInterface $id
+     */
+    public function setId(UuidInterface $id)
+    {
+        $this->id = $id;
+    }
 }

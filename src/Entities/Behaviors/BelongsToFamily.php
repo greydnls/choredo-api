@@ -23,4 +23,12 @@ trait BelongsToFamily
     {
         return $this->family;
     }
+
+    /**
+     * @param Family $family
+     */
+    public function setFamily(Family $family)
+    {
+        $this->family = $family;
+    }
 }
