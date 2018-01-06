@@ -66,13 +66,37 @@ class Chore
         string $description = null,
         int $value = null
     ) {
-        static::validate($name, $schedule, $description);
+        static::validate($id, $family, $name, $schedule, $description, $value);
         $this->id          = $id;
         $this->family      = $family;
         $this->name        = $name;
         $this->schedule    = $schedule;
         $this->description = $description;
         $this->value       = $value;
+    }
+
+    /**
+     * @param  $id
+     * @param  $family
+     * @param  $name
+     * @param  $schedule
+     * @param  $description
+     * @param  $value
+     *
+     * @return bool
+     */
+    public static function validate($id, $family, $name, $schedule, $description, $value): bool
+    {
+        return Assert::lazy()
+                     ->that($id, 'Chore::id')->isInstanceOf(UuidInterface::class)
+                     ->that($family, 'Chore::family')->isInstanceOf(Family::class)
+                     ->that($name, 'Chore::name')->alnum()->maxLength(SHORT_DATA_FIELD_MAX_SIZE)
+                     ->that($schedule, 'Chore::schedule')->isArray()->all()->boolean()
+                     ->that(array_keys($schedule), 'Chore::schedule')->all()->choice(DAYS_OF_WEEK)
+                     ->that($description, 'Chore::description')->nullOr()->maxLength(SHORT_DATA_FIELD_MAX_SIZE)
+                     ->that($value, 'Chore::value')->nullOr()->integer()
+                     ->verifyNow()
+            ;
     }
 
     /**
@@ -84,6 +108,18 @@ class Chore
     }
 
     /**
+     * @param string $name
+     *
+     * @return Chore
+     */
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function getSchedule(): array
@@ -92,11 +128,35 @@ class Chore
     }
 
     /**
+     * @param array $schedule
+     *
+     * @return Chore
+     */
+    public function setSchedule(array $schedule): self
+    {
+        $this->schedule = $schedule;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
+    }
+
+    /**
+     * @param string $description
+     *
+     * @return Chore
+     */
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
     }
 
     /**
@@ -108,23 +168,14 @@ class Chore
     }
 
     /**
-     * @param string      $name
-     * @param array       $schedule
-     * @param string|null $description
+     * @param int $value
      *
-     * @return bool
+     * @return Chore
      */
-    public static function validate(string $name, array $schedule, string $description = null): bool
+    public function setValue(int $value): self
     {
-        return Assert::lazy()
-                     ->that($name, 'Chore::name')->maxLength(SHORT_DATA_FIELD_MAX_SIZE)
-                     ->that(array_keys($schedule), 'Chore::schedule')
-                     ->all()->choice(DAYS_OF_WEEK, 'Schedule keys must be valid weekdays')
-                     ->that($schedule, 'Chore::schedule')
-                     ->all()->boolean('Schedule values must be true or false')
-                     ->that($description, 'Chore::description')
-                     ->nullOr()->maxLength(SHORT_DATA_FIELD_MAX_SIZE)
-                     ->verifyNow()
-            ;
+        $this->value = $value;
+
+        return $this;
     }
 }

@@ -53,7 +53,7 @@ class ChoreTest extends TestCase
     public function testValidationWithInvalidScheduleKeys()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Schedule keys must be valid weekdays');
+        $this->expectExceptionMessage('is not an element of the valid values');
         (new Chore(
             Uuid::uuid4(),
             $this->family,
@@ -66,7 +66,7 @@ class ChoreTest extends TestCase
     public function testValidationWithInvalidScheduleValues()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Schedule values must be true or false');
+        $this->expectExceptionMessage('is not a boolean');
         (new Chore(
             Uuid::uuid4(),
             $this->family,

@@ -30,6 +30,7 @@ class ActionProvider extends AbstractServiceProvider
         Actions\Chore\CreateChore::class,
         Actions\Chore\ListChores::class,
         Actions\Chore\GetChore::class,
+        Actions\Chore\UpdateChore::class,
     ];
 
     /**
@@ -60,5 +61,6 @@ class ActionProvider extends AbstractServiceProvider
         $this->container->share(Actions\Chore\CreateChore::class);
         $this->container->share(Actions\Chore\ListChores::class);
         $this->container->share(Actions\Chore\GetChore::class);
+        $this->container->share(Actions\Chore\UpdateChore::class);
     }
 }
